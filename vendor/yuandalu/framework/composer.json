@@ -1,0 +1,25 @@
+{
+    "name": "yuandalu/framework",
+    "description": "The Cframe Framework.",
+    "keywords": ["framework", "Cframe"],
+    "license": "MIT",
+    "homepage": "http://cframe.yuandalu.com",
+    "support": {
+        "issues": "https://github.com/yuandalu/framework/issues",
+        "source": "https://github.com/yuandalu/framework"
+    },
+    "authors": [
+        {
+            "name": "DDJ",
+            "email": "dingdejing@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}

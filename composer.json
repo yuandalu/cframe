@@ -1,0 +1,22 @@
+{
+    "name": "yuandalu/cframe",
+    "description": "The PHP Framework.",
+    "keywords": ["framework", "Cframe"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "yuandalu/framework": "0.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/yuandalu/framework"
+        }
+    ]
+}

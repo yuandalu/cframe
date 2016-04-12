@@ -1,0 +1,6 @@
+1.svn export https://ipt.src.corp.qihoo.net/svn/fw/trunk/example/
+2.vim project/env_config.php
+3.sh install.sh
+4.sh env.init.sh project user
+5.sudo webctl restart
+6.install OK,set host to view your site!!

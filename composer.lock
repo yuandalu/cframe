@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "f9bcdb654e1bc09fc21f605bd57fd5c9",
+    "content-hash": "c1a3d73621ee312e215f9ff5cdb48c6c",
+    "packages": [
+        {
+            "name": "yuandalu/framework",
+            "version": "0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yuandalu/framework.git",
+                "reference": "1036a38d1d9241393649843ce867f57e313886bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yuandalu/framework/zipball/1036a38d1d9241393649843ce867f57e313886bf",
+                "reference": "1036a38d1d9241393649843ce867f57e313886bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "DDJ",
+                    "email": "dingdejing@gmail.com"
+                }
+            ],
+            "description": "The Cframe Framework.",
+            "homepage": "http://cframe.yuandalu.com",
+            "keywords": [
+                "Cframe",
+                "framework"
+            ],
+            "support": {
+                "issues": "https://github.com/yuandalu/framework/issues",
+                "source": "https://github.com/yuandalu/framework"
+            },
+            "time": "2016-04-12 17:53:29"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.5.9"
+    },
+    "platform-dev": []
+}
