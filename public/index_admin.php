@@ -7,22 +7,9 @@ require BASE_DIR.'/bootstrap/autoload.php';
 
 $app = require_once BASE_DIR.'/bootstrap/app.php';
 
-$app->setNameSpace('App\Controllers\Front');
-$app->setControllerPath(BASE_DIR.'/app/Controllers/Front');
-$app->setViewPath(BASE_DIR.'/resources/views/front/');
-
-/*
- * 自定义路由规则
- *
-  $userroute = new QFrameStandRoute(
-       'u/:qid',
-       array(
-              'controller' => 'my',
-              'action'     => 'index',
-       )
-);
-Container::find('QFrameRouter')->addRoute('user',$userroute);
- */
+$app->setNameSpace('App\Controllers\Admin');
+$app->setControllerPath(BASE_DIR.'/app/Controllers/Admin');
+$app->setViewPath(BASE_DIR.'/resources/views/admin/');
 
 $app->run();
 

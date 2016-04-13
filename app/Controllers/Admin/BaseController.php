@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Controllers\Admin;
 
 use Elephant\Foundation\Controller;
 

@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Elephant\\' => array($vendorDir . '/yuandalu/framework/src/Elephant'),
     'App\\' => array($baseDir . '/app'),
 );

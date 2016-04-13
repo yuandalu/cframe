@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.4.0",
         "yuandalu/framework": "0.1.*"
     },
     "autoload": {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers\Front;
+namespace App\Controllers\Admin;
 
-use App\Controllers\Front\BaseController;
+use App\Controllers\Admin\BaseController;
 
 class IndexController extends BaseController
 {

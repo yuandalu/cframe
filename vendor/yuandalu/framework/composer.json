@@ -15,11 +15,11 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9"
+        "php": ">=5.4.0"
     },
     "autoload": {
-        "classmap": [
-            "src/"
-        ]
+        "psr-4": {
+            "Elephant\\": "src/Elephant/"
+        }
     }
 }
