@@ -5,6 +5,8 @@ define('BASE_DIR', dirname(dirname(__FILE__)));
 
 require BASE_DIR.'/bootstrap/autoload.php';
 
+\App\Models\Svc\LoaderSvc::init();
+
 $app = require_once BASE_DIR.'/bootstrap/app.php';
 
 $app->setNameSpace('App\Controllers\Front');
