@@ -28,9 +28,9 @@ if (!function_exists('loader')) {
 if (!function_exists('env')) {
     function env($name, $location = 'fastcgi')
     {
-        if ($location = 'fastcgi') {
+        if ($location == 'fastcgi') {
             return $_SERVER[$name];
-        } elseif ($location = 'local') {
+        } elseif ($location == 'local') {
             return '';
         }
     }

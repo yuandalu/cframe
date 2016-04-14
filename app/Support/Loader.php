@@ -17,8 +17,6 @@ class Loader
         self::setFinanceExecutorConf();
         self::setVlogExecutorConf();
         self::setCacheConf();
-        self::setMasterRedisConf($master_redis);
-        self::setSlaveRedisConf($slave_redis);
     }
 
     public static function setExecutorConf()
@@ -165,22 +163,6 @@ class Loader
             $servers[] = array('host'=>$host, 'port'=>$port, 'user'=>$user, 'password'=>$password);
         }
         self::$_cache = $servers;
-    }
-
-    public static function setMasterRedisConf($conf)
-    {
-        if (!is_array($conf)) {
-            return;
-        }
-        self::$_master_redis = $conf;
-    }
-
-    public static function setSlaveRedisConf($conf)
-    {
-        if (!is_array($conf)) {
-            return;
-        }
-        self::$_slave_redis = $conf;
     }
 
 

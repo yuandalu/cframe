@@ -20,7 +20,7 @@ class IndexController extends BaseController
         // loader('Sess')->set('a', 1);
         // echo loader('Sess')->get('a');
         // echo UtlsSvc::fenToYuan(1000);
-        LogSvc::writeLog('test', 'test');
+        // LogSvc::writeLog('test', 'test');
         $this->assign('name', $cache);
     }
 }

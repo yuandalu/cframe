@@ -12,7 +12,7 @@ class SessMysqlDriver
     static $LIFE = '';
     static $CONN = '';
 
-    const TABLE = 'sessions';
+    const TABLE = 'sys_sessions';
 
     public function __construct($life = '7200') {
         self::$HOST = env('ENV_DB_HOST');
@@ -33,12 +33,11 @@ class SessMysqlDriver
 
     public static function sessOpen()
     {
-        if (!self::$CONN = mysql_connect(self::$HOST.':'.self::$PORT, self::$USER, self::$PASS)) {
-            die('Could not connect: '.mysql_error());
-        }
+        self::$CONN = mysqli_connect(self::$HOST.':'.self::$PORT, self::$USER, self::$PASS, self::$NAME);
 
-        if (!mysql_select_db(self::$NAME, self::$CONN)) {
-            die('Can\'t use foo : '.mysql_error());
+        if (mysqli_connect_errno()) {
+            printf("Connect failed: %s\n", mysqli_connect_error());
+            exit();
         }
 
         return true;
@@ -47,7 +46,7 @@ class SessMysqlDriver
     public static function sessClose()
     {
         if (is_resource(self::$CONN)) {
-            mysql_close(self::$CONN);
+            mysqli_close(self::$CONN);
         }
         return true;
     }
@@ -58,9 +57,9 @@ class SessMysqlDriver
         $sql.= "from ".self::TABLE." ";
         $sql.= "where skey = '".$skey."' ";
         $sql.= "and expiry > '".time()."' ";
-        $row = mysql_query($sql, self::$CONN);
+        $row = mysqli_query(self::$CONN, $sql);
 
-        if (list($result) = mysql_fetch_row($row)) {
+        if (list($result) = mysqli_fetch_row($row)) {
             return $result;
         }
         return false;
@@ -68,13 +67,13 @@ class SessMysqlDriver
 
     public static function sessWrite($skey, $value)
     {
-        $skey   = mysql_real_escape_string($skey);
-        $value  = mysql_real_escape_string($value);
+        $skey   = mysqli_real_escape_string(self::$CONN, $skey);
+        $value  = mysqli_real_escape_string(self::$CONN, $value);
         $expiry = time() + self::$LIFE;
 
         $sql = "insert into ".self::TABLE." ";
         $sql.= "values ('".$skey."', '".$expiry."', '".$value."') ";
-        $row = mysql_query($sql, self::$CONN);
+        $row = mysqli_query(self::$CONN, $sql);
         if ($row) {
             return $row;
         }
@@ -82,21 +81,21 @@ class SessMysqlDriver
         $sql = "update ".self::TABLE." set ";
         $sql.= "expiry = '".$expiry."', value = '".$value."' ";
         $sql.= "where skey = '".$skey."' ";
-        return mysql_query($sql, self::$CONN);
+        return mysqli_query(self::$CONN, $sql);
     }
 
     public static function sessDestroy($skey)
     {
         $sql = "delete from ".self::TABLE." ";
         $sql.= "where skey = '".$skey."' ";
-        return mysql_query($sql, self::$CONN);
+        return mysqli_query(self::$CONN, $sql);
     }
 
     public static function sessGc()
     {
         $sql = "delete from ".self::TABLE." ";
         $sql.= "where expiry < ".time()." ";
-        $row = mysql_query($sql, self::$CONN);
-        return mysql_affected_rows(self::$CONN);
+        $row = mysqli_query(self::$CONN, $sql);
+        return mysqli_affected_rows(self::$CONN);
     }
 }

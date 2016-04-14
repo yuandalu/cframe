@@ -409,7 +409,7 @@ class UtlsSvc
 
     
 
-    static private function array2xml_node($array)
+    private static function array2xml_node($array)
     {
         $xml = '';
         foreach ($array as $k => $v) {
@@ -489,14 +489,14 @@ class UtlsSvc
 
     
 
-    public function tmplog($msg)
+    public static function tmplog($msg)
     {
         error_log("\n[" . date('H:i:s') . " " . $_SERVER['REMOTE_ADDR'] . "]" . $msg, 3, "/tmp/fawn" . date('Ymd') . ".log");
     }
 
     
 
-    public function needLogin($ajax = false)
+    public static function needLogin($ajax = false)
     {
         $info = UserSdk::getUserInfo();
         if (!$info) {
@@ -513,14 +513,14 @@ class UtlsSvc
 
     
 
-    public function validPass($password)
+    public static function validPass($password)
     {
         return preg_match('/[0-9a-f]{32}/', $password);
     }
 
     
 
-    public function encode_uri_json($arr)
+    public static function encode_uri_json($arr)
     {
         $out = array();
         foreach ($arr as $k => $v) {
@@ -536,7 +536,7 @@ class UtlsSvc
 
     
 
-    public function json_encode($var)
+    public static function json_encode($var)
     {
         switch (gettype($var)) {
             case 'boolean':
@@ -570,7 +570,7 @@ class UtlsSvc
         }
     }
 
-    public function staffAuth($uid, $pwd)
+    public static function staffAuth($uid, $pwd)
     {
 
         $ds = ldap_connect($_SERVER['ENV_LDAP_SERVER'], 389);
@@ -646,7 +646,7 @@ class UtlsSvc
         }
     }
 
-    public function showMsg($alert, $url, $time = 1.2)
+    public static function showMsg($alert, $url, $time = 1.2)
     {
         $time = $time * 1000;
         echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script src="/static/js/jquery.js"></script><script src="/static/js/msg_util.js"></script><link rel="stylesheet" href="/static/admin/css/public.css" /></head><body>';
@@ -657,7 +657,7 @@ class UtlsSvc
 
     
 
-    public function simpleShowMsg($alert, $url)
+    public static function simpleShowMsg($alert, $url)
     {
         $time = $time * 1000;
         echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><body>';
@@ -726,7 +726,7 @@ class UtlsSvc
         return $cutstr . $dot;
     }
 
-    public function object_array($object)
+    public static function object_array($object)
     {
         if (is_object($object)) {
             foreach ($object as $key => $value) {
@@ -738,7 +738,7 @@ class UtlsSvc
         return $array;
     }
 
-    public function showstar($average_star)
+    public static function showstar($average_star)
     {
         $start = '1.5';
         $b1 = "<img src='/static/images1/a1.gif' />";
@@ -759,7 +759,7 @@ class UtlsSvc
         return $start;
     }
 
-    public function checkMobile($str)
+    public static function checkMobile($str)
     {
         $pattern = "/^(13|15|18|14)\d{9}$/";
         if (preg_match($pattern, $str)) {
@@ -778,7 +778,7 @@ class UtlsSvc
      * 获得parse_str的指定变量
      */
 
-    public function get_parse_str($str, $keys)
+    public static function get_parse_str($str, $keys)
     {
         parse_str($str);
         $result = array();
@@ -793,7 +793,7 @@ class UtlsSvc
      * 分页函数
      */
 
-    public function cutpage($number, $page, $pnum, $pname, $file, $params = array(), $maxp = 0, $rewrite = false, $xianshi = false)
+    public static function cutpage($number, $page, $pnum, $pname, $file, $params = array(), $maxp = 0, $rewrite = false, $xianshi = false)
     {
 
         if (!$maxpage = ceil($number / abs($pnum)))
@@ -865,7 +865,7 @@ class UtlsSvc
         return $strurl . $ref;
     }
 
-    public function StrLenW($str)
+    public static function StrLenW($str)
     {
         $count = 0;
         $len = strlen($str);
@@ -924,7 +924,7 @@ class UtlsSvc
      * 判断 ios6 及以下版本
      */
 
-    public function isIOS5()
+    public static function isIOS5()
     {
 
         if (self::isIOS() && strpos($_SERVER['HTTP_USER_AGENT'], 'OS 5_') || strpos($_SERVER['HTTP_USER_AGENT'], 'OS 4_') || strpos($_SERVER['HTTP_USER_AGENT'], 'OS 6_')) {
@@ -983,7 +983,7 @@ class UtlsSvc
         return self::isAndroid() || self::isIOS() || self::isIphone() || self::isIpod() || self::isIpad();
     }
 
-    public function inApple()
+    public static function inApple()
     {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         if (!$ip) {
@@ -996,7 +996,7 @@ class UtlsSvc
         return false;
     }
 
-    public function inCompany($level = 0)
+    public static function inCompany($level = 0)
     {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         if (!$ip) {
@@ -1035,7 +1035,7 @@ class UtlsSvc
         return $_SERVER['READONLY_MODE'] == "1";
     }
 
-    public function numToCny($num)
+    public static function numToCny($num)
     {
         $capUnit = array('万', '亿', '万', '圆', '');  //单元
         $capDigit = array(2 => array('角', '分', ''), 4 => array('仟', '佰', '拾', ''));
@@ -1259,7 +1259,7 @@ class UtlsSvc
     /**
      * 获取某个时间段的日期数组
      */
-    public function intervalDate($begDate, $endDate)
+    public static function intervalDate($begDate, $endDate)
     {
         $date = array();
         $begTime = strtotime($begDate);
@@ -1409,7 +1409,7 @@ class UtlsSvc
     }
 
 
-    public function plat()
+    public static function plat()
     {
         $plat = 'web';
         if (UtlsSvc::isIpad()) {
@@ -1425,7 +1425,7 @@ class UtlsSvc
     }
 
     //16进制的8位唯一码 ：oPF2aa1e
-    public function unique32($a)
+    public static function unique32($a)
     {
         for
         (
@@ -1440,7 +1440,7 @@ class UtlsSvc
         return $d;
     }
 
-    public function qrcode($content, $width = 200)
+    public static function qrcode($content, $width = 200)
     {
         return UtlsSvc::remote_get_contents("http://qr.liantu.com/api.php?&bg=ffffff&fg=000000&w=" . $width . "&m=0&text=" . urlencode($content));
     }

@@ -11,7 +11,7 @@ class LogDao extends BaseDao
 
     public function loginLog($param)
     {
-        $sql = "insert into login_log (`username`,`ip`,`login_time`,`result`) values('".$param['username']."','".$param['ip']."','".$param['time']."',".$param['result'].")";
+        $sql = "insert into adm_loginlog (`username`,`ip`,`login_time`,`result`) values('".$param['username']."','".$param['ip']."','".$param['time']."',".$param['result'].")";
         //LogSvc::get("LoginLog")->log(var_export($param).'|username='.var_dump( $param['username']));
         $this->getExecutor()->exeNoQuery($sql);
     }
@@ -24,7 +24,7 @@ class LogDao extends BaseDao
         $param['time'] = date('Y-m-d H:i:s');
         $param['action'] = $action;
         $param['content'] = serialize($content);
-        $sql = "insert into action_log (username,action_time,action,content,ip) values(?,?,?,?,?)";
+        $sql = "insert into adm_actlog (username,action_time,action,content,ip) values(?,?,?,?,?)";
         return $this->getExecutor()->exeNoQuery($sql,array($param['username'],$param['time'],$param['action'],$param['content'],$param['ip']));
     }
 
@@ -52,7 +52,7 @@ class LogDao extends BaseDao
 
     public function getDetailByid($id)
     {
-        $sql = "select * from action_log where id = ?";
+        $sql = "select * from adm_actlog where id = ?";
         $data = $this->getExecutor()->querys($sql,array($id));
         return $data;
     }

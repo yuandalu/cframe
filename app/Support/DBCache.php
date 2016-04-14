@@ -4,7 +4,7 @@ namespace App\Support;
 
 class DBCache
 {
-    const TABLE_NAME = 'dbcache';
+    const TABLE_NAME = 'sys_dbcache';
     const REMOTE_KEY = "o6fk&(#@fdbsd";
     static $executor = null;
 

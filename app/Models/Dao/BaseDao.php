@@ -12,7 +12,8 @@ class BaseDao {
     private $orderBy    = null;
     private $groupBy    = null;
 
-    public function add($obj = null) {
+    public function add($obj = null)
+    {
         if (empty($obj) || !is_object($obj)) {
             return false;
         }
@@ -23,18 +24,20 @@ class BaseDao {
         return false;
     }
 
-    private function addImp($obj) {
+    private function addImp($obj)
+    {
         $cols = array_keys($obj->toAry());
         $vals = array_values($obj->toAry());
         $hold = array_fill(0, count($cols), '?');
-        $sql = 'insert ' . $this->getTableName() . ' ';
-        $sql.= '( `' . implode("`, `", $cols) . '` ) ';
+        $sql = 'insert '.$this->getTableName().' ';
+        $sql.= '(`'.implode("`, `", $cols).'`) ';
         $sql.= 'values ';
-        $sql.= '( ' . implode(", ", $hold) . ' ); ';
+        $sql.= '('.implode(", ", $hold).'); ';
         return $this->getExecutor()->exeNoQuery($sql, $vals);
     }
 
-    public function adds($objs = array()) {
+    public function adds($objs = array())
+    {
         if (empty($objs) || !is_array($objs)) {
             return false;
         }
@@ -45,7 +48,8 @@ class BaseDao {
         return false;
     }
 
-    private function addsImp($objs) {
+    private function addsImp($objs)
+    {
         $cols = array_keys($objs[0]->toAry());
         $hold = array_fill(0, count($cols), '?');
         $vals = array();
@@ -53,91 +57,97 @@ class BaseDao {
             $vals = array_merge($vals, array_values($obj->toAry()));
         }
         $len = count($objs);
-        $sql = 'insert ' . $this->getTableName() . ' ';
-        $sql.= '( ' . implode(", ", $cols) . ' ) ';
+        $sql = 'insert '.$this->getTableName().' ';
+        $sql.= '('.implode(", ", $cols).') ';
         $sql.= 'values ';
         for ($i = 0; $i < $len; $i++) {
-            $sql.= '( ' . implode(", ", $hold) . ' ), ';
+            $sql.= '('.implode(", ", $hold).'), ';
         }
-        $sql = rtrim($sql, ', ') . ';';
+        $sql = rtrim($sql, ', ').';';
         return $this->getExecutor()->exeNoQuery($sql, $vals);
     }
 
-    public function deleteById($id, $cls) {
-        $sql = "delete from " . strtolower($cls) . "  where id=?";
+    public function deleteById($id)
+    {
+        $sql = "delete from ".$this->getTableName()."  where id=?";
         return $this->getExecutor()->exeNoQuery($sql, array($id));
     }
 
-    public function deleteByParam($param, $cls) {
+    public function deleteByParam($param)
+    {
         $where = " where 1 ";
         $updval = array();
         foreach ($param as $k => $v) {
-            $where.= " and " . $k . "='" . $v . "'";
+            $where.= " and ".$k."='".$v."'";
         }
-        $sql = "delete from " . strtolower($cls);
+        $sql = "delete from ".$this->getTableName();
         $sql.=$where;
         //echo $sql;exit;
 
         return $this->getExecutor()->exeNoQuery($sql, array());
     }
 
-    public function updateById($id, $param, $cls) {
+    public function updateById($id, $param)
+    {
 
         $updkey = array();
         $updval = array();
         foreach ($param as $k => $v) {
-            $updkey[] = '`' . $k . '`=?';
+            $updkey[] = '`'.$k.'`=?';
             $updval[] = $v;
         }
         $updval[] = $id;
-        $sql = "update " . strtolower($cls) . " set ";
+        $sql = "update ".$this->getTableName()." set ";
         $sql.= implode(',', $updkey);
         $sql.= " where id=?";
 
         return $this->getExecutor()->exeNoQuery($sql, $updval);
     }
 
-    public function updateByUid($uid, $param, $cls) {
+    public function updateByUid($uid, $param)
+    {
 
         $updkey = array();
         $updval = array();
         foreach ($param as $k => $v) {
-            $updkey[] = $k . '=?';
+            $updkey[] = $k.'=?';
             $updval[] = $v;
         }
         $updval[] = $uid;
-        $sql = "update " . strtolower($cls) . " set ";
+        $sql = "update ".$this->getTableName()." set ";
         $sql.= implode(',', $updkey);
         $sql.= " where uid=?";
 
         return $this->getExecutor()->exeNoQuery($sql, $updval);
     }
 
-    public function updateParamByRequest($param, $request, $cls) {
+    public function updateParamByRequest($param, $request)
+    {
         $where = " where 1 ";
         $updkey = array();
         $updval = array();
         foreach ($param as $k => $v) {
-            $updkey[] = '`' . $k . '`=?';
+            $updkey[] = '`'.$k.'`=?';
             $updval[] = $v;
         }
         foreach ($request as $k => $v) {
-            $where.=' and `' . $k . '`="' . $v . '"';
+            $where.=' and `'.$k.'`="'.$v.'"';
         }
 
-        $sql = "update " . strtolower($cls) . " set ";
+        $sql = "update ".$this->getTableName()." set ";
         $sql.= implode(',', $updkey);
         $sql.= $where;
         return $this->getExecutor()->exeNoQuery($sql, $updval);
     }
 
-    public function getById($id = '0', $cls) {
+    public function getById($id = '0')
+    {
         if (empty($id) || empty($cls)) {
             return null;
         }
 
         $sql = "select * ";
-        $sql.= "from " . strtolower($cls) . " ";
+        $sql.= "from ".$this->getTableName()." ";
         $sql.= "where id = ? ";
         $row = $this->getExecutor()->query($sql, array($id));
         if (is_null($row)) {
@@ -149,11 +159,13 @@ class BaseDao {
         return $obj;
     }
 
-    protected function getExecutor() {
+    protected function getExecutor()
+    {
         return Loader::loadExecutor();
     }
 
-    protected function getSlaveExecutor() {
+    protected function getSlaveExecutor()
+    {
         return Loader::loadSlaveExecutor();
     }
 
