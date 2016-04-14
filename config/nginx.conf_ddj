@@ -1,14 +1,14 @@
 server{
     listen 80;
     server_name ddj.site.yuandalu.com;
-    root /home/dingdejing/cframe/public;
-    index index_front.php;
+    root /home/dingdejing/cframe/public/front;
+    index index.php;
 
     access_log logs/$host.access.log  main;
 
     location / {
         if (!-e $request_filename) {
-            rewrite ^(.*)$ /index_front.php?$1 last;
+            rewrite ^(.*)$ /index.php?$1 last;
         }
     }
 
@@ -30,7 +30,7 @@ server{
 
     location ~ \.php$ {
         fastcgi_pass  127.0.0.1:9000;
-        fastcgi_index index_front.php;
+        fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
@@ -93,14 +93,14 @@ server{
 server{
     listen 80;
     server_name ddj.siteadm.yuandalu.com;
-    root /home/dingdejing/cframe/public;
-    index index_admin.php;
+    root /home/dingdejing/cframe/public/admin;
+    index index.php;
 
     access_log logs/$host.access.log  main;
 
     location / {
         if (!-e $request_filename) {
-            rewrite ^(.*)$ /index_admin.php?$1 last;
+            rewrite ^(.*)$ /index.php?$1 last;
         }
     }
 
@@ -117,7 +117,7 @@ server{
 
     location ~ \.php$ {
         fastcgi_pass  127.0.0.1:9000;
-        fastcgi_index index_admin.php;
+        fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
@@ -180,14 +180,14 @@ server{
 server{
     listen 80;
     server_name ddj.siteapi.yuandalu.com;
-    root /home/dingdejing/cframe/public;
-    index index_api.php;
+    root /home/dingdejing/cframe/public/api;
+    index index.php;
 
     access_log logs/$host.access.log  main;
 
     location / {
         if (!-e $request_filename) {
-            rewrite ^(.*)$ /index_api.php?$1 last;
+            rewrite ^(.*)$ /index.php?$1 last;
         }
     }
 
@@ -204,7 +204,7 @@ server{
 
     location ~ \.php$ {
         fastcgi_pass  127.0.0.1:9000;
-        fastcgi_index index_api.php;
+        fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;

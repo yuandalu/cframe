@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor
+END
+ckeditor.js
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/ckeditor.js
+END
+config.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/config.js
+END
+LICENSE.md
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/LICENSE.md
+END
+contents.css
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/contents.css
+END
+CHANGES.md
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/CHANGES.md
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/README.md
+END
+build-config.js
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/build-config.js
+END
+styles.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/plugins/ckeditor/styles.js
+END

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/video/!svn/ver/10780/trunk/static/admin/admin-lte
+END
+composer.json
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/composer.json
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/LICENSE
+END
+package.json
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/package.json
+END
+bower.json
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/bower.json
+END
+changelog
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/changelog
+END
+starter.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/starter.html
+END
+Gruntfile.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/Gruntfile.js
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/index.html
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/README.md
+END
+index2.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/index2.html
+END

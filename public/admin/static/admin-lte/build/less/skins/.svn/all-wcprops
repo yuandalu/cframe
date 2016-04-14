@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins
+END
+_all-skins.less
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/_all-skins.less
+END
+skin-red.less
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-red.less
+END
+skin-yellow.less
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-yellow.less
+END
+skin-black.less
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-black.less
+END
+skin-blue-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-blue-light.less
+END
+skin-purple-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-purple-light.less
+END
+skin-red-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-red-light.less
+END
+skin-green.less
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-green.less
+END
+skin-yellow-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-yellow-light.less
+END
+skin-black-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-black-light.less
+END
+skin-green-light.less
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-green-light.less
+END
+skin-blue.less
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-blue.less
+END
+skin-purple.less
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/build/less/skins/skin-purple.less
+END

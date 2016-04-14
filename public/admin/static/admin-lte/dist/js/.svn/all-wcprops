@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/dist/js
+END
+demo.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/dist/js/demo.js
+END
+app.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/dist/js/app.js
+END
+app.min.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/video/!svn/ver/9305/trunk/static/admin/admin-lte/dist/js/app.min.js
+END
