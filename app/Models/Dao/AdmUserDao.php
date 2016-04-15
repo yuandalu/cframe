@@ -37,7 +37,7 @@ class AdmUserDao extends BaseDao
     
     public function getByEname($ename)
     {
-        $sql = "select * from ".$this->table." where ename= ?";
+        $sql = "select * from ".$this->table." where ename= ? and status=".AdmUser::ACTIVE_Y;
         $data = $this->getExecutor()->query($sql, array($ename));
         if (empty($data)) {
             return null;

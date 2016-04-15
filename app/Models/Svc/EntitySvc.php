@@ -1,10 +1,12 @@
 <?php
 
+namespace App\Models\Svc;
+
 class EntitySvc
 {
-    public function createEntityFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start)
+    public static function createEntityFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
-        $entity_file = "<?php\nclass ".$entity_ucfirst." extends Entity\n{\n    const ID_OBJ  = '{$entity}';\n";
+        $entity_file = "<?php\n\nnamespace App\Models\Entity;\n\nuse App\Support\Loader;\nuse App\Support\Entity;\n\nclass ".$entity." extends Entity\n{\n    const ID_OBJ  = '{$table_name}';\n";
         foreach ($f_default as $k => $v) {
             $oparr = explode('|', $v);
             if ($oparr[0] === '@AUTO') {
@@ -37,7 +39,7 @@ class EntitySvc
             switch($type)
             {
                 case "id_genter":
-                    $entity_file.="\n        \$obj->id = LoaderSvc::loadIdGenter()->create(self::ID_OBJ);";
+                    $entity_file.="\n        \$obj->id = Loader::loadIdGenter()->create(self::ID_OBJ);";
                     break;
                 case "ctime":
                 case "utime":
@@ -62,11 +64,11 @@ class EntitySvc
         return $entity_file;
     }
 
-    public function createSQLFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start,$table_annotation)
+    public static function createSQLFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start,$table_annotation)
     {
         $create_sql="SET NAMES UTF8;\n";
-        $create_sql.="INSERT INTO id_genter(obj,id,step)VALUES('".$entity."',".$id_genter_start.",1);\n";
-        $create_sql.= "DROP TABLE IF EXISTS $entity;\ncreate table `$entity` (\n";
+        $create_sql.="INSERT INTO sys_idgenter(obj,id,step)VALUES('".$table_name."',".$id_genter_start.",1);\n";
+        $create_sql.= "DROP TABLE IF EXISTS $table_name;\ncreate table `$table_name` (\n";
         foreach($f_type as $k=>$type)
         {
             $name = $f_name[$k];
@@ -77,15 +79,12 @@ class EntitySvc
                     break;
                 case "ctime":
                 case "utime":
-                    $create_sql.= "`$name` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',\n";
+                    $create_sql.= "`$name` datetime DEFAULT CURRENT_TIMESTAMP,\n";
                     break;
                 case "int unsigned":
                 case "int":
                 case "float":
                 case "tinyint unsigned":
-                case "datetime":
-                case "date":
-                case "time":
                     $oparr = explode('|', $f_default[$k]);
                     if ($oparr[0] === '@TABLE') {
                         $f_default[$k] = '0';
@@ -95,6 +94,11 @@ class EntitySvc
                         $f_default[$k] = $op_v;
                     }
                     $create_sql.= "`$name` $type NOT NULL DEFAULT '".$f_default[$k]."' COMMENT '".$f_description[$k]."',\n";
+                    break;
+                case "datetime":
+                case "date":
+                case "time":
+                    $create_sql.= "`$name` $type DEFAULT CURRENT_TIMESTAMP COMMENT '".$f_description[$k]."',\n";
                     break;
                 case "decimal":
                     $create_sql.= "`$name` decimal(".$f_attr[$k].") NOT NULL DEFAULT ".$f_default[$k]." COMMENT '".$f_description[$k]."',\n";
@@ -117,20 +121,20 @@ class EntitySvc
         return $create_sql;
     }
 
-    public function createSvcFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start)
+    public static function createSvcFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
 
 
-        $svc_file = "<?php
+        $svc_file = "<?php\n\nnamespace App\Models\Svc;\n\nuse App\Support\Loader;\nuse App\Models\Entity\\".$entity.";\n\n
 class";
 
-$svc_file .= " ".$entity_ucfirst."Svc
+$svc_file .= " ".$entity."Svc
 {
-    const OBJ = '".$entity_ucfirst."';
+    const OBJ = '".$entity."';
 
     public static function add(\$param)
     {
-        \$obj = ".$entity_ucfirst."::createByBiz(\$param);
+        \$obj = ".$entity."::createByBiz(\$param);
         return self::getDao()->add(\$obj);
     }
 
@@ -144,14 +148,14 @@ $svc_file .= " ".$entity_ucfirst."Svc
         return self::getDao()->getById(\$id , self::OBJ);
     }
 
-    public static function getByUid(\$uid = '0')
-    {
-        return self::getDao()->getByUid(\$uid);
-    }
-
     public static function deleteById(\$id)
     {
         return self::getDao()->deleteById(\$id, self::OBJ);
+    }
+
+    public static function getAll()
+    {
+        return self::getDao()->gets();
     }
 
     private static function getDao()
@@ -224,13 +228,13 @@ $svc_file .= " ".$entity_ucfirst."Svc
         return $svc_file;
     }
 
-    public function createDaoFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start)
+    public static function createDaoFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
-        $dao_file = "<?php\nclass";
+        $dao_file = "<?php\n\nnamespace App\Models\Dao;\n\nuse App\Support\Pager;\n\nclass";
 
-         $dao_file .=" ".$entity_ucfirst."Dao extends BaseDao
+         $dao_file .=" ".$entity."Dao extends BaseDao
 {
-    protected \$table = '".$entity."';
+    protected \$table = '".$table_name."';
 
     public function getByUid(\$uid)
     {
@@ -277,11 +281,11 @@ $svc_file .= " ".$entity_ucfirst."Svc
         return $dao_file;
     }
 
-    public function createAdminControllerFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start)
+    public static function createAdminControllerFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
-        $admin_controller = "<?php
+        $admin_controller = "<?php\n\nnamespace App\Controllers\Admin;\n\nuse App\Models\Svc\ErrorSvc;\nuse App\Models\Svc\\".$entity."Svc;\n\n
 class";
-$admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
+$admin_controller .=" ".$entity."Controller extends BaseController
 {
     // 默认分页数
     const PER_PAGE_NUM = 15;
@@ -289,16 +293,13 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
     public function __construct()
     {
         parent::__construct();
-        if (!\$user = AdminSvc::getLoginUser()) {
-            UtlsSvc::goToAct('index','notlogin');
-        }
     }
 
     public function indexAction()
     {
         \$id = \$this->getRequest('id','');
         if (\$id > 0) {
-            \$".$entity." = ".$entity_ucfirst."Svc::getById(\$id);
+            \$".$entity." = ".$entity."Svc::getById(\$id);
             if (is_null(\$".$entity.")) {
                 UtlsSvc::showMsg('没有这个ID',\$_SERVER['HTTP_REFERER']);
             }
@@ -329,10 +330,10 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
 
         if (\$id != '') {
             \$param['utime'] = date('Y-m-d H:i:s');
-            \$obj = ".$entity_ucfirst."Svc::updateById(\$id, \$param);
+            \$obj = ".$entity."Svc::updateById(\$id, \$param);
             ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '保存成功');
         } else {
-            \$obj = ".$entity_ucfirst."Svc::add(\$param);
+            \$obj = ".$entity."Svc::add(\$param);
             ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '新增成功');
         }
     }
@@ -366,7 +367,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
         $admin_controller.="        \$orderby  = \$this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
-        \$list = ".$entity_ucfirst."Svc::lists(\$request, array(
+        \$list = ".$entity."Svc::lists(\$request, array(
             'per_page'=>self::PER_PAGE_NUM,
             'page_param'=>'p',
             'curr_page'=>\$this->getRequest('p',1),
@@ -401,7 +402,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
         $admin_controller.="        \$orderby  = \$this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
-        \$list = ".$entity_ucfirst."Svc::lists(\$request, array(
+        \$list = ".$entity."Svc::lists(\$request, array(
             'per_page'=>self::PER_PAGE_NUM,
             'page_param'=>'p',
             'curr_page'=>\$this->getRequest('p',1),
@@ -476,7 +477,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
 }\n";
         return $admin_controller;
     }
-    public function createAdminListFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start,$table_annotation)
+    public static function createAdminListFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start,$table_annotation)
     {
         $admin_list_file = '<!DOCTYPE html>
 <html>
@@ -495,7 +496,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
-            <?php $this->render(\'include/layheader\', true); ?>
+            <?php $this->render(\'include/header\', true); ?>
             <?php $this->render(\'include/leftbar\', true); ?>
             <div class="content-wrapper">
                 <section class="content-header">
@@ -571,7 +572,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                         <td>
                             <select class="form-control" name="'.$name.'">
                             <option value="">All</option>
-                            <?php foreach ('.$entity_ucfirst.'::$'.strtoupper($f_name[$k]).' as $k => $v): ?>
+                            <?php foreach (\App\Models\Entity\\'.$entity.'::$'.strtoupper($f_name[$k]).' as $k => $v): ?>
                                 <?php if ($k == $this->'.$f_name[$k].') {
                                     echo \'<option value="\'.$k.\'" selected>\'.$v[\'name\'].\'-\'.$k.\'</option>\';
                                 } else {
@@ -586,7 +587,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                         <td>
                             <select class="form-control" name="'.$name.'">
                             <option value="">All</option>
-                            <?php foreach ('.ucfirst(strtolower($oparr[1])).'Svc::getAll() as $k => $v): ?>
+                            <?php foreach (\App\Models\Svc\\'.$oparr[1].'Svc::getAll() as $k => $v): ?>
                                 <?php if ($v[\''.$oparr[2].'\'] == $this->'.$f_name[$k].') {
                                     echo \'<option value="\'.$v[\''.$oparr[2].'\'].\'" selected>\'.$v[\''.$oparr[2].'\'].\'-\'.$v[\''.$oparr[3].'\'].\'</option>\';
                                 } else {
@@ -654,7 +655,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                         echo '<td>'.\$v['".$name."'].'</td>';";
                     }
                     $admin_list_file.='
-                        echo \'<td><a class="glyphicon glyphicon-edit" href="/'.$entity.'/index?id=\'.$v[\'id\'].\'"></a><br><a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del(\'.$v[\'id\'].\');return false;"></a></td>\';
+                        echo \'<td><a class="glyphicon glyphicon-edit" href="/'.$entity.'/index?id=\'.$v[\'id\'].\'"></a>&nbsp;<a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del(\'.$v[\'id\'].\');return false;"></a></td>\';
                     echo \'</tr>\';
                     } ?>
                 </tbody>
@@ -662,7 +663,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                 </div>
                 <div class="box-footer clearfix">
                     <ul class="pagination pagination-sm no-margin pull-right">
-                        <?php $this->render(\'include/laypager\', true); ?>
+                        <?php $this->render(\'include/pager\', true); ?>
                     </ul>
                 </div>
                 </div>
@@ -671,7 +672,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                 <!-- 此处是主内容区域 End -->
                 </section>
             </div>
-            <?php $this->render(\'include/layfooter\', true); ?>
+            <?php $this->render(\'include/footer\', true); ?>
             <?php $this->render(\'include/rightbar\', true); ?>
         </div>
         <?php $this->render(\'include/footersource\', true); ?>
@@ -700,7 +701,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
         return $admin_list_file;
     }
  
-    public function createAdminIndexFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start,$table_annotation)
+    public static function createAdminIndexFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start,$table_annotation)
     {
         $admin_index_file = '<!DOCTYPE html>
 <html>
@@ -713,7 +714,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
-            <?php $this->render(\'include/layheader\', true); ?>
+            <?php $this->render(\'include/header\', true); ?>
             <?php $this->render(\'include/leftbar\', true); ?>
             <div class="content-wrapper">
                 <section class="content-header">
@@ -764,7 +765,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                             <label class="col-sm-2 control-label">'.$f_description[$k].'</label>
                             <div class="col-sm-10">
                                 <select class="form-control" style="width:200px;"  name="'.$f_name[$k].'">
-                                <?php foreach ('.$entity_ucfirst.'::$'.strtoupper($f_name[$k]).' as $k => $v): ?>
+                                <?php foreach (\App\Models\Entity\\'.$entity.'::$'.strtoupper($f_name[$k]).' as $k => $v): ?>
                                     <?php if ($k == $this->'.$f_name[$k].') {
                                         echo \'<option value="\'.$k.\'" selected>\'.$v[\'name\'].\'-\'.$k.\'</option>\';
                                     } else {
@@ -780,7 +781,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                             <label class="col-sm-2 control-label">'.$f_description[$k].'</label>
                             <div class="col-sm-10">
                                 <select class="form-control" style="width:200px;"  name="'.$f_name[$k].'">
-                                <?php foreach ('.ucfirst(strtolower($oparr[1])).'Svc::getAll() as $k => $v): ?>
+                                <?php foreach (\App\Models\Svc\\'.$oparr[1].'Svc::getAll() as $k => $v): ?>
                                     <?php if ($v[\''.$oparr[2].'\'] == $this->'.$f_name[$k].') {
                                         echo \'<option value="\'.$v[\''.$oparr[2].'\'].\'" selected>\'.$v[\''.$oparr[2].'\'].\'-\'.$v[\''.$oparr[3].'\'].\'</option>\';
                                     } else {
@@ -815,12 +816,12 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                 <!-- 此处是主内容区域 End -->
                 </section>
             </div>
-            <?php $this->render(\'include/layfooter\', true); ?>
+            <?php $this->render(\'include/footer\', true); ?>
             <?php $this->render(\'include/rightbar\', true); ?>
         </div>
         <?php $this->render(\'include/footersource\', true); ?>
         <!-- JavaScript引用和代码请集中写入此处 Start -->
-        <script src="/static/admin/jquery-form/jquery.form.min.js"></script>
+        <script src="/static/jquery-form/jquery.form.min.js"></script>
         <script type="text/javascript">
         $(function(){
             var btnSubmit;
@@ -857,10 +858,10 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
 ';
         return $admin_index_file;
     }
-    public function createFrontControllerFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$entity_ucfirst,$id_genter_start)
+    public static function createFrontControllerFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
-        $front_controller = "<?php
-class ".$entity_ucfirst."Controller extends BaseController
+        $front_controller = "<?php\n\nnamespace App\Controllers\Front;\n\n
+class ".$entity."Controller extends BaseController
 {
     // 需要排除验证登录的action名
     static \$NOT_LOGIN_ACTION  = array('');
@@ -903,7 +904,7 @@ class ".$entity_ucfirst."Controller extends BaseController
             ErrorSvc::showJson(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
         }
 
-        // \$obj = ".$entity_ucfirst."Svc::add(\$param);
+        // \$obj = ".$entity."Svc::add(\$param);
         if (is_object(\$obj)) {
             ErrorSvc::showJson(ErrorSvc::ERR_OK, \$obj->toAry());
         } else {
@@ -938,7 +939,7 @@ class ".$entity_ucfirst."Controller extends BaseController
         }
 
         \$param['utime'] = date('Y-m-d H:i:s');
-        // \$obj = ".$entity_ucfirst."Svc::updateById(\$id, \$param);
+        // \$obj = ".$entity."Svc::updateById(\$id, \$param);
         if (\$obj) {
             ErrorSvc::showJson(ErrorSvc::ERR_OK);
         } else {
@@ -960,7 +961,7 @@ class ".$entity_ucfirst."Controller extends BaseController
             ErrorSvc::showJson(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
         }
 
-        // \$obj = ".$entity_ucfirst."Svc::getById(\$id);
+        // \$obj = ".$entity."Svc::getById(\$id);
         if (\$obj) {
             ErrorSvc::showJson(ErrorSvc::ERR_OK, \$obj->toAry());
         } else {
@@ -993,7 +994,7 @@ class ".$entity_ucfirst."Controller extends BaseController
             ErrorSvc::showJson(ErrorSvc::ERR_PARAM_EMPTY);
         }
 
-        // \$list = ".$entity_ucfirst."Svc::lists(\$request,array('per_page'=>\$pagenum, 'page_param'=>'p', 'curr_page'=>\$p,'file_name'=>'/".$entity."/list/','orderby'=>\$orderby));
+        // \$list = ".$entity."Svc::lists(\$request,array('per_page'=>\$pagenum, 'page_param'=>'p', 'curr_page'=>\$p,'file_name'=>'/".$entity."/list/','orderby'=>\$orderby));
         
         ErrorSvc::showJson(ErrorSvc::ERR_OK, \$list);
 

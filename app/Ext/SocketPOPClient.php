@@ -12,32 +12,32 @@ namespace App\Ext;
 
 class SocketPOPClient 
 { 
-     var $strMessage    = ''; 
-     var $intErrorNum   = 0; 
-     var $bolDebug      = false; 
+     public $strMessage    = ''; 
+     public $intErrorNum   = 0; 
+     public $bolDebug      = false; 
      
-     var $strEmail      = ''; 
-     var $strPasswd     = ''; 
-     var $strHost       = ''; 
-     var $intPort       = 110; 
-     var $intConnSecond = 30; 
-     var $intBuffSize   = 8192;
-     var $resHandler    = NULL; 
-     var $bolIsLogin    = false; 
-     var $strRequest    = ''; 
-     var $strResponse   = ''; 
-     var $arrRequest    = array(); 
-     var $arrResponse   = array();
+     public $strEmail      = ''; 
+     public $strPasswd     = ''; 
+     public $strHost       = ''; 
+     public $intPort       = 110; 
+     public $intConnSecond = 30; 
+     public $intBuffSize   = 8192;
+     public $resHandler    = NULL; 
+     public $bolIsLogin    = false; 
+     public $strRequest    = ''; 
+     public $strResponse   = ''; 
+     public $arrRequest    = array(); 
+     public $arrResponse   = array();
 
     //--------------- 
     // 基础操作 
     //---------------
     //构造函数 
-    function SocketPOPClient($strLoginEmail, $strLoginPasswd, $strPopHost='', $intPort='') 
-    { 
-        $this->strEmail        = trim(strtolower($strLoginEmail)); 
-        $this->strPasswd    = trim($strLoginPasswd); 
-        $this->strHost        = trim(strtolower($strPopHost));
+    function __construct($strLoginEmail, $strLoginPasswd, $strPopHost='', $intPort='') 
+    {
+        $this->strEmail  = trim(strtolower($strLoginEmail)); 
+        $this->strPasswd = trim($strLoginPasswd); 
+        $this->strHost   = trim(strtolower($strPopHost));
         if ($this->strEmail=='' || $this->strPasswd=='') 
         { 
             $this->setMessage('Email address or Passwd is empty', 1001); 
@@ -253,9 +253,9 @@ class SocketPOPClient
     //---------------
     //登录邮箱 
     function popLogin() 
-    { 
-        if (!$this->getIsConnect()) 
-        { 
+    {
+        if (!$this->getIsConnect())
+        {
             return false; 
         } 
         $this->sendCommand("USER ".$this->strEmail); 

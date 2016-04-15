@@ -16,11 +16,11 @@ class BaseController extends Controller
         if (in_array($controllerName, array('include', 'index'))) {
             return "";
         }
-        $adminUser = loader('Sess')->get('adminUser');
-        if (!$adminUser) {
+        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUserObj = AdmUserSvc::getByEname($adminUser);
+        if (!$adminUserObj) {
             UtlsSvc::goToAct("index", "notlogin");
         }
-        $adminUserObj = AdmUserSvc::getByEname($adminUser);
         $this->assign('adminUser', $adminUser);
         $this->assign('adminUserObj', $adminUserObj);
         if ($adminUserObj && $adminUserObj->isSuper()) {

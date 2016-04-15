@@ -15,7 +15,7 @@
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
-            <?php $this->render('include/layheader', true); ?>
+            <?php $this->render('include/header', true); ?>
             <?php $this->render('include/leftbar', true); ?>
             <div class="content-wrapper">
                 <section class="content-header">
@@ -41,9 +41,11 @@
                 <table id="search" class="table table-bordered table-condensed table-striped table-hover">
                 <tr>
                     <td width="40px">表名</td>
-                    <td><input class="form-control" type="text" placeholder="只允许英文字母且小写 例：orderinfo" name="entity" id="e_entity" onblur="checkentity(this.value)"></td>
+                    <td><input class="form-control" type="text" placeholder="字母、数字、下划线" name="entity" id="table_name" onblur="checktable_name(this.value)"></td>
                     <td width="60px">表注释</td>
-                    <td><input class="form-control" type="text" placeholder="请使用简单的中文描述 如：订单详情" id="table_annotation"></td>
+                    <td><input class="form-control" type="text" placeholder="简要描述作为表注释" id="table_annotation"></td>
+                    <td width="40px">ClassName</td>
+                    <td><input class="form-control" type="text" placeholder="类名，使用驼峰命名法" name="entity" id="e_entity" onblur="checkentity(this.value)"></td>
                     <td width="70px">ID初始值</td>
                     <td width="140px"><input class="form-control" type="number" id="id_genter_start" value="1"></td>
                 </tr>
@@ -135,7 +137,7 @@
                 </div>
                 </form>
                 <div id="mustread" style="display:none;">
-                    <p>一、正常情况下：字符串、文本类型留空，其他类型请根据类型需求填写默认值，如int填写0；</p>
+                    <p>一、正常情况下：时间日期、字符串、文本类型留空，其他类型请根据类型需求填写默认值，如int填写0；</p>
                     <p>二、当使用TINYINT表示状态时可以使用：<code>@AUTO|YES:1:可用|NO:2:不可用</code> ；<br>
                         <ol>
                             <li>此方式能够自动生成后台的下拉选择以及Entity的配置列表；</li>
@@ -147,11 +149,11 @@
                             <li>第一个状态值会作为默认值，所以请将默认值写在第一位，不需要按照1、2、3...排序写</li>
                         </ol>
                     </p>
-                    <p>三、当使用INT表示某个表的ID时可以使用：<code>@TABLE|classify|id|tagname</code> ；<br>
+                    <p>三、当使用INT表示某个表的ID时可以使用：<code>@TABLE|TestClass|id|name</code> ；<br>
                         <ol>
                             <li>此方式能够自动生成关联某个表的下拉菜单，比如上例中标签名字会显示在列表中，对应的ID会作为值存储，并不局限于ID和NAME请自由使用</li>
                             <li>使用自动生成开始必须填写 <code>@TABLE|</code></li>
-                            <li><code>classify|id|tagname</code> 分别表示 表名:作为值的字段:作为显示的字段</li>
+                            <li><code>TestClass|id|name</code> 分别表示 表名:作为值的字段:作为显示的字段</li>
                             <li><code> | </code> 必须使用英文状态输入，所有内容<b>不得包含空格</b></li>
                         </ol>
                     </p>
@@ -159,7 +161,7 @@
                 <!-- 此处是主内容区域 End -->
                 </section>
             </div>
-            <?php $this->render('include/layfooter', true); ?>
+            <?php $this->render('include/footer', true); ?>
             <?php $this->render('include/rightbar', true); ?>
         </div>
         <?php $this->render('include/footersource', true); ?>
@@ -190,10 +192,10 @@
                     $('#f_attr').val('');
                     return;
                 }
-                if (!/^\d{4}-\d{2}-\d{2}$/.test(f_default)) {
-                    alertMsg('默认值非日期格式，需要填写格式为0000-00-00');
-                    return;
-                }
+                // if (!/^\d{4}-\d{2}-\d{2}$/.test(f_default)) {
+                //     alertMsg('默认值非日期格式，需要填写格式为0000-00-00');
+                //     return;
+                // }
                 break;
             case 'time':
                 if (f_attr != '') {
@@ -201,10 +203,10 @@
                     $('#f_attr').val('');
                     return;
                 }
-                if (!/^\d{2}:\d{2}:\d{2}$/.test(f_default)) {
-                    alertMsg('默认值非时间格式，需要填写格式为00:00:00');
-                    return;
-                }
+                // if (!/^\d{2}:\d{2}:\d{2}$/.test(f_default)) {
+                //     alertMsg('默认值非时间格式，需要填写格式为00:00:00');
+                //     return;
+                // }
                 break;
             case 'datetime':
                 if (f_attr != '') {
@@ -212,10 +214,10 @@
                     $('#f_attr').val('');
                     return;
                 }
-                if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(f_default)) {
-                    alertMsg('默认值非时间格式，需要填写格式为0000-00-00 00:00:00');
-                    return;
-                }
+                // if (!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(f_default)) {
+                //     alertMsg('默认值非时间格式，需要填写格式为0000-00-00 00:00:00');
+                //     return;
+                // }
                 break;
             case 'varchar':
                 if (f_attr == '') {
@@ -291,13 +293,23 @@
         }
         function submitAll() {
             var f_table = document.getElementById('f_table');
+            var table_name = $('#table_name').val();
+            if (!table_name) {
+                alertMsg('请输入表名');
+                return;
+            }
             var table_annotation = $('#table_annotation').val();
             if (!table_annotation) {
                 alertMsg('请输入表的注释，尽量使用简单的中文描述');
                 return;
             }
+            var entity = $('#e_entity').val();
+            if (!entity) {
+                alertMsg('请输入ClassName');
+                return;
+            }
 
-            var post_data = 'entity=' + $('#e_entity').val() + '&table_annotation=' + table_annotation + '&id_genter_start=' + $('#id_genter_start').val();
+            var post_data = 'entity=' + entity + '&table_annotation=' + table_annotation + '&table_name=' + table_name + '&id_genter_start=' + $('#id_genter_start').val();
 
             for (var i = 1; i < f_table.rows.length; i++) {
                 var row = f_table.rows[i];
@@ -311,7 +323,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/entity/indexSubmit",
+                url: "/Entity/indexSubmit",
                 data: post_data,
                 success: function(msg) {
                     alertMsg(msg);
@@ -335,6 +347,27 @@
                     if (data.code != 'succ') {
                         $('#e_entity').val('');
                         $('#e_entity').attr('placeholder', '已重复，请输入新的名字');
+                    }
+                }
+            });
+        }
+
+        function checktable_name(table_name) {
+            table_name = $.trim(table_name);
+            if (table_name == '') {
+                $('#table_name').val('');
+                return;
+            }
+
+            $.ajax({
+                url: '/Entity/ajaxQueryTableName?table_name=' + encodeURIComponent(table_name),
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+
+                    if (data.code != 'succ') {
+                        $('#table_name').val('');
+                        $('#table_name').attr('placeholder', '已重复，请输入新的名字');
                     }
                 }
             });

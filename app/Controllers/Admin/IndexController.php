@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\AdminSvc;
+use App\Models\Svc\AdmUserSvc;
 use App\Ext\Browser;
 
 class IndexController extends BaseController
@@ -15,27 +16,30 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        $adminUser = loader('Sess')->get('adminUser');
-        if (!$adminUser) {
+        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUserObj = AdmUserSvc::getByEname($adminUser);
+        if (!$adminUserObj) {
             $go = $this->getRequest('go');
             UtlsSvc::goToAct('index','notlogin', array('go'=>urlencode($go)));
         }
+        $this->assign('adminUserObj', $adminUserObj);
     }
 
     public function notloginAction()
     {
-        // $browser     = new Browser();
-        // $sys         = $browser->getBrowser();
-        // $browserlist = array("Chrome", "Safari", "iPhone", "iPad", "OS/2", "Apple");
-        // if ($this->getRequest('o') != 1) {
-        //     if (!in_array($sys, $browserlist)) {
-        //         $str = "<center><h1>警告!!</h1></center><br /><span style='font-size:14px;'>您用的不是Chrome浏览器,为了正常使用，请通过Chrome浏览器使用该系统！</span><br /><center><a href='/index/notlogin/?o=1'><span style='color:red'>继续登录</span></a>&nbsp;&nbsp;&nbsp;<a href='http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html' target='_blank'><span style='color:red'></span></a></center>";
-        //         UtlsSvc::showMsg($str, '/index/index/',1000);
-        //     }
-        // }
+        $browser     = new Browser();
+        $sys         = $browser->getBrowser();
+        $browserlist = array("Chrome", "Safari", "iPhone", "iPad", "OS/2", "Apple");
+        if ($this->getRequest('o') != 1) {
+            if (!in_array($sys, $browserlist)) {
+                $str = "<center><h1>警告!!</h1></center><br /><span style='font-size:14px;'>您用的不是Chrome浏览器,为了正常使用，请通过Chrome浏览器使用该系统！</span><br /><center><a href='/index/notlogin/?o=1'><span style='color:red'>继续登录</span></a>&nbsp;&nbsp;&nbsp;<a href='http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html' target='_blank'><span style='color:red'></span></a></center>";
+                UtlsSvc::showMsg($str, '/index/index/',1000);
+            }
+        }
 
-        $adminUser = loader('Sess')->get('adminUser');
-        if ($adminUser) {
+        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUserObj = AdmUserSvc::getByEname($adminUser);
+        if ($adminUserObj) {
             UtlsSvc::goToAct('index', 'index');
         }
         $go = $this->getRequest('go');

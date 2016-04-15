@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-测试</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+        <style>
+            #list.table th, #list.table td, #search th, #search td { 
+                text-align: center;
+                vertical-align: middle; 
+            }
+        </style>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>测试<small>List</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            测试列表
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <!-- search -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Search</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" style="display: block;">
+                <form id="searchform" method="post" action="/TestClass/list/">
+                <table id="search" class="table">
+                    <tr>
+                        <td width="80px">ID</td>
+                        <td width="150px"><input type="text" name="id" value="<?php echo $this->id; ?>" class="form-control" placeholder="ID"></td>
+                        <td width="80px">起始时间</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" name="startdate" value="<?php echo $this->startdate; ?>" class="form-control">
+                            </div>
+                        </td>
+                        <td width="80px">结束时间</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" name="enddate" value="<?php echo $this->enddate; ?>" class="form-control">
+                            </div>
+                        </td>
+                        <td><input type="submit" class="btn btn-block btn-default" value="查询"></td>
+                        <td><a class="btn btn-block btn-info" onclick="exportTable();return false;">导出</a></td>
+                    </tr>
+                    <!-- 请自己按照数量调整好 colspan 使表格看起来更协调 -->
+                    <tr>
+                        <td>时间</td>
+                        <td><input type="text" name="tdata" value="<?php echo $this->tdata; ?>" class="form-control" placeholder="查询的时间"></td>
+                        <td>status</td>
+                        <td>
+                            <select class="form-control" name="status">
+                            <option value="">All</option>
+                            <?php foreach (\App\Models\Entity\TestClass::$STATUS as $k => $v): ?>
+                                <?php if ($k == $this->status) {
+                                    echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
+                                } else {
+                                    echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
+                                } ?>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td>idname</td>
+                        <td>
+                            <select class="form-control" name="tableidname">
+                            <option value="">All</option>
+                            <?php foreach (\App\Models\Svc\TestClassSvc::getAll() as $k => $v): ?>
+                                <?php if ($v['id'] == $this->tableidname) {
+                                    echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['name'].'</option>';
+                                } else {
+                                    echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['name'].'</option>';
+                                } ?>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>test</td>
+                        <td><input type="text" name="name" value="<?php echo $this->name; ?>" class="form-control" placeholder="查询的test"></td>
+                    </tr>
+                </table>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- list -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Table List</h3>
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-sm btn-default">可</a>
+                            <a href="#" class="btn btn-sm btn-default">隐</a>
+                            <span class="btn btn-sm btn-default active">藏</span>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-th-list"></span>
+                        <a class="glyphicon glyphicon-plus" href="/TestClass/index"></a>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                <table id="list" class="table table-bordered table-condensed table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th width="10px">#</th>
+                        <th>创建时间</th>
+                        <th>修改时间</th>
+                        <th>时间</th>
+                        <th>status</th>
+                        <th>idname</th>
+                        <th>test</th>
+                        <th>操作</th>
+                    </tr>
+                    <?php foreach ($this->list['records'] as $v) {
+                    echo "<tr>";
+                        echo '<td>'.$v['id'].'</td>';
+                        echo '<td>'.$v['ctime'].'</td>';
+                        echo '<td>'.$v['utime'].'</td>';
+                        echo '<td>'.$v['tdata'].'</td>';
+                        echo '<td>'.$v['status'].'</td>';
+                        echo '<td>'.$v['tableidname'].'</td>';
+                        echo '<td>'.$v['name'].'</td>';
+                        echo '<td><a class="glyphicon glyphicon-edit" href="/TestClass/index?id='.$v['id'].'"></a>&nbsp;<a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del('.$v['id'].');return false;"></a></td>';
+                    echo '</tr>';
+                    } ?>
+                </tbody>
+                </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <?php $this->render('include/pager', true); ?>
+                    </ul>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script type="text/javascript">
+        function del(id) {
+            $.confirm({
+                title: '警告!',
+                content: '是否删除',
+                confirm: function() {
+                    window.location.href = '/TestClass/delete?id='+id;
+                }
+            });
+        }
+        function exportTable()
+        {
+            var act = $("#searchform").attr('action');
+            $("#searchform").attr('action', act.replace('list', 'export'));
+            $("#searchform").submit();
+        }
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

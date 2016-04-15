@@ -25,7 +25,7 @@ class AdminSvc
         $param['username'] = $user;
         $param['time'] = date('Y-m-d H:i:s',time());
         #warning 检查是否有这个用户
-        if (true && self::staffAuth($user,$pwd)) {
+        if (true && self::staffAuth($user, $pwd)) {
             $param['result'] = '1';
             LogSvc::loginLog($param);
             loader('Sess')->set('adminUser', $user);
@@ -40,9 +40,9 @@ class AdminSvc
         }
     }
 
-    public function staffAuth($uid, $pwd)
+    public static function staffAuth($uid, $pwd)
     {
-        $o = new SocketPOPClient($uid.'@yuandalu.com', $pwd, 'pop.qq.com', '110');
+        $o = new SocketPOPClient($uid.'@guixue.com', $pwd, 'pop.ym.163.com', '110');
         if ($o->popLogin()) {
             //优先用QQ企业邮箱登陆
             $r = 1;

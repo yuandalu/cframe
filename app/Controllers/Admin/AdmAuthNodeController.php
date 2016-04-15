@@ -28,7 +28,6 @@ class AdmAuthNodeController extends BaseController
 
     public function addAction()
     {
-        $user = AdminSvc::getLoginUser();
         $param = array();
         $param['aid'] = $this->getRequest('aid','');
         $param['contr'] = $this->getRequest('contr','');

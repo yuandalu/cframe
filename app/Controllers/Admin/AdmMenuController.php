@@ -31,7 +31,6 @@ class AdmMenuController extends BaseController
 
     public function addAction()
     {
-        $user = AdminSvc::getLoginUser();
         $param = array();
         $param['name'] = $this->getRequest('name','');
         $param['url'] = $this->getRequest('url','');

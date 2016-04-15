@@ -89,11 +89,9 @@
                         echo "<td>".$v['depart']."</td>";
                         echo "<td>".$v['position']."</td>";
                         echo "<td><span id=\"r_".$v['id']."\"><a href='javascript:' onclick='uprole(".$v['id'].",\"".$v[role]."\")'>".$v['role']."</a></span></td>";
-                        if($v['status']==1)
-                        {
+                        if ($v['status']==\App\Models\Entity\AdmUser::ACTIVE_Y) {
                             echo "<td>正常</td>";
-                        }else
-                        {
+                        } else {
                             echo "<td style='color:red'>禁用</td>";
                         }
 

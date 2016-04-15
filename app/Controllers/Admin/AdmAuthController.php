@@ -25,7 +25,6 @@ class AdmAuthController extends BaseController
 
     public function addAction()
     {
-        $user = AdminSvc::getLoginUser();
         $param = array();
         $param['name'] = $this->getRequest('name','');
 
