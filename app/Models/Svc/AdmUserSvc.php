@@ -3,6 +3,7 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Models\Entity\AdmUser;
 
 class AdmUserSvc
 {
@@ -11,7 +12,7 @@ class AdmUserSvc
     public static function add($param)
     {
         $obj = AdmUser::createByBiz($param);
-        $addResult = self::getDao()->add($obj, self::getDao()->getTableName());
+        $addResult = self::getDao()->add($obj);
         return $addResult;
     }
 
@@ -38,11 +39,6 @@ class AdmUserSvc
         return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options );
     }
 
-    public static function getAlladmin()
-    {
-        return self::getDao()->getAlladmin();
-    }
-
     public static function forbiddenAccount($id)
     {
         return self::getDao()->forbiddenAccount($id);
@@ -62,10 +58,6 @@ class AdmUserSvc
     {
         return self::getDao()->getUidByEname($name);
     }
-    public static function getGidByUid($uid)
-    {
-        return self::getDao()->getGidByUid($uid);
-    }
 
     public static function getAuthByUid($uid)
     {
@@ -74,10 +66,6 @@ class AdmUserSvc
     public static function getUidByAuth($aid)
     {
         return self::getDao()->getUidByAuth($aid);
-    }
-    public static function getGradelistByUid($uid)
-    {
-        return self::getDao()->getGradelistByUid($uid);
     }
 
     public static function getAdminByuid($uid)

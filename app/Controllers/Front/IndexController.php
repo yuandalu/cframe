@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Front;
 
-use App\Controllers\Front\BaseController;
 use App\Support\Loader;
 use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\LogSvc;

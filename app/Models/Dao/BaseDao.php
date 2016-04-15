@@ -142,7 +142,7 @@ class BaseDao {
 
     public function getById($id = '0')
     {
-        if (empty($id) || empty($cls)) {
+        if (empty($id)) {
             return null;
         }
 
@@ -153,7 +153,7 @@ class BaseDao {
         if (is_null($row)) {
             return null;
         }
-
+        $cls = '\App\Models\Entity\\'.substr(get_class($this), 15, -3);
         $obj = new $cls($row);
 
         return $obj;
@@ -197,7 +197,7 @@ class BaseDao {
                     $this->where[]      = $v[0].' '.$v[1].' ?';
                     $this->whereParam[] = $v[2];
                 } else {
-                    throw new Exception("where param error");
+                    throw new \Exception("where param error");
                 } 
             }
         } elseif ($numArgs == 2) {
@@ -210,17 +210,17 @@ class BaseDao {
                     $this->whereParam[] = $v;
                 }
             } else {
-                throw new Exception("where param error");
+                throw new \Exception("where param error");
             }
         } elseif ($numArgs == 3) {
             if (is_string($args[0]) && is_string($args[1]) && (is_string($args[2]) || is_numeric($args[2]))) {
                 $this->where[]      = $args[0].' '.$args[1].' ?';
                 $this->whereParam[] = $args[2];
             } else {
-                throw new Exception("where param error");
+                throw new \Exception("where param error");
             }
         } else {
-            throw new Exception("where param error");
+            throw new \Exception("where param error");
         }
         return $this;
     }
@@ -232,7 +232,7 @@ class BaseDao {
         } elseif (is_string($ids)) {
             $idArr = explode(',', $ids);
         } else {
-            throw new Exception("where param error");
+            throw new \Exception("where param error");
         }
         if (!empty($idArr)) {
             $idStr = implode(',',array_fill(0, count($idArr), '?'));
@@ -251,7 +251,7 @@ class BaseDao {
         if (is_string($field)) {
             $this->where[] = $field.' is null';
         } else {
-            throw new Exception("where param error");
+            throw new \Exception("where param error");
         }
         return $this;
     }
@@ -296,8 +296,8 @@ class BaseDao {
             return null;
         } else {
             if ($isObj) {
-                $className = is_string($isObj)?$isObj:strstr(get_class($this), 'Dao', true);
-                return new $className($row);
+                $cls = is_string($isObj)?$isObj:'\App\Models\Entity\\'.substr(get_class($this), 15, -3);
+                return new $cls($row);
             } else {
                 return $row;
             }

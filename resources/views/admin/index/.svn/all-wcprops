@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/video/!svn/ver/10517/trunk/src/application/views/admin/index
+END
+noauth.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/video/!svn/ver/1/trunk/src/application/views/admin/index/noauth.phtml
+END
+index.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/video/!svn/ver/1800/trunk/src/application/views/admin/index/index.phtml
+END
+login.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/video/!svn/ver/10517/trunk/src/application/views/admin/index/login.phtml
+END
+notlogin.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/video/!svn/ver/10517/trunk/src/application/views/admin/index/notlogin.phtml
+END
+qrlogin.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/video/!svn/ver/1/trunk/src/application/views/admin/index/qrlogin.phtml
+END

@@ -1,1 +1,41 @@
-<?php echo $this->name; ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-仪表盘</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>仪表盘<small>Add</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            仪表盘
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

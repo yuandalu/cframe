@@ -2,6 +2,8 @@
 
 namespace App\Models\Dao;
 
+use App\Support\Pager;
+
 class AdmAuthNodeDao extends BaseDao
 {
     protected $table = 'adm_authnode';

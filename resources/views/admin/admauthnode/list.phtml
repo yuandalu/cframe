@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-菜单管理</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+        <style>
+            #list.table th, #list.table td, #search th, #search td { 
+                text-align: center;
+                vertical-align: middle; 
+            }
+        </style>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>菜单管理<small>List</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            菜单管理列表
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <!-- search -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Search</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" style="display: block;">
+                <form id="searchform" method="post" action="/AdmAuthNode/list">
+                <table id="search" class="table">
+                    <tr>
+                        <td width="80px">aid:</td>
+                        <td width="150px"><input type="text" name="aid" value="<?php echo $this->aid; ?>" class="form-control" placeholder="aid"></td>
+                        <td width="80px">contr:</td>
+                        <td width="150px"><input type="text" name="contr" value="<?php echo $this->contr; ?>" class="form-control" placeholder="contr"></td>
+                        <td width="80px">action:</td>
+                        <td width="150px"><input type="text" name="action" value="<?php echo $this->action; ?>" class="form-control" placeholder="action"></td>
+                        <td width="80px"><input type="submit" class="btn btn-default" value="查询"></td>
+                    </tr>
+                </table>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- list -->
+                <div class="row">
+                <div class="col-xs-12">
+                <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Table List</h3>
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                        <a class="glyphicon glyphicon-plus" href="/AdmAuthNode/index"></a>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                <form action="/AdmAuthNode/updateAuths" method="post">
+                <table id="list" class="table table-bordered table-condensed table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th width="50px"><input type="checkbox" onclick="checkAll(this.checked)"></th>
+                        <th>权限ID</th>
+                        <th>权限名称</th>
+                        <th><b>contr</b></th>
+                        <th><b>action</b></th>
+                        <th><b>修改</b></th>
+                    </tr>
+                    <?php foreach ($this->list['records'] as $v) {
+                    echo "<tr>";
+                        echo '<td ><input class="checklist" type="checkbox" name="ids['.$v['id'].']" value="1"> '.$v['id'].'</td>';
+                        echo '<td >'.$v['aid'].'</td>';
+                        if ($v['aid']==0) {
+                            echo '<td style="color:red">未选权限</td>';
+                        } else {
+                            echo '<td >'.$v['aid'].'-'.$this->authconf[$v['aid']].'</td>';
+                        }
+                        echo '<td >'.$v['contr'].'</td>';
+                        echo '<td >'.$v['action'].'</td>';
+                        echo '<td><a class="glyphicon glyphicon-edit" href="/AdmAuthNode/edit/?id='.$v['id'].'"></a></td>';
+                    echo '</tr>';
+                    } ?>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td><select name="auths" class="form-control">
+                        <option value="">选择要分配的权限</option>
+                        <?php foreach ($this->authconf as $id=>$name) {
+                            echo "<option value='".$id."'>".$id."-".$name."</option>";
+                        } ?>
+                        </select></td>
+                        <td><input type="submit" class="btn btn-primary" value="提交"></td>
+                    </tr>
+                </tbody>
+                </table>
+                </form>
+                </div>
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <?php $this->render('include/pager', true); ?>
+                    </ul>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script>
+        function checkAll(c)
+        {
+            $('.checklist').attr('checked', c);
+        }
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-后台用户</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+        <style>
+            #list.table th, #list.table td, #search th, #search td { 
+                text-align: center;
+                vertical-align: middle; 
+            }
+        </style>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>后台用户<small>List</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            后台用户列表
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <!-- search -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Search</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" style="display: block;">
+                <form id="searchform" method="get" action="/AdmUser/index">
+                <table id="search" class="table">
+                    <tr>
+                        <td width="80px">用户名:</td>
+                        <td width="150px"><input type="text" name="name" value="<?php echo $this->name; ?>" class="form-control" placeholder="用户名"></td>
+                        <td><input type="submit" class="btn btn-default" value="查询"></td>
+                    </tr>
+                </table>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- list -->
+                <div class="row">
+                <div class="col-xs-12">
+                <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Table List</h3>
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                <table id="list" class="table table-bordered table-condensed table-striped table-hover">
+                <tbody>
+                    <tr id="lis">
+                        <th><h4>ID</h4></th>
+                        <th><h4>姓名</h4></th>
+                        <th><h4>拼音姓名</h4></th>
+                        <th><h4>部门</h4></th>
+                        <th><h4>职位</h4></th>
+                        <th><h4>系统角色</h4></th>
+                        <th><h4>状态</h4></th>
+                        <th><h4>操作</h4></th>
+                    </tr>
+                    <?php foreach ($this->list['records'] as $v) {
+                    echo "<tr id=\"m_".$v['id']."\">";
+                        echo "<td>".$v['id']."</td>";
+                        echo "<td id=\"s_".$v['id']."\">".$v['name']."</td>";
+                        echo "<td>".$v['ename']."</td>";
+                        echo "<td>".$v['depart']."</td>";
+                        echo "<td>".$v['position']."</td>";
+                        echo "<td><span id=\"r_".$v['id']."\"><a href='javascript:' onclick='uprole(".$v['id'].",\"".$v[role]."\")'>".$v['role']."</a></span></td>";
+                        if($v['status']==1)
+                        {
+                            echo "<td>正常</td>";
+                        }else
+                        {
+                            echo "<td style='color:red'>禁用</td>";
+                        }
+
+                        echo "<td><a class='glyphicon glyphicon-edit' title='权限管理' href='javascript:void(0)' onclick='selectgrade(".$v['id'].", \"".$v['ename']."\")'></a>&nbsp;&nbsp;&nbsp;<a class='glyphicon glyphicon-th-list' href='/AdmUser/modifyauth/?uid=".$v['id']."' title='修改权限'></a>&nbsp;&nbsp;<a class='fa fa-user-times' href='javascript:void(0)' onclick='forbidden(".$v['id'].")' title='禁用账号'></a>&nbsp;</td>";
+                    echo "</tr>";
+                    } ?>
+                </tbody>
+                </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <?php $this->render('include/pager', true); ?>
+                    </ul>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- other -->
+                <div class="row">
+                <div class="col-xs-12">
+                <div class="box box-primary">
+                <div class="box-body table-responsive">
+                <details><summary><b>添加管理员</b></summary>
+                <hr>
+                    <form action = "/AdmUser/add/" method="post" id="authform" name="authform">
+                    <fieldset>
+                    <p>姓名： <input class="form-control" type="search" name="name" id="names" value="" required="required"/><span id="c_title"></span></p>
+                    <p>拼音姓名： <input class="form-control" type="search" name="ename" id="ename" value="" required="required" onblur="check(this.value)"/>&nbsp;<span style="color:red" id="enotic">和邮箱前缀保持一致！</span></p>
+
+                    <p>部门： <select id="depart" name="depart" class="form-control" required="required">
+                    <option value="">--请选择--</option>
+                    <option value="技术">--技术--</option>
+                    <option value="运营">--运营--</option>
+                    <option value="营销">--营销--</option>
+                    <option value="教学">--教学--</option>
+                    <option value="财务">--财务--</option>
+                    <option value="职能">--职能--</option>
+                    <option value="总裁办">--总裁办--</option>
+                    </select></p>
+                    <p>职位：<select id="position" name="position" class="form-control" required="required">
+                    <option value="">--请选择--</option>
+                    <option value="总裁">--总裁--</option>
+                    <option value="副总裁">--副总裁--</option>
+                    <option value="总监">--总监--</option>
+                    <option value="主管">--主管--</option>
+                    <option value="员工">--员工--</option>
+                    <option value="兼职">--兼职--</option>
+                    <option value="实习生">--实习生--</option>
+                    </select></p>
+                    <p>角色： <select id="role" name="role" class="form-control" required="required">
+                    <option value="">--请选择--</option>
+                    <option value="超级管理员">--超级管理员--</option>
+                    <option value="编辑">--编辑--</option>
+                    </select></p>
+                    <p><input class="btn btn-default" type="button" value="新增" onclick=" return submitForm()">&nbsp;<span class="notic" style="color:red"></span></p>
+                    </fieldset> <!-- End #tab3 -->
+                    </form>
+                </details>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script type="text/javascript">
+        function submitForm()
+        {
+            var name = $.trim($("#names").val());
+            var ename = $.trim($("#ename").val());
+            var depart = $.trim($("#depart").val());
+            var position = $.trim($("#position").val());
+            var role = $.trim($("#role").val());
+            if(name=="" || ename=="" || depart=="" || position=="" ||role=="")
+            {
+                var notic = "所有项均不能为空!"
+                $(".notic").html(notic);
+                return false;
+            }
+            $.ajax({
+                type:"GET",
+                data:$("#authform").serialize(),
+                url:"/AdmUser/add/",
+                dataType:"json",
+                cache: false,
+                success:function(data){
+                    if(data.code=="succ")
+                    {
+                        window.location=window.location;
+                    }else
+                    {
+                        MsgUtil.show(data.msg)
+                    }
+                }
+            });
+        }
+
+        function selectgrade(id, admin)
+        {
+            $.confirm({
+                title: admin+'权限设置',
+                content: 'url:/AdmUser/addgrade/?id='+id+'&admin='+admin,
+                animation: 'top',
+                backgroundDismiss: false,
+                columnClass: 'col-md-6 col-md-offset-3',
+                confirmButtonClass: 'btn-danger',
+                confirmButton: '提交',
+                cancelButton: '取消',
+                confirm: function (close) {
+                    $("#authForm").submit();
+                    return false;
+                },
+                cancel: function () {
+                }
+            });
+        }
+
+        function forbidden(id)
+        {
+            $.confirm({
+                title: '警告!',
+                content: '是否禁用此人权限？',
+                confirm: function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "/AdmUser/forbidden/",
+                        data: {'id':id},
+                        dataType:"json",
+                        cache: false,
+                        success: function(data){
+                            $.confirm({
+                                title: false,
+                                content: data.msg,
+                                cancelButton: false,
+                                confirmButton: false
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        function uprole(id, name)
+        {
+            var str = "<input type='text' value='"+name+"' onblur='saverole(this.value,"+id+")'>";
+            $("#r_"+id).html(str);
+        }
+
+        function saverole(name, id)
+        {
+            if (name!="") {
+                $.ajax({
+                    type: "POST",
+                    url: "/AdmUser/saverole/",
+                    data: {'id':id,'name':name},
+                    dataType:"json",
+                    cache: false,
+                    success: function(data){
+                       if (data.code == "yes") {
+                            var str = '<a href="javascript:" onclick="uprole('+id+',&quot;'+name+'&quot;)">'+name+'</a>';
+                             $("#r_"+id).html(str);
+                       }
+                    }
+                });
+            } else {
+                alert("fail");
+            }
+
+        }
+
+        function check(data)
+        {
+            $.ajax({
+               type: "POST",
+               url: "/AdmUser/checkname/",
+               data: {'name':data},
+               dataType:"json",
+               cache: false,
+               success: function(data){
+                   if(data.code=="yes")
+                   {
+                     $("#enotic").html(data.msg);
+                     $("#ename").focus();
+                   }
+                   if(data.code=="no")
+                   {
+                    $("#enotic").html(data.msg);
+                   }
+               }
+            });
+        }
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<title>优米网视频点播系统</title>
+
+		<!--                       CSS                       -->
+
+		<!-- Reset Stylesheet -->
+		<link rel="stylesheet" href="/static/admin/css/reset.css" type="text/css" media="screen" />
+
+		<!-- Main Stylesheet -->
+
+		<link rel="stylesheet" href="/static/admin/css/style.css" type="text/css" media="screen" />
+
+		<!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
+		<link rel="stylesheet" href="/static/admin/css/invalid.css" type="text/css" media="screen" />
+
+		<!-- Colour Schemes
+
+		Default colour scheme is green. Uncomment prefered stylesheet to use it.
+
+		<link rel="stylesheet" href="/static/admin/css/blue.css" type="text/css" media="screen" />
+
+		<link rel="stylesheet" href="/static/admin/css/red.css" type="text/css" media="screen" />
+
+		-->
+
+		<!-- Internet Explorer Fixes Stylesheet -->
+
+		<!--[if lte IE 7]>
+			<link rel="stylesheet" href="/static/admin/css/ie.css" type="text/css" media="screen" />
+		<![endif]-->
+
+		<!--                       Javascripts                       -->
+
+		<!-- jQuery -->
+		<script type="text/javascript" src="/static/js/jquery.js"></script>
+
+
+		<!-- jQuery Configuration -->
+		<script type="text/javascript" src="/static/admin/scripts/simpla.jquery.configuration.js"></script>
+
+		<!-- Facebox jQuery Plugin -->
+		<script type="text/javascript" src="/static/admin/scripts/facebox.js"></script>
+		<!-- jQuery WYSIWYG Plugin -->
+
+		<!-- Internet Explorer .png-fix -->
+
+
+		<!--[if IE 6]>
+			<script type="text/javascript" src="/static/admin/scripts/DD_belatedPNG_0.0.7a.js"></script>
+			<script type="text/javascript">
+				DD_belatedPNG.fix('.png_bg, img, li');
+			</script>
+		<![endif]-->
+
+	</head>
+
+	<body id="login">
+
+		<div id="login-wrapper" class="png_bg">
+			<div id="login-top">
+
+				<h1>优米网视频点播管理后台</h1>
+				<!-- Logo (221px width) -->
+			</div> <!-- End #logn-top -->
+
+			<div id="login-content">
+			<br/><br/>
+				<form action="/index/login/" method="post" >
+
+					<div class="notification information png_bg">
+						<div>
+							请扫描如下二维码登录
+						</div>
+					</div>
+
+					<p>
+						<img src="/index/qrimage?tk=<?php echo $this->tk;?>">
+
+						<a style="display:none;" href="<?php
+
+						echo 'http://'.str_replace('admin.','',$_SERVER['SERVER_NAME']).'/qrlogin/qrlogin?tk='.$this->tk;
+						?>" target="_blank">link</a>
+					</p>
+
+
+				</form>
+
+			</div> <!-- End #login-content -->
+
+		</div> <!-- End #login-wrapper -->
+
+  </body>
+  </html>
+
+                <div id="main">
+				<?php if($this->logined){?>
+					<h3>欢迎您 <?php echo $this->user;?>，您具有的权限如下：</h3>
+					<ul class="authlist">
+					<?php
+						foreach( $this->auth as $v)
+						{
+							echo "<li>",Auth::$authname[$v],"</li>";
+						}
+					?>
+					</ul>
+				<?php }else{?>
+
+				<?php }?>
+                </div>
+                <!-- // #main -->
+<script type="text/javascript">
+
+
+function checkLoginStatus()
+{
+	$.ajax(
+	{
+		url:'/index/checkloginstatus?tk=<?php echo $this->tk;?>',
+		type:'GET',
+		success:function(data)
+		{
+			if(data=='succ')
+			{
+				window.location='/index/index';
+			}
+		}
+	}
+	);
+
+}
+setInterval(function(){checkLoginStatus()},1000);
+</script>

@@ -3,6 +3,7 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Models\Entity\AdmMenu;
 
 class AdmMenuSvc
 {
@@ -10,13 +11,12 @@ class AdmMenuSvc
     #warning 书写格式没有规范
     public static function add($param)
     {
-        $obj = Menu::createByBiz($param);
+        $obj = AdmMenu::createByBiz($param);
         return self::getDao()->add($obj);
     }
     public static function getById($id = '0')
     {
-        if (empty($id))
-        {
+        if (empty($id)) {
             return null;
         }
         return self::getDao()->getById($id);
@@ -36,6 +36,11 @@ class AdmMenuSvc
         return self::getDao()->getByUid($uid);
     }
 
+    public static function getByName($name)
+    {
+        return self::getDao()->where('name', $name)->find();
+    }
+
     private static function getDao()
     {
         return Loader::loadDao(self::OBJ);
@@ -46,38 +51,29 @@ class AdmMenuSvc
         $request_param = array();
         $sql_condition = array();
 
-
-
-        if(isset($request['id']) && strlen($request['id'])>1)
-        {
+        if (isset($request['id']) && strlen($request['id'])>1) {
             $request_param[] = 'id=' . $request['id'];
             $sql_condition[] = 'id = ? '  ;
             $sql_param[]     = $request['id'];
         }
 
-        if($request['startdate'] != '')
-        {
+        if ($request['startdate'] != '') {
             $request_param[] = 'startdate=' . $request['startdate'];
             $sql_condition[] = 'ctime>=?';
             $sql_param[]     = $request['startdate'];
         }
-        if($request['enddate'] != '')
-        {
+        if ($request['enddate'] != '') {
             $request_param[] = 'enddate=' . $request['enddate'];
             $sql_condition[] = 'ctime<=?';
-            if('10' >= strlen($request['enddate']) )
-            {
+            if ('10' >= strlen($request['enddate']) ) {
                 $sql_param[] = $request['enddate'].' 23:59:59';
-            }
-            else
-            {
+            } else {
                 $sql_param[] = $request['enddate'];
             }
         }
 
 
-        if($request['username'] != '')
-        {
+        if ($request['username'] != '') {
             $userinfo =  UserSdk::getInfoByUsername($request['username']);
             $query_uid = $userinfo['uid'];
             $request_param[] = 'username=' . urlencode($request['username']);
@@ -86,50 +82,42 @@ class AdmMenuSvc
         }
 
 
-        if($request['name'])
-        {
+        if ($request['name']) {
             $request_param[] = 'name=' . $request['name'];
             $sql_condition[] = 'name =?';
             $sql_param[]     = $request['name'];
         }
-        if($request['url'])
-        {
+        if ($request['url']) {
             $request_param[] = 'url=' . $request['url'];
             $sql_condition[] = 'url =?';
             $sql_param[]     = $request['url'];
         }
-        if($request['sort'])
-        {
+        if ($request['sort']) {
             $request_param[] = 'sort=' . $request['sort'];
             $sql_condition[] = 'sort =?';
             $sql_param[]     = $request['sort'];
         }
-        if($request['groupid'])
-        {
+        if ($request['groupid']) {
             $request_param[] = 'groupid=' . $request['groupid'];
             $sql_condition[] = 'groupid =?';
             $sql_param[]     = $request['groupid'];
         }
-        if($request['aid'])
-        {
+        if ($request['aid']) {
             $request_param[] = 'aid=' . $request['aid'];
             $sql_condition[] = 'aid =?';
             $sql_param[]     = $request['aid'];
         }
-        if($request['oneclass'])
-        {
+        if ($request['oneclass']) {
             $request_param[] = 'oneclass=' . $request['oneclass'];
             $sql_condition[] = 'oneclass =?';
             $sql_param[]     = $request['oneclass'];
         }
-        if($request['curr_menu'])
-        {
+        if ($request['curr_menu']) {
             $request_param[] = 'curr_menu=' . $request['curr_menu'];
             $sql_condition[] = 'curr_menu =?';
             $sql_param[]     = $request['curr_menu'];
         }
-        if($request['curr_submenu'])
-        {
+        if ($request['curr_submenu']) {
             $request_param[] = 'curr_submenu=' . $request['curr_submenu'];
             $sql_condition[] = 'curr_submenu =?';
             $sql_param[]     = $request['curr_submenu'];

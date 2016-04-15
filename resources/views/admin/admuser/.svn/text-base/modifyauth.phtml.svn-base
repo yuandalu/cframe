@@ -1,0 +1,82 @@
+<?php $this->render( 'include/header', true ); ?>
+<?php $this->render( 'include/lefter', true );
+$album = $this->list;
+?>
+<script type="text/javascript" src="/static/js/popup_util.js"></script>
+<script type="text/javascript" src="/static/js/msg_util.js"></script>
+		<div id="main-content"> <!-- Main Content Section with everything -->
+		
+			
+			<div class="content-box ">
+
+				<div class="content-box-header">
+
+					<h3>权限修改</h3>
+					<ul class="content-box-tabs">
+						<li><a href="/album/index/?islist=1" class="default-tab">列表</a></li> <!-- href must be unique and match the id of target div -->
+						<!--<li><a href="/vipalbum/index/">新增</a></li>-->
+					</ul>
+
+
+				</div> <!-- End .content-box-header -->
+
+				<div class="content-box-content">
+
+					<div class="tab-content default-tab" id="refresh">
+
+						<table id="selected">
+							<tr id="lis">
+								<th><h3>ID</h3></th>
+								<th><h3>权限拥有人</h3></th>
+								<th><h3>权限</h3></th>
+								<th><h3>系统角色</h3></th>
+								<th><h3>操作</h3></th>
+							</tr >
+							<?php
+							foreach($this->data as $key=> $v)
+							{
+								echo "<tr id=\"m_".$v['aid']."\">";
+								echo "<td>".($key+1)."</td>";
+								echo "<td>".$this->admin[0]['name']."</td>";
+								echo "<td>".$v['name']."</td>";
+								echo "<td>".$this->admin[0]['role']."</td>";
+								echo "<td><a href='javascript:void(0)' onclick='forbidden(".$v['aid'].",".$v['uid'].")'><img src='/static/admin/images/icons/cross.png' title='删除权限'></a>&nbsp;</td>";
+								echo "</tr>";
+							}
+							?>
+						</table>
+					</div> <!-- End #tab3 -->
+
+				</div> <!-- End .content-box-content -->
+			
+				
+			</div> <!-- End .content-box -->
+
+
+<?php $this->render( 'include/footer', true ); ?>
+<script>
+function forbidden(aid,uid)
+{
+	var yes = confirm("是否删除此项权限？");
+		if(yes === true)
+		{
+		$.ajax({
+		   type: "POST",
+		   url: "/auth/delauth/",
+		   data: {'id':aid,'uid':uid},
+		   dataType:"json",
+		   cache: false,
+		   success: function(data){
+			 if(data.code=="succ")
+			 {
+				$("#m_"+aid).remove();
+			 }
+		   }
+		});
+		}
+}
+function modify(id,uid)
+{
+	alert(id);
+}
+</script>

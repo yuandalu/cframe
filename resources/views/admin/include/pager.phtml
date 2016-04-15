@@ -1,0 +1,30 @@
+<?php
+$list = $this->list;
+$per_page_num = $this->per_page_num;
+if ($list['pages'] > 1 && $list['curr_page'] > 1) {
+    echo '<li><a href="' . $list['linkinfo']['first'] . '">第一页</a></li>';
+} else {
+    echo '<li class="disabled"><a>第一页</a></li>';
+}
+if ($list['curr_page'] > 1) {
+    echo '<li><a href="' . $list['linkinfo']['prev'] . '">«</a></li>';
+} else {
+    echo '<li class="disabled"><a>«</a></li>';
+}
+foreach ($list['linkinfo']['seq'] as $key => $item) {
+    if ($list['curr_page'] == $key) {
+        echo '<li class="active"><a href="' . $item . '">' . $key . '</a></li>';
+    } else {
+        echo '<li><a href="' . $item . '">' . $key . '</a></li>';
+    }
+}
+if ($list['curr_page'] < $list['pages']) {
+    echo '<li><a href="' . $list['linkinfo']['next'] . '">»</a></li>';
+} else {
+    echo '<li class="disabled"><a>»</a></li>';
+}
+if ($list['pages'] > 1 && $list['curr_page'] < $list['pages']) {
+    echo '<li><a href="' . $list['linkinfo']['last'] . '">最后页</a></li>';
+} else {
+    echo '<li class="disabled"><a>最后页</a></li>';
+}

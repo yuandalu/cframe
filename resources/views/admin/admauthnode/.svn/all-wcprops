@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/video/!svn/ver/1/trunk/src/application/views/admin/controauth
+END
+edit.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/video/!svn/ver/1/trunk/src/application/views/admin/controauth/edit.phtml
+END
+index.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/video/!svn/ver/1/trunk/src/application/views/admin/controauth/index.phtml
+END
+list.phtml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/video/!svn/ver/1/trunk/src/application/views/admin/controauth/list.phtml
+END

@@ -3,6 +3,7 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Ext\SocketPOPClient;
 
 class AdminSvc
 {
@@ -23,7 +24,8 @@ class AdminSvc
         $param['ip'] = $ip;
         $param['username'] = $user;
         $param['time'] = date('Y-m-d H:i:s',time());
-        if (self::checkUserAuth($user, Auth::AUTH_LOGIN) && self::staffAuth($user,$pwd)) {
+        #warning 检查是否有这个用户
+        if (true && self::staffAuth($user,$pwd)) {
             $param['result'] = '1';
             LogSvc::loginLog($param);
             loader('Sess')->set('adminUser', $user);
@@ -38,7 +40,7 @@ class AdminSvc
         }
     }
 
-    public function staffAuth($uid,$pwd)
+    public function staffAuth($uid, $pwd)
     {
         $o = new SocketPOPClient($uid.'@yuandalu.com', $pwd, 'pop.qq.com', '110');
         if ($o->popLogin()) {

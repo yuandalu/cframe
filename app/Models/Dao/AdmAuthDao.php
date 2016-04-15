@@ -2,9 +2,11 @@
 
 namespace App\Models\Dao;
 
+use App\Support\Pager;
+
 class AdmAuthDao extends BaseDao
 {
-    protected $table = 'AdmAuth';
+    protected $table = 'adm_auths';
 
     public function getByUid($uid)
     {
@@ -79,7 +81,7 @@ class AdmAuthDao extends BaseDao
     }
     public function getAuthByUid($uid)
     {
-        $sql = "select aid from userauth where uid= ?";
+        $sql = "select aid from adm_userauth where uid= ?";
         $data = $this->getExecutor()->querys($sql, array($uid));
         if (empty($data)) {
             return array();
@@ -92,7 +94,7 @@ class AdmAuthDao extends BaseDao
 
     public function getAidByUser($user)
     {
-        $sql = "select aid from userauth where user= ?";
+        $sql = "select aid from adm_userauth where user= ?";
         $data = $this->getExecutor()->querys($sql, array($user));
         if (empty($data)) {
             return array();
@@ -105,7 +107,7 @@ class AdmAuthDao extends BaseDao
 
     public function verify($c,$a)
     {
-        $sql = "select aid from  controauth where contr= ? and action= ?";
+        $sql = "select aid from  adm_authnode where contr= ? and action= ?";
         $data = $this->getExecutor()->querys($sql, array($c,$a));
         if (empty($data)) {
             return array();
@@ -118,7 +120,7 @@ class AdmAuthDao extends BaseDao
 
     public function getauth()
     {
-        $sql  = "select id,name from auths";
+        $sql  = "select id,name from ".$this->table;
         $data = $this->getExecutor()->querys($sql);
         return $data;
     }

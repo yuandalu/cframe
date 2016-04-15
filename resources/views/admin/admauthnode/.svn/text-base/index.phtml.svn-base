@@ -1,0 +1,90 @@
+<?php $this->render( "include/header", true ); ?>
+<?php $this->render( "include/lefter", true );?>
+
+<div id="main-content"> <!-- Main Content Section with everything -->
+<!-- Page Head-->
+
+<div class="content-box">
+	<div class="content-box-header">
+	<h3>程序权限添加</h3>
+		<ul class="content-box-tabs">
+			<li><a href="/controauth/list/">列表</a></li>
+			<li><a class="default-tab"  href="/controauth/index/">新增</a></li>
+		</ul>
+	</div> <!-- End .content-box-header -->
+<?php //print_r($this->contrauth);?>
+	<div class="content-box-content">
+		<div class="tab-content default-tab">
+			<br>
+			<form method="post" action="/controauth/add/" name="myform" id="myform">
+			<div>
+				<fieldset>
+							<p>权限名称：
+								<select name="aid" id="aid">
+									<?php foreach($this->auth as $val){?>
+									<option value="<?php echo $val['id'];?>"><?php echo $val['name'];?></option>
+									<?php }?>
+								</select>
+							</p>
+							<p>contr： 
+								<input type="text" name="contr" id="contr" value="" class="text-input small-input">
+							</p>
+
+							<p>action： 
+								<input type="text" name="action" id="action" value="" class="text-input small-input">
+							</p>
+
+				</fieldset> <!-- End #tab3 -->
+				<p><input class="button" type="button" value=" 确   定 " onclick="return submitForm()"></p>
+				<p style="color:red;" id="check"></p>
+
+			</div>
+			</form>
+		</div> <!-- End #tab3 -->
+
+	</div> <!-- End .content-box-content -->
+</div> <!-- End .content-box -->
+<script type="text/javascript">
+<!--
+	function submitForm()
+	{
+		$.ajax({
+			type:"GET",
+			data:$("#myform").serialize(),
+			url:"/controauth/add/",
+			dataType:"html",
+			cache: false,
+			success:function(data){
+				MsgUtil.show(data)
+				//自己写回调
+			}
+		});
+	}
+	function checkuid(username)
+	{
+		username = $.trim(username)
+		if(username=="")
+		{
+			$("#uid").val("");
+			return;
+		}
+		$.ajax({
+			url:"/account/ajaxQueryQid?username="+encodeURIComponent(username),
+			async:false,
+			dataType:"json",
+			success:function(data){
+				if(data.code=="succ")
+				{
+					$("#uid").val(data.uid);
+				}else
+				{
+					alert(data.msg);
+					$("#username").focus();
+				}
+			}
+		});
+	}
+//-->
+</script>
+<?php $this->render( "include/footer", true ); ?>
+

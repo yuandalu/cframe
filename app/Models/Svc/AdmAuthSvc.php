@@ -3,13 +3,14 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Models\Entity\AdmAuth;
 
-class AuthsSvc
+class AdmAuthSvc
 {
-    const OBJ = 'Auths';
+    const OBJ = 'AdmAuth';
     public static function add($param)
     {
-        $obj = Auths::createByBiz($param);
+        $obj = AdmAuth::createByBiz($param);
         return self::getDao()->add($obj);
     }
     public static function getById($id = '0')
@@ -70,13 +71,18 @@ class AuthsSvc
     {
         return self::getDao()->getByUid($uid);
     }
+
+    public static function getByName($name)
+    {
+        return self::getDao()->where('name', $name)->find();
+    }
     public static function getAuthByUid($uid)
     {
         return self::getDao()->getAuthByUid($uid);
     }
     private static function getDao()
     {
-        return LoaderSvc::loadDao(self::OBJ);
+        return Loader::loadDao(self::OBJ);
     }
 
     public static function lists($request=array(), $options=array(), $export = false)

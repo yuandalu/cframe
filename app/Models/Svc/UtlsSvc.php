@@ -649,7 +649,7 @@ class UtlsSvc
     public static function showMsg($alert, $url, $time = 1.2)
     {
         $time = $time * 1000;
-        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script src="/static/js/jquery.js"></script><script src="/static/js/msg_util.js"></script><link rel="stylesheet" href="/static/admin/css/public.css" /></head><body>';
+        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script src="/static/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js"></script><script src="/static/js/msg_util.js"></script><link rel="stylesheet" href="/static/css/public.css" /></head><body>';
         echo "<script>MsgUtil.show('" . addslashes($alert) . "',function(){window.location.href='" . $url . "';},$time);</script>";
         echo "</body></html>";
         exit;

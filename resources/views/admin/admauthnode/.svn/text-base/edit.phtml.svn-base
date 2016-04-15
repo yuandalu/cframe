@@ -1,0 +1,48 @@
+<?php $this->render( 'include/header', true ); ?>
+<?php $this->render( 'include/lefter', true );
+$data = $this->data;
+?>
+<script type="text/javascript" src="/static/js/popup_util.js"></script>
+<script type="text/javascript" src="/static/js/msg_util.js"></script>
+		<div id="main-content"> <!-- Main Content Section with everything -->
+		
+			
+			<div class="content-box ">
+
+				<div class="content-box-header">
+
+					<h3>程序权限修改</h3>
+					<ul class="content-box-tabs">
+						<li><a href="/controauth/list/" class="default-tab">列表</a></li> <!-- href must be unique and match the id of target div -->
+						<!--<li><a href="/vipalbum/index/">新增</a></li>-->
+					</ul>
+
+
+				</div> <!-- End .content-box-header -->
+
+				<div class="content-box-content">
+
+					<div class="tab-content default-tab" id="refresh">
+					<form action="/controauth/modify/?id=<?php echo $data->id;?>" method="POST">
+					<p>id：<input type="text" class="text-input small-input" value="<?php echo $data->id;?>" name="id" readonly></p>
+					<p>权限：<select name="aid" id="aid"  >
+								<option value="">请选择</option>
+								<?php foreach($this->auths as $k=>$v)
+								{?>
+									<option value='<?php echo $v['id'];?>' <?php if($data->aid==$v[id]){echo "selected";}?>><?php echo $v['name'];?></option>
+								<?php }?>
+							</select>
+					</p>
+					<p>Controller：<input type="text" class="text-input small-input" value="<?php echo $data->contr;?>" name="contr"></p>
+					<p>Action：<input type="text" class="text-input small-input" value="<?php echo $data->action;?>" name="action"></p>
+					<p><input type="submit" class="button" value="提交修改"></p>
+					</form>
+					</div> <!-- End #tab3 -->
+
+				</div> <!-- End .content-box-content -->
+			
+				
+			</div> <!-- End .content-box -->
+
+
+<?php $this->render( 'include/footer', true ); ?>

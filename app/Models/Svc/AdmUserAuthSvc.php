@@ -3,6 +3,7 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Models\Entity\AdmUserAuth;
 
 class AdmUserAuthSvc
 {
@@ -10,7 +11,7 @@ class AdmUserAuthSvc
     #warning 书写格式没有规范
     static public function add($param)
     {
-        $obj = Userauth::createByBiz($param);
+        $obj = AdmUserAuth::createByBiz($param);
         return self::getDao()->add($obj);
     }
     static public function getById($id = '0')

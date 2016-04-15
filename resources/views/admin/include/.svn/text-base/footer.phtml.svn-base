@@ -1,0 +1,324 @@
+			<div id="footer">
+			<h3>技术部联系方式</h3>
+			<table>
+				<tr>
+					<th>姓名</th>
+					<th>手机</th>
+					<th>邮箱</th>
+					<th>QQ</th>
+				</tr>
+				<tr>
+					<td>高尚勇</td>
+					<td></td>
+					<td><a href="mailto:gaoshangyong@guixue.com">gaoshangyong@guixue.com</td>
+					<td>346870986</td>
+				</tr>
+				<tr>
+					<td>张晓波</td>
+					<td></td>
+					<td><a href="mailto:zhangxiaobo@guixue.com">zhangxiaobo@guixue.com</td>
+					<td>6066395</td>
+				</tr>
+				<tr>
+					<td>王相杰</td>
+					<td></td>
+					<td><a href="mailto:wangxiangjie@guixue.com">wangxiangjie@guixue.com</td>
+					<td>903059908</td>
+				</tr>
+				 
+
+			</table>
+			<br>
+			<h3>常用地址</h3>
+			<table>
+				<tr>
+					<th>网站</th>
+					<th>网址</th>
+					<th>说明</th>
+					<th></th>
+				</tr>
+				 
+				<tr>
+					<td>用户中心后台</td>
+					<td><a href="http://admin.passport.guixue.com:9889" target="_blank">http://admin.passport.guixue.com:9889</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>用户引擎</td>
+					<td><a href="http://userengine.guixue.com/petstore/" target="_blank">http://userengine.guixue.com/petstore/</a></td>
+					<td>需绑定host到:182.92.103.136</td>
+					<td></td>
+				</tr>
+				 
+				<tr>
+					<td>网站后台</td>
+					<td><a href="http://admin.v.guixue.com:9889" target="_blank">http://admin.v.guixue.com:9889</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				 
+			</table>
+			<br>
+				<small> <!-- Remove this notice or replace it with whatever you want -->
+
+						&#169; Copyright <?php echo date('Y',time());?> 贵学教育 | <a href="#">返回顶部</a>
+				</small>
+			</div><!-- End #footer -->
+
+		</div> <!-- End #main-content -->
+
+
+
+
+
+
+
+
+	</div>
+
+	<div id="favmenu_normal" class="content-box"
+	style="position:fixed;top:90px;right:0px;border:1px solid #66ffcc;width:auto;text-align:center;padding-top:4px;display:none;">
+
+		<h3 style="cursor:e-resize" onclick="favmenu_hide()">菜单收藏夹</h3>
+		<div class="content-box-content" id="float_favmenu_div">
+			加载中...
+
+		</div>
+
+	</div>
+	<div  id="favmenu_hidden" class="content-box"  onclick="favmenu_show()"
+	style="position:fixed;top:90px;right:0px;border:1px solid #66ffcc;width:20px;text-align:center;padding-top:4px;cursor:w-resize;display:none;">
+		菜单收藏夹
+	</div>
+</body>
+<script type="text/javascript" src="/static/js/cookie.js"></script>
+
+<script>
+function feature_lastest(o)
+{
+	var r = o.record;
+	html = "";
+	for(var i in r)
+	{
+		html += "<a href='javascript:void(0)' onclick='feature_show("+r[i].id+")'>"+r[i].title+"</a> ";
+	}
+	$("#main-content").prepend("<marquee>"+html+"</marquee>");
+}
+function feature_show(id)
+{
+	popupUtil.init('feather_iframe');
+
+
+
+	setTimeout(function(){
+		$('#feather_iframe').attr('src','/feature/show?id='+id);
+		popupUtil.resize({height:280,width:560});
+
+	},600);
+
+}
+</script>
+<script type="text/javascript" src="/feature/latest"></script>
+<?php
+//$auth = AuthsSvc::verify('Favmenu','add');
+
+//if($auth=='succ')
+		{ ?>
+<style>
+.table_favmenu td{
+	border-top:1px solid #888;
+	border-left:1px solid #888;
+	padding:4px;
+
+}
+.table_favmenu{
+	border-right:1px solid #888;
+	border-bottom:1px solid #888;
+
+}
+
+</style>
+
+<script>
+
+function favmenu()
+{
+	var title=prompt("您将收藏该页面到菜单收藏夹\n请为该页面输入一个好记的名称");
+	var url=location.href.replace(location.origin,'');
+	if(!title)
+	{
+		alert('未填写名称');
+		return;
+	}
+
+	$.ajax({
+		type:"POST",
+		data:{url:url,title:title},
+		url:"/favmenu/add/",
+		dataType:"html",
+		cache: false,
+		success:function(data){
+			alert(data);
+			loadfavmenu();
+			//自己写回调
+		}
+	});
+
+}
+function loadfavmenu()
+{
+	$('#float_favmenu_div').load('/favmenu/usermenu');
+	if(getCookie('favmenu_hide')==1)
+	{
+		favmenu_hide();
+	}else
+	{
+		favmenu_show();
+	}
+}
+function favmenu_del(id, title)
+{
+	if(!confirm('确定要删除 “'+title+'” 吗？'))
+	{
+		return;
+	}
+	$.ajax({
+		type:"POST",
+		data:{id:id},
+		url:"/favmenu/del/",
+		dataType:"html",
+		cache: false,
+		success:function(data){
+			alert(data);
+			loadfavmenu();
+			//自己写回调
+		}
+	});
+}
+function favmenu_show()
+{
+	$('#favmenu_normal').show();
+	$('#favmenu_hidden').hide();
+	setCookie('favmenu_hide',0,'/');
+}
+function favmenu_hide()
+{
+	$('#favmenu_normal').hide();
+	$('#favmenu_hidden').show();
+	setCookie('favmenu_hide',1,'/');
+}
+loadfavmenu();
+
+</script>
+<?php }?>
+
+<?php
+$auth = AuthsSvc::verify('Caller','add');
+
+if($auth=='succ')
+		{ ?>
+
+<script type="text/javascript">
+
+var callcenter = {
+
+	request:function()
+	{
+		/*
+		if(getCookie('request_status')=='requesting')
+		{
+			//alert('stop');
+			return;
+		}
+		setCookie('request_status','requesting','/');
+		*/
+		this.save_time = getCookie('save_time');
+		if(!this.save_time)
+		{
+			this.save_time='';
+		}
+		//save_time='0000-00-00 00:00:00';
+		//alert(this.save_time);
+		$.ajax({
+			type: "GET",
+			dataType:"json",
+			cache:false,
+			url: "/callcenter/requestNewest/?save_time="+callcenter.save_time,
+			success: function(o){
+				//alert(o);
+				setCookie('save_time',o.save_time,'/');
+				//setCookie('request_status','','/',null,null,60);
+				if(o.record)
+				{
+					for(var i=0;i<o.record.length;i++)
+					{
+						if (o.record[i].way=='1'){
+							webkitNotify( o.record[i].caller , o.record[i].callee , o.record[i].name , o.record[i].id);
+						}
+					}
+				}
+			}
+		});
+	}
+}
+//停止callcenter响应
+//setInterval(function(){callcenter.request();},2000);
+function webkitNotify(mobile,callee,name,id)
+{
+	if(window.webkitNotifications)
+	{
+		if(window.webkitNotifications.checkPermission() == 0)
+		{
+			if(mobile=='801'||mobile=='802'||mobile=='803')
+			{
+				var title = mobile+' 呼叫：'+name+' 号码：'+callee;
+			}else
+			{
+				var title = name+'：'+mobile+' 来电 接收号码'+callee;
+			}
+			var notification_test = window.webkitNotifications.createNotification("http://i2.umivi.net/avatar/46/6187446m.jpg",title, ' 点击查看更多资料');
+			notification_test.display = function() {}
+			notification_test.onerror = function() {}
+			notification_test.onclose = function() {}
+			notification_test.onclick = function() {this.cancel();window.open('/caller/index/?mobile='+mobile+'&callee='+callee+'&callcenterid='+id);}
+
+			notification_test.replaceId = 'callin' //sn.substring(0,4);
+
+			notification_test.show();
+		}else{
+			window.webkitNotifications.requestPermission();//function(){return webkitNotify();}
+		}
+	}
+}
+
+function requestwebkitNotificationsPermission()
+{
+	if(window.webkitNotifications)
+	{
+		if(window.webkitNotifications.checkPermission() != 0)
+		{
+			window.webkitNotifications.requestPermission();
+		}
+	}
+}
+function showRequestWindow()
+{
+	if(window.webkitNotifications)
+	{
+		if(window.webkitNotifications.checkPermission() != 0)
+		{
+			MsgUtil.show('您是客服，需要打开通知，请按<input type=button value="确定" onclick="requestwebkitNotificationsPermission()">确定后点击“允许”',60000);
+		}
+	}
+
+}
+showRequestWindow();
+</script>
+<?php }?>
+
+
+
+
+
+</html>

@@ -1,0 +1,6 @@
+    <script src="/static/RGraph/libraries/RGraph.common.core.js" ></script>
+    <script src="/static/RGraph/libraries/RGraph.common.dynamic.js" ></script>
+    <script src="/static/RGraph/libraries/RGraph.common.effects.js" ></script>
+    <script src="/static/RGraph/libraries/RGraph.common.tooltips.js" ></script>
+    <script src="/static/RGraph/libraries/RGraph.common.key.js" ></script>
+    <script src="/static/RGraph/libraries/RGraph.bar.js" ></script>

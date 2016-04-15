@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,input,p,blockquote,th,td,form,p{margin:0;padding:0;}
+body,html{_background-image:url(about:blank);_background-attachment:fixed;}
+ol,ul,li,dd,dt,dl{list-style:none;}
+img{border:0;}
+
+html{text-align:center;background:#F7F7F7;}
+body{min-width:950px;text-align:left;font:12px/1.5em \5FAE\8F6F\96C5\9ED1,arial,verdana; color:#333;}
+:focus{outline:none;}
+em,th{font-style:normal;font-weight:normal;}
+.table{border-collapse:collapse;border-spacing:0;empty-cells:show;}
+/*link*/
+a{color:#333; text-decoration:none;}
+a:hover{color:#557917 !important;text-decoration:underline;}
+
+
+
+
+
+
+
+

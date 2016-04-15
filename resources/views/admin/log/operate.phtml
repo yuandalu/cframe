@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-登录日志</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+        <style>
+            #list.table th, #list.table td, #search th, #search td { 
+                text-align: center;
+                vertical-align: middle; 
+            }
+        </style>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>登录日志<small>List</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            登录日志列表
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <!-- search -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Search</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive" style="display: block;">
+                <form id="searchform" method="get" action="/Log/operate">
+                <table id="search" class="table">
+                    <tr>
+                        <td width="80px">操作人</td>
+                        <td width="150px"><input type="text" name="username" value="<?php echo $this->username; ?>" class="form-control" placeholder="操作人"></td>
+                        <td width="80px">关键词</td>
+                        <td width="150px"><input type="text" name="kw" value="<?php echo $this->kw; ?>" class="form-control" placeholder="关键词"></td>
+                        <td width="100px">起始时间</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" name="start" value="<?php echo $this->start; ?>" class="form-control">
+                            </div>
+                        </td>
+                        <td width="100px">结束时间</td>
+                        <td>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input type="date" name="end" value="<?php echo $this->end; ?>" class="form-control">
+                            </div>
+                        </td>
+                        <td><input type="submit" class="btn btn-block btn-default" value="查询"></td>
+                    </tr>
+                </table>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- list -->
+                <div class="row">
+                <div class="col-xs-12">
+                <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Table List</h3>
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                </div>
+                <div class="box-body table-responsive">
+                <table id="list" class="table table-bordered table-condensed table-striped table-hover">
+                <tbody>
+                    <tr>
+                        <th>操作人</th>
+                        <th>操作动作</th>
+                        <th>操作时间</th>
+                        <th>操作IP</th>
+                        <th>查看</th>
+                    </tr>
+                    <?php foreach ($this->list['records'] as $v) {
+                    echo '<tr>';
+                        echo '<td>'.$v['username'].'</td>';
+                        echo '<td >'.$v['action'].'</td>';
+                        echo '<td>'.$v['action_time'].'</td>';
+                        echo '<td>'.$v['ip'].'</td>';
+                        echo '<td>';
+                    ?>
+                        <input type="button" class="btn btn-primary btn-xs" value="操作详情"  onclick="showOperate(<?php echo $v['id'];?>)"></td>
+                    <?php
+                    echo '</tr>';
+                    } ?>
+                </tbody>
+                </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <?php $this->render('include/pager', true); ?>
+                    </ul>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script type="text/javascript">
+        function showOperate(id)
+        {
+            $.confirm({
+                title: '操作详情',
+                content: 'url:/Log/getLogDetail?id='+id,
+                animation: 'bottom',
+                columnClass: 'col-md-6 col-md-offset-3',
+                cancelButton: false,
+                confirmButton: false
+            });
+        }
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

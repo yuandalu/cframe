@@ -3,6 +3,7 @@
 namespace App\Models\Svc;
 
 use App\Support\Loader;
+use App\Models\Entity\AdmAuthNode;
 
 class AdmAuthNodeSvc
 {

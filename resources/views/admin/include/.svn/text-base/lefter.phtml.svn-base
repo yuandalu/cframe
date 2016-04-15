@@ -1,0 +1,107 @@
+<script>
+function menu_hide()
+{
+	$("#sidebar").hide();
+	$("#sidebar-hidden").show();
+	$("#main-content").css({'margin-left':0});
+	setCookie('hiddensidebar','1','/');
+}
+
+function menu_show()
+{
+	$("#sidebar").show();
+	$("#sidebar-hidden").hide();
+	$("#main-content").css({'margin-left':'190px'});
+	setCookie('hiddensidebar','0','/');
+	//$()
+}
+</script>
+		<div id="sidebar-hidden" style="color:#fff;position:fixed;top:0px;left:0px;width:180px;height:32px;z-Index:10000;display:none;">
+			<button  style="font-size:20px;height:36px;width:180px;"  onclick="menu_show()">点此显示菜单</button>
+		</div>
+		<div id="sidebar" style="display:none;">
+		<button  value="点此隐藏菜单" style="font-size:20px;height:36px;width:180px;"   onclick="menu_hide()">点此隐藏菜单</button>
+		<div  id="sidebar-wrapper" > <!-- Sidebar with logo and menu -->
+
+			<h1 id="sidebar-title"><a href="#">贵学视频点播管理系统</a></h1>
+
+			<!-- Logo (221px wide) -->
+<?php $adminuserobj = AdminuserSvc::getByEname($this->admin_user);?>
+			<br />
+			
+			<!-- Sidebar Profile links -->
+
+			<div id="profile-links">
+				<a href="http://guixue.com/" target="_blank">前台</a> | <a href="/index/logout/" title="退出">退出</a>
+			</div>
+<?php
+$admin_user = LoaderSvc::loadSess()->get('admin_user');
+$adminuserobj = AdminuserSvc::getByEname($admin_user);
+
+$curUid = $adminuserobj->id;
+$haveauth = AuthsSvc::getAuthByUid($curUid);//已经有的权限
+$tempArr = array();
+//echo '$haveauth<br>';
+//print_r($haveauth);
+if('超级管理员' == $adminuserobj->role){
+	$auths = MenuSvc::getMenus($haveauth,true);
+}else{
+	$auths = MenuSvc::getMenus($haveauth,false);
+}
+//echo '$auths<br>';
+//print_r($auths);
+
+$curr_submenus = array();
+
+foreach($auths as $key=>$value)
+{
+	$nodsclass = MenuSvc::getByonclass($value['oneclass']);
+	$tempArr[$value['oneclass']] = $nodsclass;
+
+	foreach($nodsclass as $_nodek =>$_nodev) {
+		$curr_submenus[$value['oneclass']][] = $_nodev['curr_submenu'];
+	}
+
+	
+
+}
+?>
+			<ul id="main-nav">
+				<?php foreach($tempArr as $key=>$value){ 
+					?>
+				<li>
+					<a href="#" class="nav-top-item<?php if($this->curr_menu==$value[0]['curr_menu']  && in_array($this->curr_submenu, $curr_submenus[$key]) ){echo ' current';}?>">
+						<?php
+							echo $key;
+						 ?>
+					</a>
+					<ul>
+						<?php foreach($value as $va){
+						if(!in_array($va['aid'], $haveauth) &&
+						('超级管理员' != $adminuserobj->role))
+						{
+							continue;
+						}
+
+						?>
+						<li><a href="<?php echo $va['url'];?>"<?php if($this->curr_submenu==$va[curr_submenu]){echo 'class="current"';}?>><?php echo $va['name'];?></a></li>
+						<?php }?>
+					</ul>
+				</li>
+				<?php }?>
+			</ul> <!-- End #main-nav -->
+
+		</div></div> <!-- End #sidebar -->
+
+<script>
+$(document).ready(
+	function(){
+		if(getCookie('hiddensidebar')==1)
+		{
+			menu_hide();
+		}else
+		{
+			menu_show();
+		}
+})
+</script>

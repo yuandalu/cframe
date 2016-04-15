@@ -1,0 +1,63 @@
+<?php $this->render( 'include/header', true ); ?>
+<?php $this->render( 'include/lefter', true );
+$logs = $this->list;
+?>
+		<div id="main-content"> <!-- Main Content Section with everything -->
+
+			<!-- Page Head -->
+			<div class="content-box ">
+
+				<div class="content-box-header">
+
+					<h3>登录日志</h3>
+					<!--<ul class="content-box-tabs">
+						<li><a href="/album/index/?isdelete=1" <?php if($this->isdelete==1){echo 'class="default-tab"';}?>>列表</a></li> <!-- href must be unique and match the id of target div 
+						<li><a href="/album/index/?isdelete=2" <?php if($this->isdelete==2){echo 'class="default-tab"';}?>>已删</a></li>
+						<li><a href="/album/select/">新增</a></li>
+					</ul>-->
+
+
+				</div> <!-- End .content-box-header -->
+
+				<div class="content-box-content">
+
+					<div class="tab-content default-tab">
+
+						<table>
+							<tr>
+								<th><h3>ID</h3></th>
+								<th><h3>用户名</h3></th>
+								<th><h3>登录IP</h3></th>
+								<th><h3>登录时间</h3></th>
+								<th><h3>结果</h3></th>
+							</tr>
+							<?php
+							foreach($logs['record'] as $key=>$v)
+							{
+								echo '<tr>';
+								echo '<td>'.$v['id'].'</td>';
+								echo '<td >'.$v['username'].'</td>';
+								echo '<td>'.$v['ip'].'</td>';
+								echo '<td>'.$v['login_time'].'</td>';
+								if($v['result'])
+								{
+									echo '<td>成功</td>';
+								}else
+								{
+									echo '<td><font color=red>失败</font></td>';
+								}
+								
+							}
+
+							?>
+						</table>
+
+					</div> <!-- End #tab3 -->
+<?php $this->render( 'include/pager', true ); ?>
+				</div> <!-- End .content-box-content -->
+
+
+			</div> <!-- End .content-box -->
+
+
+<?php $this->render( 'include/footer', true ); ?>

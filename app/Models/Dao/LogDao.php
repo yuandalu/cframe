@@ -3,6 +3,7 @@
 namespace App\Models\Dao;
 
 use App\Support\Loader;
+use App\Support\Pager;
 use App\Models\Svc\UtlsSvc;
 
 class LogDao extends BaseDao
@@ -28,11 +29,6 @@ class LogDao extends BaseDao
         return $this->getExecutor()->exeNoQuery($sql,array($param['username'],$param['time'],$param['action'],$param['content'],$param['ip']));
     }
 
-    public function writeFileLog()
-    {
-        LogSvc::get("Videoaction")->log();
-    }
-
     public function getLogs($table,$options, $request = array(), $request_param= array(), $sql_condition= array(),$sql_param= array())
     {
         $sql = "select * from ".$table;
@@ -55,23 +51,6 @@ class LogDao extends BaseDao
         $sql = "select * from adm_actlog where id = ?";
         $data = $this->getExecutor()->querys($sql,array($id));
         return $data;
-    }
-
-    public function getRunningLog($id)
-    {
-        $sql = "select * from dump where id = ?";
-        $data = $this->getExecutor()->querys($sql,array($id));
-        return $data;
-    }
-
-    /*
-    * 删除客户端运行日志
-    ***/
-    public function delLog($id)
-    {
-        $sql = "delete from dump where id = ?";
-        $this->getExecutor()->exeNoquery($sql,array($id));
-        return "OK";
     }
 
 }

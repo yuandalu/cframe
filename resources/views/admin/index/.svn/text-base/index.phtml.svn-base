@@ -1,0 +1,45 @@
+<?php $this->render( 'include/header', true ); ?>
+<?php 
+		$this->render( 'include/lefter', true ); 
+?>
+ <link href="/static/css/layout.css" rel="stylesheet" type="text/css" />
+
+
+		<div id="main-content"> <!-- Main Content Section with everything -->
+
+			<!-- Page Head -->
+			<h2>欢迎您，<?php echo $this->admin_user;?></h2>
+
+			<p id="page-intro"></p>
+
+
+
+
+			<div class="content-box ">
+
+				<div class="content-box-header">
+
+					<h3>图片尺寸标准</h3>
+
+
+				</div> <!-- End .content-box-header -->
+
+				<div class="content-box-content">
+
+					<div class="tab-content default-tab">
+					<p>首页推荐课程图:  390*219（16:9）</p>
+					<p>点播课程列表小图:  376*212（16:9）</p>
+					<p>点播课程封面大图:  861*484（16:9）</p>
+					<p>直播课程封面大图:  578*328（16:9）</p>
+					<p>课程封面小图:  390*219（16:9）</p>
+
+
+
+					</div> <!-- End #tab3 -->
+
+				</div> <!-- End .content-box-content -->
+
+			</div> <!-- End .content-box -->
+
+
+<?php $this->render( 'include/footer', true ); ?>

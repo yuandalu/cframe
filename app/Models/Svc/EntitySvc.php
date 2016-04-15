@@ -647,7 +647,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
                 $admin_list_file.='
                         <th>操作</th>
                     </tr>
-                    <?php foreach ($this->list[\'record\'] as $v) {
+                    <?php foreach ($this->list[\'records\'] as $v) {
                     echo "<tr>";';
                     foreach ($f_name as $name) {
                         $admin_list_file.="
@@ -717,7 +717,7 @@ $admin_controller .=" ".$entity_ucfirst."Controller extends BaseController
             <?php $this->render(\'include/leftbar\', true); ?>
             <div class="content-wrapper">
                 <section class="content-header">
-                    <h1>'.$table_annotation.'<small>Add</small></h1>
+                    <h1>'.$table_annotation.'<small><?php echo $this->id?\'Edit\':\'Add\';?></small></h1>
                     <ol class="breadcrumb">
                         <li>
                             <a href="/">
