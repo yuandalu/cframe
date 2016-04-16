@@ -104,8 +104,7 @@ class ErrorSvc
         if (!is_null($data)) {
             $result['data'] = $data;
         }
-        echo json_encode($result);
-        exit;
+        return $result;
     }
     /**
      * [showJC 根据参数决定是否输出回调]

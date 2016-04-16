@@ -5,6 +5,7 @@ namespace App\Controllers\Front;
 use App\Support\Loader;
 use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\LogSvc;
+use App\Models\Svc\ErrorSvc;
 
 class IndexController extends BaseController
 {
@@ -24,8 +25,8 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        // $cache = Loader::loadDBCache()->set('a', 'ttt ');
-        // $cache = Loader::loadDBCache()->get('a');
+        // $cache = Loader::loadDBCache()->set('a', 'DBCache');
+        // echo $cache = Loader::loadDBCache()->get('a');
         // $cache = loader('DBCache')->set('a', 'ttt ');
         // $cache = loader('DBCache')->get('a');
         // Loader::loadSlaveRedis()->set('a', 2);
@@ -37,5 +38,11 @@ class IndexController extends BaseController
         // var_dump(env('CAPTCHA_FONT_FILE', 'local'));
         $name = 'Frame';
         $this->assign('name', $name);
+        echo $name;
+        // return view('index');
+        $data = array('type'=>'json', 'name'=>'api');
+        // return $data;
+        // return 666;
+        return ErrorSvc::showJson(ErrorSvc::ERR_OK, $data);
     }
 }

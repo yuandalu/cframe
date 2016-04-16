@@ -617,7 +617,7 @@ class UtlsSvc
 
     public static function isReadonly()
     {
-        return $_SERVER['READONLY_MODE'] == "1";
+        return env('READONLY_MODE', 'local') == '1';
     }
 
     public static function numToCny($num)

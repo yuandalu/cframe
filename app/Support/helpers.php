@@ -1,8 +1,19 @@
 <?php
 
+use Elephant\Container\Factory;
 use App\Support\ObjectFinder;
 use App\Support\DBCache;
 use App\Support\Logs;
+
+if (!function_exists('view')) {
+    function view($name, $noController = false)
+    {
+        $view = Factory::find('Elephant\Foundation\View');
+        $view->setReturnAction($name);
+        $view->setReturnNoController($noController);
+        return $view;
+    }
+}
 
 if (!function_exists('loader')) {
     function loader($name)

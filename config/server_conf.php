@@ -8,4 +8,5 @@ if (isset($_SERVER['REMOTE_ADDR']) && (in_array($_SERVER['REMOTE_ADDR'], array('
     $EXCEPTION = false;
 }
 
+$READONLY_MODE = '0';
 $CAPTCHA_FONT_FILE = BASE_DIR.'/resources/data/verdana.ttf';

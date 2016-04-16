@@ -115,7 +115,7 @@ class SQLExecutor
 
     public function exeNoQuery($sql, $values = array())
     {
-        if (env('READONLY', 'local')) {
+        if (env('READONLY_MODE', 'local')) {
             return false;
         }
 
@@ -153,7 +153,7 @@ class SQLExecutor
 
     public function commit()
     {
-        if (UtlsSvc::isReadonly()) {
+        if (env('READONLY_MODE', 'local')) {
             $this->_dbh->rollback();
             ErrorSvc::show(ErrorSvc::ERR_BUSY);
             exit();
