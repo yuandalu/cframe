@@ -16,8 +16,8 @@ class LogController extends BaseController
     {
         $list = LogSvc::getLogs('adm_loginlog',array('per_page'=>self::PER_PAGE_NUM, 'page_param'=>'cp', 'curr_page'=>$this->getRequest('cp',1),'file_name'=>'/log/index/'));
         $this->assign('list', $list);
-        $this->assign('curr_menu', 'log');
-        $this->assign('curr_submenu', 'log');
+        $this->assign('curr_menu', 'manage');
+        $this->assign('curr_submenu', 'manage_log');
     }
 
     public function operateAction()
@@ -39,7 +39,8 @@ class LogController extends BaseController
         $this->assign('start', $start);
         $this->assign('end', $end);
 
-        $this->assign('curr_submenu', 'operate');
+        $this->assign('curr_menu', 'manage');
+        $this->assign('curr_submenu', 'manage_operate');
     }
 
     public function getLogDetailAction()

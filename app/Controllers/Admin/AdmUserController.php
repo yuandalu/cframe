@@ -23,7 +23,7 @@ class AdmUserController extends BaseController
         $this->assign('list', $list);
         $this->assign('name', $request['name']);
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'manage_index');
+        $this->assign('curr_submenu', 'manage_admuser');
     }
 
     public function addAction()
@@ -110,7 +110,6 @@ class AdmUserController extends BaseController
         exit;
     }
 
-
     /***
     获取某个人所有权限
     id--uid 2013-5-31
@@ -122,8 +121,9 @@ class AdmUserController extends BaseController
         $this->assign('admin',$admin);
         $this->assign('data',$auth);
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'manage_index');
+        $this->assign('curr_submenu', 'manage_admuser');
     }
+    
     /***
     账号禁用
     ***/

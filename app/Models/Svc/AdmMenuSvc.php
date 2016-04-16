@@ -129,7 +129,6 @@ class AdmMenuSvc
     public static function getAll()
     {
         $data = self::getDao()->getAll($tag);
-
         return $data;
     }
 

@@ -28,8 +28,7 @@ server{
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
-
-        fastcgi_param ENV_INCLUDE_PATH "";
+        
         fastcgi_param ENV_DATA_DIR "/data/www/data/v.guixue.com";
         fastcgi_param ENV_DATA_DIR_URL "http://223data.v.guixue.com";
         fastcgi_param ENV_DATA_CDN_URL "http://223data.v.guixue.com";
@@ -37,7 +36,6 @@ server{
 
         fastcgi_param ENV_CACHE_DIR "/data/www/cache/v.guixue.com";
         fastcgi_param ENV_APPLOGS_DIR "/data/www/applogs/ddj.v.guixue.com";
-        fastcgi_param ENV_QFRAME_PATH "/home/dingdejing/QFrame";
 
         fastcgi_param ENV_DB_HOST "127.0.0.1";
         fastcgi_param ENV_DB_PORT "3306";
@@ -114,8 +112,7 @@ server{
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
-
-        fastcgi_param ENV_INCLUDE_PATH "";
+        
         fastcgi_param ENV_DATA_DIR "/data/www/data/v.guixue.com";
         fastcgi_param ENV_DATA_DIR_URL "http://223data.v.guixue.com";
         fastcgi_param ENV_DATA_CDN_URL "http://223data.v.guixue.com";
@@ -123,7 +120,6 @@ server{
 
         fastcgi_param ENV_CACHE_DIR "/data/www/cache/v.guixue.com";
         fastcgi_param ENV_APPLOGS_DIR "/data/www/applogs/ddj.v.guixue.com";
-        fastcgi_param ENV_QFRAME_PATH "/home/dingdejing/QFrame";
 
         fastcgi_param ENV_DB_HOST "127.0.0.1";
         fastcgi_param ENV_DB_PORT "3306";
@@ -200,8 +196,7 @@ server{
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
-
-        fastcgi_param ENV_INCLUDE_PATH "";
+        
         fastcgi_param ENV_DATA_DIR "/data/www/data/v.guixue.com";
         fastcgi_param ENV_DATA_DIR_URL "http://223data.v.guixue.com";
         fastcgi_param ENV_DATA_CDN_URL "http://223data.v.guixue.com";
@@ -209,7 +204,6 @@ server{
 
         fastcgi_param ENV_CACHE_DIR "/data/www/cache/v.guixue.com";
         fastcgi_param ENV_APPLOGS_DIR "/data/www/applogs/ddj.v.guixue.com";
-        fastcgi_param ENV_QFRAME_PATH "/home/dingdejing/QFrame";
 
         fastcgi_param ENV_DB_HOST "127.0.0.1";
         fastcgi_param ENV_DB_PORT "3306";

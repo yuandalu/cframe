@@ -49,8 +49,9 @@ class AdmAuthNodeDao extends BaseDao
 
     public function getAll()
     {
-        $sql = "select concat(contr,'_',action) as a from ".$this->table." ";
+        $sql  = "select concat(contr,'_',action) as a from ".$this->table." ";
         $data = $this->getExecutor()->querys($sql);
+        $res  = array();
         foreach ($data as $v) {
             $res[]=$v['a'];
         }

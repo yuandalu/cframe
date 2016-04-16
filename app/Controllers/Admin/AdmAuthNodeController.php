@@ -22,7 +22,7 @@ class AdmAuthNodeController extends BaseController
         $auths = AdmAuthSvc::getAllauth();
         $this->assign("auth",$auth);
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'controauth_add');
+        $this->assign('curr_submenu', 'manage_admauthnode');
 
     }
 
@@ -68,6 +68,7 @@ class AdmAuthNodeController extends BaseController
         }
         UtlsSvc::showMsg('修改成功',$_SERVER['HTTP_REFERER']);
     }
+
     public function editAction()
     {
         $id = $this->getRequest("id");
@@ -76,7 +77,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign('data', $data );
         $this->assign('auths', $auths );
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'controauth_add');
+        $this->assign('curr_submenu', 'manage_admauthnode');
     }
 
     public function modifyAction()
@@ -86,14 +87,12 @@ class AdmAuthNodeController extends BaseController
         $param['action'] = $this->getRequest('action');
         $param['aid'] = $this->getRequest('aid');
         $re = AdmAuthNodeSvc::updateById($id,$param);
-        if($re)
-        {
+        if ($re) {
             $action = '修改程序权限['.$id.']';
             LogSvc::writeLog($action,array('action'=>$action,'content'=>$param));
             UtlsSvc::showMsg('修改成功', '/AdmAuthNode/list/');
             exit;
-        }else
-        {
+        } else {
             UtlsSvc::showMsg('未做任何改变', '/AdmAuthNode/list/?id='.$id.'');
             exit;
         }
@@ -121,7 +120,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign( 'per_page_num', self::PER_PAGE_NUM );
 
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'controauth_list');
+        $this->assign('curr_submenu', 'manage_admauthnode');
 
         $this->assign($request);
         $this->assign( 'authconf',  AdmAuthSvc::getConf());

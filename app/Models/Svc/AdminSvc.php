@@ -48,7 +48,6 @@ class AdminSvc
             $r = 1;
         } else {
             $r = 0;
-
         }
         $o->closeHost();
         return $r;

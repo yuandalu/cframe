@@ -26,7 +26,7 @@ class AdmAuthSvc
     {
         $admin = AdminSvc::getLoginUser();
         $auths = self::getDao()->getAidByUser($admin);
-        $data  = AdmAuthNodeSvc::verify($c,$a);
+        $data  = AdmAuthNodeSvc::verify($c, $a);
         /*echo "<pre>";
         print_r($data);
         echo "所有权限";
@@ -34,10 +34,8 @@ class AdmAuthSvc
         print_r($auths);
         echo "我的权限";
         exit;*/
-        foreach($data as $value)
-        {
-            if(in_array($value,$auths))
-            {
+        foreach ($data as $value) {
+            if (in_array($value,$auths)) {
                 return "succ";
             }
         }

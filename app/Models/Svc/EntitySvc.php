@@ -283,7 +283,7 @@ $svc_file .= " ".$entity."Svc
 
     public static function createAdminControllerFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start)
     {
-        $admin_controller = "<?php\n\nnamespace App\Controllers\Admin;\n\nuse App\Models\Svc\ErrorSvc;\nuse App\Models\Svc\\".$entity."Svc;\n\n
+        $admin_controller = "<?php\n\nnamespace App\Controllers\Admin;\n\nuse App\Models\Svc\ErrorSvc;\nuse App\Models\Svc\UtlsSvc;\nuse App\Models\Svc\\".$entity."Svc;\n\n
 class";
 $admin_controller .=" ".$entity."Controller extends BaseController
 {
@@ -301,7 +301,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         if (\$id > 0) {
             \$".$entity." = ".$entity."Svc::getById(\$id);
             if (is_null(\$".$entity.")) {
-                UtlsSvc::showMsg('没有这个ID',\$_SERVER['HTTP_REFERER']);
+                UtlsSvc::showMsg('没有这个ID', '/".$entity."/list');
             }
             \$this->assign(\$".$entity."->toAry());
         }

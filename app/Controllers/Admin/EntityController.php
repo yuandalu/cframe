@@ -12,7 +12,6 @@ class EntityController extends BaseController
         parent::__construct();
     }
 
-
     public function indexAction()
     {
 
@@ -20,7 +19,6 @@ class EntityController extends BaseController
 
     public function indexSubmitAction()
     {
-
         $f_type = $this->getRequest('f_type');
         $f_name = $this->getRequest('f_name');
         $f_description = $this->getRequest('f_description');

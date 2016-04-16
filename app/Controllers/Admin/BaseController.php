@@ -19,21 +19,17 @@ class BaseController extends Controller
         $adminUser    = loader('Sess')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if (!$adminUserObj) {
-            UtlsSvc::goToAct("Index", "notlogin");
+            UtlsSvc::goToAct("Index", "login");
         }
         $this->assign('adminUser', $adminUser);
         $this->assign('adminUserObj', $adminUserObj);
-        if ($adminUserObj && $adminUserObj->isSuper()) {
+        $mastVerify = false;// #warning这里添加必须验证的逻辑
+        if (!$mastVerify && $adminUserObj && $adminUserObj->isSuper()) {
             return "";
         } else {
             $auth = AdmAuthSvc::verify($controllerName, $actionName);
             if ($auth == "fail") {
-                if ($_SERVER['HTTP_X_REQUESTED_WITH']) {
-                    UtlsSvc::showMsg('您无此权限', '/Index/index/');
-                    exit;
-                } else {
-                    UtlsSvc::showMsg('您无此权限', '/Index/index/');
-                }
+                UtlsSvc::showMsg('您无此权限', '/Index/index/');
             } else {
                 return "";
             }

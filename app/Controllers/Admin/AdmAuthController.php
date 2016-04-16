@@ -18,10 +18,8 @@ class AdmAuthController extends BaseController
     public function indexAction()
     {
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'auths_add');
-
+        $this->assign('curr_submenu', 'manage_admauth');
     }
-
 
     public function addAction()
     {
@@ -73,7 +71,7 @@ class AdmAuthController extends BaseController
         $this->assign( 'per_page_num', self::PER_PAGE_NUM );
 
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'auths_add');
+        $this->assign('curr_submenu', 'manage_admauth');
 
         $this->assign($request);
         $this->assign('orderby', $orderby);

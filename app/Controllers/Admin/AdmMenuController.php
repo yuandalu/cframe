@@ -24,7 +24,7 @@ class AdmMenuController extends BaseController
         $this->assign("oneclass",$oneclass);
         $this->assign("auths",$auths);
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'menu_add');
+        $this->assign('curr_submenu', 'manage_admmenu');
 
     }
 
@@ -126,9 +126,7 @@ class AdmMenuController extends BaseController
         $this->assign( 'per_page_num', self::PER_PAGE_NUM );
 
         $this->assign('curr_menu', 'manage');
-        $this->assign('curr_submenu', 'menu_add');
-
-        $this->assign($request);
+        $this->assign('curr_submenu', 'manage_admmenu');
         $this->assign('orderby', $orderby);
     }
 

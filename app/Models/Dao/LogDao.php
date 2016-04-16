@@ -13,7 +13,6 @@ class LogDao extends BaseDao
     public function loginLog($param)
     {
         $sql = "insert into adm_loginlog (`username`,`ip`,`login_time`,`result`) values('".$param['username']."','".$param['ip']."','".$param['time']."',".$param['result'].")";
-        //LogSvc::get("LoginLog")->log(var_export($param).'|username='.var_dump( $param['username']));
         $this->getExecutor()->exeNoQuery($sql);
     }
 

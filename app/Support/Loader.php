@@ -107,14 +107,14 @@ class Loader
         }
 
         $obj = new SQLExecutor(self::$_db_f);
-        $obj->regLogObj(LogSvc::getFinanceSqlLog());
+        $obj->regLogObj(logs('finance_sql'));
         ObjectFinder::register('SQLExecutorFinance', $obj);
         return $obj;
     }
 
-    public static function loadVlogExecutor()
+    public static function loadLogExecutor()
     {
-        $obj = ObjectFinder::find('SQLExecutorVlog');
+        $obj = ObjectFinder::find('SQLExecutorLog');
         if (is_object($obj)) {
             return $obj;
         }
@@ -124,8 +124,8 @@ class Loader
         }
 
         $obj = new SQLExecutor(self::$_db_vlog);
-        $obj->regLogObj(LogSvc::getFinanceSqlLog());
-        ObjectFinder::register('SQLExecutorVlog', $obj);
+        $obj->regLogObj(logs('log_sql'));
+        ObjectFinder::register('SQLExecutorLog', $obj);
         return $obj;
     }
 

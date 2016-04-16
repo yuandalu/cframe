@@ -31,7 +31,9 @@ if (!function_exists('env')) {
         if ($location == 'fastcgi') {
             return $_SERVER[$name];
         } elseif ($location == 'local') {
-            return '';
+            // 帮助函数载入比较优先，所以app.php设置的配置路径不生效，在此重新设置
+            Elephant\Base\Config::$configFile = BASE_DIR.'/config/server_conf.php';
+            return \Elephant\Base\Config::getConfig($name);
         }
     }
 }

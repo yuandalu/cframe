@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Svc\ErrorSvc;
+use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\TestClassSvc;
 
 
@@ -22,7 +23,7 @@ class TestClassController extends BaseController
         if ($id > 0) {
             $TestClass = TestClassSvc::getById($id);
             if (is_null($TestClass)) {
-                UtlsSvc::showMsg('没有这个ID',$_SERVER['HTTP_REFERER']);
+                UtlsSvc::showMsg('没有这个ID', '/TestClass/list');
             }
             $this->assign($TestClass->toAry());
         }
