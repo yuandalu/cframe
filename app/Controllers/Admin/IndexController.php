@@ -19,8 +19,7 @@ class IndexController extends BaseController
         $adminUser    = loader('Sess')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if (!$adminUserObj) {
-            $go = $this->getRequest('go');
-            UtlsSvc::goToAct('index','notlogin', array('go'=>urlencode($go)));
+            UtlsSvc::goToAct('Index', 'notlogin');
         }
         $this->assign('adminUserObj', $adminUserObj);
     }
@@ -40,52 +39,41 @@ class IndexController extends BaseController
         $adminUser    = loader('Sess')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if ($adminUserObj) {
-            UtlsSvc::goToAct('index', 'index');
+            UtlsSvc::goToAct('Index', 'index');
         }
-        $go = $this->getRequest('go');
-        $go = $go?$go:(strpos($_SERVER['HTTP_REFERER'], 'index/login')?'/':$_SERVER['HTTP_REFERER']);
-        $this->assign('go', urldecode($go));
     }
 
     public function noauthAction()
     {
-        UtlsSvc::showMsg('没有权限','/index/notlogin/');
+        UtlsSvc::showMsg('没有权限','/Index/notlogin/');
         exit;
     }
 
     public function loginAction()
     {
-        //这里是后台
         $captcha     = strtolower($this->getRequest('security_code', ''));
         $session_val = strtolower(loader('Sess')->get('security_code'));
         $user        = $this->getRequest('user', '');
         $pwd         = $this->getRequest('pwd', '');
-        $go          = $this->getRequest('go');
         if (UtlsSvc::inCompany() || true) {
             if ('' == $captcha || $session_val !=  $captcha   || '' == $session_val) {
-                UtlsSvc::showMsg('验证码错误', '/index/index?go='.urlencode($go), 1.25);
+                UtlsSvc::showMsg('验证码错误', '/Index/index', 1.25);
             }
         } else {
             
         }
 
         $r = AdminSvc::login($user, $pwd);
-        if(!$r)
-        {
-            UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用新的企业邮箱密码登陆</span>)', '/index/index?go='.urlencode($go));
+        if (!$r) {
+            UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用新的企业邮箱密码登陆</span>)', '/Index/index');
         }
-        if ($go) {
-            header("location:".$go);
-            exit;
-        } else {
-            UtlsSvc::goToAct('index', 'index');
-        }
+        UtlsSvc::goToAct('Index', 'index');
     }
 
     public function logoutAction()
     {
         //这里是后台
         loader('Sess')->destroy('adminUser');
-        UtlsSvc::goToAct('index', 'index');
+        UtlsSvc::goToAct('Index', 'index');
     }
 }

@@ -13,13 +13,13 @@ class BaseController extends Controller
     {
         $controllerName = Controller::getControllerName();
         $actionName     = Controller::getActionName();
-        if (in_array($controllerName, array('include', 'index'))) {
+        if (in_array($controllerName, array('Include', 'Index', 'include', 'index'))) {
             return "";
         }
         $adminUser    = loader('Sess')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if (!$adminUserObj) {
-            UtlsSvc::goToAct("index", "notlogin");
+            UtlsSvc::goToAct("Index", "notlogin");
         }
         $this->assign('adminUser', $adminUser);
         $this->assign('adminUserObj', $adminUserObj);
@@ -29,10 +29,10 @@ class BaseController extends Controller
             $auth = AdmAuthSvc::verify($controllerName, $actionName);
             if ($auth == "fail") {
                 if ($_SERVER['HTTP_X_REQUESTED_WITH']) {
-                    UtlsSvc::showMsg('您无此权限', '/index/index/');
+                    UtlsSvc::showMsg('您无此权限', '/Index/index/');
                     exit;
                 } else {
-                    UtlsSvc::showMsg('您无此权限', '/index/index/');
+                    UtlsSvc::showMsg('您无此权限', '/Index/index/');
                 }
             } else {
                 return "";

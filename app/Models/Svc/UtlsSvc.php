@@ -303,93 +303,10 @@ class UtlsSvc
         return $ip;
     }
 
-    
-
-    public static function get_ip_address($ip)
-    {
-        if ($ip == '127.0.0.1')
-            return 'IP：' . $ip . ' 来自：本地';
-        $content = self::simpleRequest("http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip);
-        $ipdata = json_decode($content, true);
-        $ipaddress = " " . $ipdata['data']['country'] . "-" . $ipdata['data']['area'] . "-" . $ipdata['data']['region'] . "-" . $ipdata['data']['city'] . "-" . $ipdata['data']['county'] . $ipdata['data']['isp'] . "";
-        return $ipaddress;
-    }
-
-    /*
-     * 返回地址数组
-     */
-
-    public static function get_ip_address2($ip)
-    {
-        if ($ip == '127.0.0.1' || empty($ip)) {
-            return array();
-        }
-
-        $content = self::simpleRequest("http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip);
-        $ipdata = json_decode($content, true);
-
-        if ($ipdata['data']) {
-            $address['country'] = $ipdata['data']['country'];
-            $address['area'] = $ipdata['data']['area'];
-            $address['region'] = $ipdata['data']['region'];
-            $address['city'] = $ipdata['data']['city'];
-            $address['county'] = $ipdata['data']['county'];
-            $address['isp'] = $ipdata['data']['isp'];
-        } else {
-            $address = array();
-        }
-        return $address;
-    }
-
-    public static function get_ip_province($ip)
-    {
-        if ($ip == '127.0.0.1')
-            return 'IP：' . $ip . ' 来自：本地';
-        $content = self::simpleRequest("http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip);
-        $ipdata = json_decode($content, true);
-        $ipaddress = $ipdata['data']['region'];
-        return $ipaddress;
-    }
-
     public static function getRemoteIP()
     {
         return $_SERVER['REMOTE_ADDR'];
     }
-
-    
-
-    public static function checkSourceIP($mid)
-    {
-        $merchant_allow_ip = QFrameConfig::getConfig('MERCHANT_ALLOW_IP');
-        if (!isset($merchant_allow_ip[$mid])) {
-            return false;
-        }
-        //self::getClientIP()里，HTTP_X_FORWARDED太容易被伪造了
-        return in_array($_SERVER['REMOTE_ADDR'], $merchant_allow_ip[$mid]);
-    }
-
-    
-
-    public static function checkNotifyIP($gateway)
-    {
-        $gateway_allow_ip = QFrameConfig::getConfig('GATEWAY_ALLOW_IP');
-        if (!isset($gateway_allow_ip[$gateway])) {
-
-            return false;
-        }
-        $ip = self::getRemoteIP();
-        if (in_array($ip, $gateway_allow_ip[$gateway])) {
-            return true;
-        }
-        foreach ($gateway_allow_ip[$gateway] as $ip_C) {
-            if (strpos($ip, $ip_C) === 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    
 
     public static function array2xml($array)
     {
@@ -406,8 +323,6 @@ class UtlsSvc
         $xml .= '</root>';
         return $xml;
     }
-
-    
 
     private static function array2xml_node($array)
     {
@@ -426,8 +341,6 @@ class UtlsSvc
         }
         return $xml;
     }
-
-    
 
     public static function xml2array($xml)
     {
@@ -461,8 +374,6 @@ class UtlsSvc
         return $arr;
     }
 
-    
-
     public static function htmlspecialcharsRecursive($value)
     {
         if (is_numeric($value)) {
@@ -487,38 +398,15 @@ class UtlsSvc
         return $value;
     }
 
-    
-
     public static function tmplog($msg)
     {
         error_log("\n[" . date('H:i:s') . " " . $_SERVER['REMOTE_ADDR'] . "]" . $msg, 3, "/tmp/fawn" . date('Ymd') . ".log");
     }
 
-    
-
-    public static function needLogin($ajax = false)
-    {
-        $info = UserSdk::getUserInfo();
-        if (!$info) {
-            if ($ajax) {
-                return '';
-                exit;
-            } else {
-                UtlsSvc::goToAct('login', 'index', array('go' => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']));
-            }
-            return false;
-        }
-        return true;
-    }
-
-    
-
     public static function validPass($password)
     {
         return preg_match('/[0-9a-f]{32}/', $password);
     }
-
-    
 
     public static function encode_uri_json($arr)
     {
@@ -534,139 +422,12 @@ class UtlsSvc
         return $output;
     }
 
-    
-
-    public static function json_encode($var)
-    {
-        switch (gettype($var)) {
-            case 'boolean':
-                return $var ? 'true' : 'false'; // Lowercase necessary!
-            case 'integer':
-            case 'double':
-                return $var;
-            case 'resource':
-            case 'string':
-                return '"' . str_replace(array("\r", "\n", "<", ">", "&"), array('\r', '\n', '\x3c', '\x3e', '\x26'), addslashes($var)) . '"';
-            case 'array':
-                // Arrays in JSON can't be associative. If the array is empty or if it
-                // has sequential whole number keys starting with 0, it's not associative
-                // so we can go ahead and convert it as an array.
-                if (empty($var) || array_keys($var) === range(0, sizeof($var) - 1)) {
-                    $output = array();
-                    foreach ($var as $v) {
-                        $output[] = self::json_encode($v);
-                    }
-                    return '[' . implode(', ', $output) . ']';
-                }
-            // Otherwise, fall through to convert the array as an object.
-            case 'object':
-                $output = array();
-                foreach ($var as $k => $v) {
-                    $output[] = '"' . strval($k) . '":' . self::json_encode($v);
-                }
-                return '{' . implode(',', $output) . '}';
-            default:
-                return 'null';
-        }
-    }
-
-    public static function staffAuth($uid, $pwd)
-    {
-
-        $ds = ldap_connect($_SERVER['ENV_LDAP_SERVER'], 389);
-        if ($ds) {
-            if (@ldap_bind($ds, $uid, $pwd)) {
-                $r = 1;
-            } else {
-                $r = 0;
-            }
-            ldap_close($ds);
-        } else {
-            $r = 0;
-        }
-        return $r;
-    }
-
-    public static function uploadDocFile($file, $param, $k = "")
-    {
-        if (empty($param['size'])) {
-            return 'param size is not exist';
-        }
-        if (empty($param['path'])) {
-            return 'param path is not exist';
-        }
-        if (empty($file)) {
-            return 'param file is not exist';
-        }
-        if ($k) {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'][$k])) {
-                $result = array();
-                if ($_FILES[$file]['size'][$k] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                    self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'][$k], $_FILES[$file]['name'][$k]);
-//                $pathinfo = pathinfo($name);
-//                $newName = md5(uniqid() . $param['size'] . $_SERVER['REMOTE_ADDR']) . "." . $pathinfo['extension'];
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path'] . '/' . $name;
-                move_uploaded_file($_FILES[$file]['tmp_name'][$k], $targetFile);
-                $result['name'] = $param['path'] . '/' . $name;
-                $result['size'] = $_FILES[$file]['size'][$k];
-
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        } else {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'])) {
-                $result = array();
-                if ($_FILES[$file]['size'] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                    self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'], $_FILES[$file]['name']);
-//                $pathinfo = pathinfo($name);
-//                $newName = md5(uniqid() . $param['size'] . $_SERVER['REMOTE_ADDR']) . "." . $pathinfo['extension'];
-//                $newName = date("dhis")."_"  . $_FILES[$file]['name'];
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path'] . '/' . $name;
-                move_uploaded_file($_FILES[$file]['tmp_name'], $targetFile);
-                $result['name'] = $param['path'] . '/' . $name;
-                $result['size'] = $_FILES[$file]['size'];
-                //print_r($result);exit;
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        }
-    }
-
     public static function showMsg($alert, $url, $time = 1.2)
     {
         $time = $time * 1000;
-        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script src="/static/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js"></script><script src="/static/js/msg_util.js"></script><link rel="stylesheet" href="/static/css/public.css" /></head><body>';
-        echo "<script>MsgUtil.show('" . addslashes($alert) . "',function(){window.location.href='" . $url . "';},$time);</script>";
-        echo "</body></html>";
+        echo '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script src="/static/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js"></script><script src="/static/js/msg_util.js"></script><link rel="stylesheet" href="/static/css/public.css"/></head><body><script>MsgUtil.show(\''.addslashes($alert).'\', function(){window.location.href=\''.$url.'\';}, '.$time.');</script></body></html>';
         exit;
     }
-
-    
-
-    public static function simpleShowMsg($alert, $url)
-    {
-        $time = $time * 1000;
-        echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><body>';
-        echo "<script>alert('" . addslashes($alert) . "');window.location.href='" . $url . "';</script>";
-        echo "</body></html>";
-        exit;
-    }
-
-    
 
     //截取字符串
     function cutstr($string, $length, $dot = '')
@@ -738,27 +499,6 @@ class UtlsSvc
         return $array;
     }
 
-    public static function showstar($average_star)
-    {
-        $start = '1.5';
-        $b1 = "<img src='/static/images1/a1.gif' />";
-        $b2 = "<img src='/static/images1/a2.gif' />";
-        if ($average_star < $start) {
-            $start = $b1 . $b2 . $b2 . $b2 . $b2;
-        } elseif ($start <= $average_star && $average_star < ($start + 1)) {
-            $start = $b1 . $b1 . $b2 . $b2 . $b2;
-        } elseif (($start + 1) <= $average_star && $average_star < ($start + 2)) {
-            $start = $b1 . $b1 . $b1 . $b2 . $b2;
-        } elseif (($start + 2) <= $average_star && $average_star < ($start + 3)) {
-            $start = $b1 . $b1 . $b1 . $b1 . $b2;
-        } elseif (($start + 3) <= $average_star && $average_star < ($start + 4)) {
-            $start = $b1 . $b1 . $b1 . $b1 . $b1;
-        } else {
-            $start = $b1 . $b1 . $b1 . $b1 . $b1;
-        }
-        return $start;
-    }
-
     public static function checkMobile($str)
     {
         $pattern = "/^(13|15|18|14)\d{9}$/";
@@ -769,15 +509,9 @@ class UtlsSvc
         }
     }
 
-    public static function getWebBaseUrl()
-    {
-        return 'http://' . str_replace('admin.', '', $_SERVER['SERVER_NAME']);
-    }
-
     /*
      * 获得parse_str的指定变量
      */
-
     public static function get_parse_str($str, $keys)
     {
         parse_str($str);
@@ -787,92 +521,6 @@ class UtlsSvc
         }
 
         return $result;
-    }
-
-    /*
-     * 分页函数
-     */
-
-    public static function cutpage($number, $page, $pnum, $pname, $file, $params = array(), $maxp = 0, $rewrite = false, $xianshi = false)
-    {
-
-        if (!$maxpage = ceil($number / abs($pnum)))
-            $maxpage = 1;
-        if ($maxp)
-            $maxpage = min($maxp, $maxpage);
-        if (!is_numeric($page) || $page < 1 || $page > $maxpage)
-            return false;
-        if ($maxpage < 2)
-            return '';
-        $cutpage = "<p class='paging mar_t10'>";
-        if ($xianshi == false) {
-            $cutpage .= "<a>总记录：" . $number . "条</a> <a>当前页" . $page . "总页数" . $maxpage . "</a>";
-        }
-        if ($page != 1)
-            $cutpage .= ' <a href="' . $file . '" target="_self">首页</a>';
-        if ($page > 1)
-            $cutpage .= ' <a href="' . self::urlme($file, array_merge($params, array($pname => $page - 1)), $rewrite) . '" target="_self">上一页</a>';
-        $lnum = $page > 3 ? 2 : $page - 1;
-        $maxsp = $page + 10 - $lnum > $maxpage ? $maxpage + 1 : $page + 10 - $lnum;
-        $minsp = $maxsp - 10 < 1 ? 1 : $maxsp - 10;
-        for ($i = $minsp; $i < $maxsp; $i++) {
-            $cutpage .= $page == $i ? ' <a class=on>' . $i . '</a>' : ' <a href="' . self::urlme($file, array_merge($params, array($pname => $i)), $rewrite) . '" target="_self">' . $i . '</a>';
-        }
-        if ($page < $maxpage)
-            $cutpage .= ' <a href="' . self::urlme($file, array_merge($params, array($pname => $page + 1)), $rewrite) . '" target="_self">下一页</a>';
-        if ($page != $maxpage)
-            $cutpage .= ' <a href="' . self::urlme($file, array_merge($params, array($pname => $maxpage)), $rewrite) . '" target="_self">尾页</a>';
-        $cutpage = $cutpage . '</p>';
-
-        return $cutpage;
-    }
-
-    private function urlme($path = null, $params = null, $rewrite = false)
-    {
-        $url = '/';
-        if (is_string($path) || is_numeric($path))
-            $path = explode('/', $path);
-        if (is_array($path)) {
-            foreach ($path as $v)
-                if ($v && (is_string($v) || is_numeric($v)))
-                    $ptmp[] = rawurlencode($v);
-            if ($ptmp)
-                $url .= implode('/', $ptmp);
-        }
-        if (!preg_match('/.*\.[a-z]{2,4}$/', $url))
-            $url .= '/';
-        if (is_array($params)) {
-            $url .= '?';
-            foreach ($params as $k => $v) {
-                if (is_string($v) || is_numeric($v))
-                    $url .= rawurlencode($k) . '=' . rawurlencode($v) . '&';
-            }
-        }
-        return $rewrite ? rtrim(str_replace(array('=', '&', '?', '//'), '/', $url)) . '.html' : rtrim($url, '&?');
-    }
-
-    public static function checkUrl($strurl)
-    {
-        $str = substr($strurl, 0, 7);
-        if (stripos($strurl, '?') !== false) {
-            $ref = "&ref=221";
-        } else {
-            $ref = "?ref=221";
-        }
-        if ($str !== 'http://') {
-            return "http://" . $strurl . $ref;
-        }
-        return $strurl . $ref;
-    }
-
-    public static function StrLenW($str)
-    {
-        $count = 0;
-        $len = strlen($str);
-        for ($i = 0; $i < $len; $i++, $count++)
-            if (ord($str[$i]) >= 128)
-                $i++;
-        return $count;
     }
 
     public static function isIpad()
@@ -893,55 +541,6 @@ class UtlsSvc
     public static function isIOS()
     {
         return (strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) || (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false) || (strpos($_SERVER['HTTP_USER_AGENT'], 'iPod') !== false);
-    }
-
-    /*
-    *获取ios的设备id
-    */
-    public static function getIosDeviceid()
-    {
-
-        $deviceid = "";
-        $version = self::getAppVersion();
-
-        if (self::isApp() && self::isIOS() && (  ($version['app'] == 'GUIXUE' && $version['version'] > 1.4 )  || ($version['app'] == 'GUIXUETOEFL' && $version['version'] > 0) ) ) {
-            LogSvc::get("deviceid")->log(print_r($version, true));
-
-
-            $useragent = $_SERVER['HTTP_USER_AGENT'];
-
-            preg_match("/DeviceId:(.*?)\)/i", $useragent, $match);
-            LogSvc::get("deviceid")->log(print_r($match, true));
-
-            $deviceid = $match[1];
-        }
-
-        return $deviceid;
-
-    }
-
-    /*
-     * 判断 ios6 及以下版本
-     */
-
-    public static function isIOS5()
-    {
-
-        if (self::isIOS() && strpos($_SERVER['HTTP_USER_AGENT'], 'OS 5_') || strpos($_SERVER['HTTP_USER_AGENT'], 'OS 4_') || strpos($_SERVER['HTTP_USER_AGENT'], 'OS 6_')) {
-            //网页访问会带上版本信息
-            return true;
-        } else {
-            //应用内访问只能通过cookie传递版本信息
-            $appverid = $_COOKIE['appverid'];
-            $appverobj = AppverSvc::getById($appverid);
-            $sysver = intval(100 * $appverobj->sysver);
-
-            if ($sysver > 0 && $sysver < 700) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /*
@@ -1012,20 +611,6 @@ class UtlsSvc
         return false;
     }
 
-    public static function hexdec_big($hex)
-    {
-        $ret = 0;
-        $c = 0;
-        while (strlen($hex) > 0) {
-            $h = substr($hex, -1);
-            $d = base_convert($h, 16, 10);
-            $ret = bcadd($ret, bcmul(bcpow(16, $c, 0), $d, 0), 0);
-            $hex = substr($hex, 0, -1);
-            $c++;
-        }
-        return $ret;
-    }
-
     /*
      * 只读模式
      */
@@ -1059,65 +644,6 @@ class UtlsSvc
         }
         $ret = ($ret == "") ? $capNum[0] . $capUnit[3] : $ret;
         return $ret;
-    }
-
-    /*
-     * 根据手机号获取手机归属地等信息
-     */
-
-    public static function getMobileInfo($mobile)
-    {
-        $page = self::simpleRequest('http://opendata.baidu.com/api.php?query=' . $mobile . '&co=&resource_id=6004&t=' . time() . '&ie=utf8&oe=gbk&cb=bd__cbs__854nlx&format=json&tn=baidu');
-
-        $page = iconv('gbk', 'utf-8', substr(str_replace('bd__cbs__854nlx(', '', $page), 0, -2));
-
-        $json = json_decode($page);
-        $city = $json->data[0]->city; //城市
-        $operators = $json->data[0]->type; //归属地
-        $prov = $json->data[0]->prov; //省份
-        return array('city' => $city, 'operators' => $operators, 'prov' => $prov);
-    }
-
-    //QQ和彩贝联合登录自动注册的系统邮箱地址
-    public static function autoregEmail($username)
-    {
-        $uid = intval(str_replace('#', '', $username));
-        if ($uid > 0) {
-            return $username . '@guixue.net';
-        } else {
-            $userinfo = UserSdk::getInfoByUsername($username);
-            $uid = $userinfo['uid'];
-            return '#' . $uid . '@guixue.net';
-        }
-    }
-
-    //是否自动注册用户
-    public static function isAutoRegUser($uid, $username)
-    {
-        $uid = intval($uid);
-        if (strpos($username, '#') === 0 || $username == '#' . $uid) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    //获取用户推广链接
-    public static function getUserRef($uid)
-    {
-        if (intval($uid)) {
-            return 'u-' . $uid;
-        }
-        return 0;
-    }
-
-    //根据用户推广链接获取uid
-    public static function getUidByRef($ref)
-    {
-        if (strpos($ref, 'u-') !== false) {
-            return intval(str_replace('u-', '', $ref));
-        }
-        return 0;
     }
 
     /**
@@ -1154,8 +680,6 @@ class UtlsSvc
         return $new_array;
     }
 
-//end function
-
     public static function arraySort2($arr, $keys, $type = "asc")
     {
 
@@ -1182,8 +706,6 @@ class UtlsSvc
         return $new_array;
     }
 
-//end function
-
     public static function seconds2Hms($seconds)
     {
         if ($seconds >= 3600) {
@@ -1204,32 +726,6 @@ class UtlsSvc
         $m = strlen($m) == 1 ? ('0' . $m) : $m;
         $seconds = strlen($seconds) == 1 ? ('0' . $seconds) : $seconds;
         return $h . ':' . $m . ':' . $seconds;
-    }
-
-    /**
-     *
-     * cms 区块输出为json格式的转换为二维数组(仅考虑多行1列的情况)
-     * @param int $sectionid
-     */
-    public static function json2arrayBySectionId($sectionid)
-    {
-        $url = 'http://www.guixue.com/section/' . intval($sectionid) . '.json';
-        $data = self::remote_get_contents($url);
-
-        $output = array();
-        if ($data) {
-            $data = json_decode($data, true);
-            foreach ($data as $k => $r) {
-                foreach ($r as $i => $c) {
-                    if (strpos($c['thumb'], 'http://') === false) {
-                        $c['thumb'] = 'http://i1.umivi.net/' . $c['thumb'];
-                    }
-
-                    $output[] = $c;
-                }
-            }
-        }
-        return $output;
     }
 
     public static function makeDir($path)
@@ -1271,159 +767,6 @@ class UtlsSvc
         return $date;
     }
 
-    public static function uploadFile($file, $param, $k = "")
-    {
-        if (empty($param['size'])) {
-            return 'param size is not exist';
-        }
-        if (empty($param['image_type'])) {
-            return 'param image_type is not exist';
-        }
-        if (empty($param['path'])) {
-            return 'param path is not exist';
-        }
-        if (empty($file)) {
-            return 'param file is not exist';
-        }
-        if ($k) {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'][$k])) {
-                $result = array();
-                if ($_FILES[$file]['size'][$k] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!in_array($_FILES[$file]['type'][$k], $param['image_type'])) {
-                    return 'image_type is wrong ';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                    self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'][$k], $_FILES[$file]['name'][$k]);
-                $pathinfo = pathinfo($name);
-                $newName = md5(uniqid() . $param['size'] . $_SERVER['REMOTE_ADDR']) . "." . $pathinfo['extension'];
-
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path'] . '/' . $newName;
-                move_uploaded_file($_FILES[$file]['tmp_name'][$k], $targetFile);
-                $result['image'] = $param['path'] . '/' . $newName;
-                $result['size'] = $_FILES[$file]['size'][$k];
-
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        } else {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'])) {
-                $result = array();
-                if ($_FILES[$file]['size'] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!in_array($_FILES[$file]['type'], $param['image_type'])) {
-                    return 'image_type is wrong ';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                    self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'], $_FILES[$file]['name']);
-                $pathinfo = pathinfo($name);
-                $newName = md5(uniqid() . $param['size'] . $_SERVER['REMOTE_ADDR']) . "." . $pathinfo['extension'];
-
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path'] . '/' . $newName;
-                move_uploaded_file($_FILES[$file]['tmp_name'], $targetFile);
-                $result['image'] = $param['path'] . '/' . $newName;
-                $result['size'] = $_FILES[$file]['size'];
-                //print_r($result);exit;
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        }
-    }
-
-    public static function uploadCorpusFile($file, $param, $k = "", $id)
-    {
-        if (empty($param['size'])) {
-            return 'param size is not exist';
-        }
-        if (empty($param['type'])) {
-            return 'param type is not exist';
-        }
-        if (empty($param['path'])) {
-            return 'param path is not exist';
-        }
-        if (empty($file)) {
-            return 'param file is not exist';
-        }
-        if ($k) {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'][$k])) {
-                $result = array();
-                if ($_FILES[$file]['size'][$k] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!in_array($_FILES[$file]['type'][$k], $param['type'])) {
-                    return 'image_type is wrong ';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                    self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'][$k], $_FILES[$file]['name'][$k]);
-                $pathinfo = pathinfo($name);
-                $newName = $id[$k] . "." . $pathinfo['extension'];
-
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path'] . '/' . $newName;
-                move_uploaded_file($_FILES[$file]['tmp_name'][$k], $targetFile);
-                $result['sound'] = $param['path'] . '/' . $newName;
-                $result['size'] = $_FILES[$file]['size'][$k];
-
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        } else {
-            if (is_uploaded_file($_FILES[$file]['tmp_name'])) {
-                $result = array();
-                if ($_FILES[$file]['size'] > $param['size']) {
-                    return 'size to large';
-                }
-                if (!in_array($_FILES[$file]['type'], $param['type'])) {
-                    return 'type is wrong ';
-                }
-                if (!file_exists($_SERVER['ENV_DATA_DIR'] . '/' . $param['path'])) {
-                   echo  self::makeDir($_SERVER['ENV_DATA_DIR'] . '/' . $param['path']);
-                }
-                $name = strstr($_FILES[$file]['name'], $_FILES[$file]['name']);
-                $pathinfo = pathinfo($name);
-                $newName = $id . "." . $pathinfo['extension'];
-                $targetFile = $_SERVER['ENV_DATA_DIR'] . '/' . $param['path']  . '/' . $newName;
-                move_uploaded_file($_FILES[$file]['tmp_name'], $targetFile);
-                $result['sound'] = str_replace('corpus','',$param['path']) . '/' . $newName;
-                $result['size'] = $_FILES[$file]['size'];
-                //print_r($result);exit;
-
-                return $result;
-            } else {
-                return " file is not exist";
-            }
-        }
-    }
-
-
-    public static function plat()
-    {
-        $plat = 'web';
-        if (UtlsSvc::isIpad()) {
-            $plat = 'ipad';
-        }
-        if (UtlsSvc::isIphone() || UtlsSvc::isIpod()) {
-            $plat = 'iphone';
-        }
-        if (UtlsSvc::isAndroid()) {
-            $plat = 'android';
-        }
-        return $plat;
-    }
-
     //16进制的8位唯一码 ：oPF2aa1e
     public static function unique32($a)
     {
@@ -1440,403 +783,11 @@ class UtlsSvc
         return $d;
     }
 
-    public static function qrcode($content, $width = 200)
-    {
-        return UtlsSvc::remote_get_contents("http://qr.liantu.com/api.php?&bg=ffffff&fg=000000&w=" . $width . "&m=0&text=" . urlencode($content));
-    }
-
-    public static function rootDomain()
-    {
-        $domain = $_SERVER['SERVER_NAME'];
-        return 'guixue.com';
-    }
-
     public static function getMicrotime()
     {
         list($usec, $sec) = explode(" ", microtime());
         return intval(($usec * 1000 + (float)$sec * 1000));
     }
-
-    public static function getMid()
-    {
-
-        $mid = (int)$_REQUEST['mid'];
-
-
-        if (in_array($mid, array(Merchant::MERCHANT_DEFAULT, Merchant::MERCHANT_VOD_ANDROID, Merchant::MERCHANT_VOD_IOS))) {
-            return $mid;
-        }
-
-
-        if (self::isApp() && self::isAndroid()) {
-            $mid = Merchant::MERCHANT_VOD_ANDROID;
-
-        } else if (self::isApp() && self::isIOS()) {
-            $mid = Merchant::MERCHANT_VOD_IOS;
-        } else if (self::isMobile('excludepad')) {
-            $mid = Merchant::MERCHANT_VOD_WAP;
-        } else {
-
-            $mid = Merchant::MERCHANT_DEFAULT;
-        }
-
-        return $mid;
-
-    }
-
-
-    public static function getAppVersion()
-    {
-
-        $useragent = $_SERVER['HTTP_USER_AGENT'];
-        $result = array();
-
-        
-
-        preg_match("/GUIXUETOEFL:(\d+\.\d+)/", $useragent, $match);
-
-        if (isset($match[1])) {
-            $result['version'] = $match[1];
-            $result['app'] = "GUIXUETOEFL";
-            return $result;
-        }
-
-
-        preg_match("/GUIXUECET:(\d+\.\d+)/", $useragent, $match);
-
-        if (isset($match[1])) {
-            $result['version'] = $match[1];
-            $result['app'] = "GUIXUECET";
-            return $result;
-        }
-
-        preg_match("/GUIXUE:(\d+\.\d+)/", $useragent, $match);
-        if (isset($match[1])) {
-            $result['version'] = $match[1];
-            $result['app'] = "GUIXUE";
-            return $result;
-        }
-
-        return $result;
-
-        
-    }
-
-    public static function WaitingForReview($app = "GUIXUE")
-    {
-        $version = UtlsSvc::getAppVersion();
-        
-        if(self::isToeflApp())
-        {
-            if (UtlsSvc::isIOS() && $version['version'] == 1.1) {
-                return true;
-            }
-        }
-
-        if(self::isCetApp())
-        {
-            if (UtlsSvc::isIOS() && $version['version'] == 1.0) {
-                return true;
-            }
-        }
-        
-
-        if(self::isIeltsApp())
-        {
-            if (UtlsSvc::isIOS() && $version['version'] == 2.65) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    /*
-    *按照功能模块 区分
-    */
-    public static function waitingForReviewBySub($sub, $app = "GUIXUE")
-    {   
-
-
-        if(self::isToeflApp())
-        {
-            $version_android = self::getToeflAndroidAppVersion();
-            $version_ios = self::getToeflIosAppVersion();
-
-            if($sub == 'iosdeposit' && ($version_ios >=1.0 )  ) {
-                return true;
-            } 
-
-            if($sub == 'useiap' && ($version_ios <=0.9 ) && !self::inApple() && !self::isAbroad() ) {
-                //如果为true 则不使用iap 适用支付宝等sdk
-                return true;
-            }
-
-            if($sub == 'couponcode' && $version_ios<1.1) {
-                //显示优惠码
-                return true;
-            }
-        } else if(self::isCetApp()){
-            $version_android = self::getCetAndroidAppVersion();
-            $version_ios = self::getCetIosAppVersion();
-             
-            if($sub == 'useiap' && ($version_ios <1.0 ) && !self::inApple() && !self::isAbroad() ) {
-                //如果为true 则不使用iap 适用支付宝等sdk
-                //return false;
-                return true;
-
-            }
-
-        } else  {
-            $version_android = self::getGuixueAndroidAppVersion();
-            $version_ios = self::getGuixueIosAppVersion();
-            if($sub == 'synonyms' &&  ($version_android == 2.2  || $version_ios ==2.2 ) )
-            {
-                return true;
-            }
-
-            if($sub == 'memberielts' && ($version_android>=2.60 || $version_ios>=2.60) ) {
-                return true;
-            }   
-             if($sub == 'membercet' && ($version_android >= 2.5  || $version_ios >=2.5 )   ) {
-                return true;
-            }
-
-            if($sub == 'changemobile' && ($version_android >= 2.61  || $version_ios >=2.61 )  ) {
-                return true;
-            }   
-
-            if($sub == 'iosdeposit' && ($version_ios >=2.61 )  ) {
-                return true;
-            }   
-
-            if($sub == 'useiap' && ($version_ios <=2.64 ) && !self::inApple() && !self::isAbroad() ) {
-                //如果为true 则不使用iap 适用支付宝等sdk
-                //return false;
-                return true;
-
-            }
-
-            if($sub  == 'ieltsaddon'  && ($version_android > 2.61  || $version_ios >2.61 )  ) {
-                //雅思终身会员 2.62的时候跳转到终身会员页
-                return true;
-            }
-
-            if($sub == 'version263' && ($version_android >=2.63  || $version_ios >=2.63 ) ) {
-                //针对版本2.63 做的设置
-                return true;
-            }
-
-             if($sub == 'couponcode' && $version_ios<=2.63) {
-                //显示优惠码
-                return true;
-            }
-        }
-        
-
-        
-
-        return false;
-    }
-
-    public static function isApp()
-    {
-        $appversion = self::getAppVersion();
-        return !empty($appversion);
-    }
-
-    public static function isGuixeApp()
-    {
-        $appversion = self::getAppVersion();
-        return $appversion['app'] == 'GUIXUE';
-    }
-
-    public static function isIeltsApp()
-    {
-        $appversion = self::getAppVersion();
-        return $appversion['app'] == 'GUIXUE';
-    }
-
-    public static function isPengciApp()
-    {
-        $appversion = self::getAppVersion();
-        return $appversion['app'] == "PENGCI";
-    }
-
-    public static function isToeflApp()
-    {
-        $appversion = self::getAppVersion();
-        return $appversion['app'] == "GUIXUETOEFL";
-    }
-    public static function isCetApp()
-    {
-        $appversion = self::getAppVersion();
-        return $appversion['app'] == "GUIXUECET";
-    }
-
-    public static function getGuixueVersion()
-    {
-        $appversion = self::getAppVersion();
-        return ($appversion['app'] == 'GUIXUE' ? $appversion['version'] : 0);
-    }
-
-
-    public static function getGuixueIosAppVersion()
-    {
-        $appversion = self::getAppVersion();
-        return (($appversion['app'] == 'GUIXUE' && UtlsSvc::isIOS()) ? $appversion['version'] : 0);
-    }
-
-    public static function getGuixueAndroidAppVersion()
-    {
-        $appversion = self::getAppVersion();
-
-        return (($appversion['app'] == 'GUIXUE' && UtlsSvc::isAndroid()) ? $appversion['version'] : 0);
-
-    }
-
-    public static function getToeflIosAppVersion()
-    {
-        $appversion = self::getAppVersion();
-        return (($appversion['app'] == 'GUIXUETOEFL' && UtlsSvc::isIOS()) ? $appversion['version'] : 0);
-    }
-
-    public static function getToeflAndroidAppVersion()
-    {
-        $appversion = self::getAppVersion();
-
-        return (($appversion['app'] == 'GUIXUETOEFL' && UtlsSvc::isAndroid()) ? $appversion['version'] : 0);
-
-    }
-
-    public static function getCetIosAppVersion()
-    {
-        $appversion = self::getAppVersion();
-        return (($appversion['app'] == 'GUIXUECET' && UtlsSvc::isIOS()) ? $appversion['version'] : 0);
-    }
-
-    public static function getCetAndroidAppVersion()
-    {
-        $appversion = self::getAppVersion();
-
-        return (($appversion['app'] == 'GUIXUECET' && UtlsSvc::isAndroid()) ? $appversion['version'] : 0);
-
-    }
-
-    public static function getPengciVersion()
-    {
-        $appversion = self::getAppVersion();
-        return ($appversion['app'] == 'PENGCI' ? $appversion['version'] : 0);
-    }
-
-    public static function getGeTuiField()
-    {
-        if (self::isIeltsApp()) {
-            return 'getuiid';
-        } elseif (self::isToeflApp()) {
-            return 'toeflid';
-        } elseif (self::isCetApp()) {
-            return 'cetid';
-        } else {
-            return 'getuiid';
-        }
-    }
-
-    public static function getGeTuiFieldByType($productType = '0')
-    {
-        if ($productType >= '0' && $productType <= '1999') {
-            return 'getuiid';
-        } elseif ($productType >= '2000' && $productType <= '2999') {
-            return 'toeflid';
-        } elseif ($productType >= '3000' && $productType <= '3999') {
-            return 'cetid';
-        } else {
-            return 'getuiid';
-        }
-    }
-
-    public static function createAudioRecorderLicence()
-    {
-
-        $str = strtolower($_SERVER['HTTP_HOST']) . '?localhost';
-        $i = 0;
-        $str1 = '';
-        for ($i = 0; $i < strlen($str); $i++) {
-
-            $str1 .= dechex(ord($str[$i]));
-        }
-        $str1_len = strlen($str1);
-        $a = substr($str1, 0, intval($str1_len / 2));
-        $b = substr($str1, intval($str1_len / 2));
-
-        $str2 = $a . 'aurc8be' . $b . 'aurc0c2c4baceba';
-
-        $i = 0;
-        $vali = 0;
-        while ($i < strlen($str2)) {
-            $curr = intval($str2[$i]);
-            if ($curr > 0) {
-                $vali = $vali + $curr;
-            }
-
-            $i++;
-        }
-
-
-        $vali = dechex($vali);
-        return $str2 . $vali;
-    }
-
-    public static function validateAudioRecorderLicence($str)
-    {
-        $i = 0;
-        $pos2 = strpos($str, "aur", 0);
-        $str3 = substr($str, 0, $pos2);
-        $str4 = substr($str, ($pos2 + 3), 4);
-        $pos5 = strpos($str, "aur", $pos2 + 3);
-        $str6 = substr($str, $pos2 + 7, $pos5 - $pos2 - 7);
-        $str7 = substr($str, $pos5 + 3, 4);
-        $str8 = substr($str, $pos5 + 7, 8);
-        $str9 = substr($str, $pos5 + 15);
-        $str10 = $str3 . $str6;
-
-        $str11 = "";
-        $pos12 = 0;
-
-        $str15 = "";
-
-        $i = 0;
-        while ($i < $pos5 + 15) {
-            $curr = intval($str[$i]);
-            if ($curr > 0) {
-                $pos12 = $pos12 + $curr;
-            }
-
-            $i++;
-        }
-
-
-        $pos12 = dechex($pos12);
-
-        if ($str9 != $pos12) {
-            exit;
-        }
-
-        $i = 0;
-
-
-        while ($i < strlen($str10)) {
-            $str15 = chr(hexdec(substr($str10, $i, 2)));
-            $str11 = $str11 . $str15;
-            $i++;
-            $i++;
-
-        }
-
-        return $str11 == (strtolower($_SERVER['HTTP_HOST']) . '?localhost');
-
-    }
-
 
     public static function responseJSON($result)
     {
@@ -1927,23 +878,6 @@ class UtlsSvc
         }
 
         return $tmp_arr;
-    }
-
-    //判断是否是国外
-    public static function isAbroad($ip='') {
-        if($ip == '') {
-           $ip = self::getClientIP();
-        }
-
-        if(!$ip) {
-            return false;
-        }
-
-
-        require_once(__dir__.'/../integration/GeoIP2/geoip2.php');
-        $isoCode = getGeoIP2Contry($ip);
-        
-        return (strtolower($isoCode) != 'cn' && $isoCode !='');
     }
 
 }

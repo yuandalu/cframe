@@ -31,7 +31,7 @@ class IncludeController extends BaseController
          header('Cache-Control: post-check=0, pre-check=0', false);
          header('Pragma: no-cache');
          $captcha = new Captcha(4,2);
-         $captcha->showHtmlImage(80, 30);
+         $captcha->showHtmlImage(80, 34);
          exit;
     }
 }
