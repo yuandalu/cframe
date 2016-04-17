@@ -123,7 +123,7 @@ class UserController extends BaseController
 
         // 表格导出
         $table = '<table border="1"><tr>
-        <th>ID</th><th>创建时间</th><th>修改时间</th><th>手机号</th><th>昵称</th><th>密码</th><th>加密</th><th>状态</th>
+        <th>ID</th><th>创建时间</th><th>修改时间</th><th>手机号</th><th>昵称</th><th>密码</th><th>加盐</th><th>状态</th>
         </tr>';
         foreach ($list as $k => $v) {
             $table .= '<tr>';
@@ -133,7 +133,7 @@ class UserController extends BaseController
         $table .= '</table>';
         echo $table;
         // CSV导出
-        // $str = "ID,创建时间,修改时间,手机号,昵称,密码,加密,状态\n";
+        // $str = "ID,创建时间,修改时间,手机号,昵称,密码,加盐,状态\n";
         // foreach ($list as $k => $v) {
             // $id = $v['id'];
             // $ctime = $v['ctime'];
