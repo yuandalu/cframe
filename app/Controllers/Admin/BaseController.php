@@ -14,7 +14,7 @@ class BaseController extends Controller
         $controllerName = Controller::getControllerName();
         $actionName     = Controller::getActionName();
         if (in_array($controllerName, array('Include', 'Index', 'include', 'index'))) {
-            return "";
+            return ture;
         }
         $adminUser    = loader('session')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
@@ -25,13 +25,13 @@ class BaseController extends Controller
         $this->assign('adminUserObj', $adminUserObj);
         $mastVerify = false;// #warning这里添加必须验证的逻辑
         if (!$mastVerify && $adminUserObj && $adminUserObj->isSuper()) {
-            return "";
+            return true;
         } else {
             $auth = AdmAuthSvc::verify($controllerName, $actionName);
             if ($auth == "fail") {
                 UtlsSvc::showMsg('您无此权限', '/Index/index/');
             } else {
-                return "";
+                return true;
             }
         }
     }
