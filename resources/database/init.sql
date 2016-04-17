@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-04-17 09:08:12
+-- Generation Time: 2016-04-17 16:40:56
 -- 服务器版本： 5.7.11
 -- PHP Version: 7.0.5
 
@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `adm_actlog` (
   `content` text COMMENT '操作内容',
   `action_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ip` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+--
+-- 转存表中的数据 `adm_actlog`
+--
+
+INSERT INTO `adm_actlog` (`id`, `username`, `action`, `content`, `action_time`, `ip`) VALUES
+(1, 'system', 'test', 's:4:"test";', '2016-04-17 09:45:05', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -138,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `adm_loginlog` (
   `ip` varchar(15) NOT NULL,
   `login_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `result` tinyint(3) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 --
 -- 转存表中的数据 `adm_loginlog`
@@ -154,7 +161,10 @@ INSERT INTO `adm_loginlog` (`id`, `username`, `ip`, `login_time`, `result`) VALU
 (7, 'dingdejing', '127.0.0.1', '2016-04-16 07:24:20', 0),
 (8, 'dingdejing', '127.0.0.1', '2016-04-16 07:24:35', 1),
 (9, 'dingdejing', '127.0.0.1', '2016-04-17 08:42:21', 1),
-(10, 'dingdejing', '127.0.0.1', '2016-04-17 08:42:46', 1);
+(10, 'dingdejing', '127.0.0.1', '2016-04-17 08:42:46', 1),
+(11, 'dingdejing', '127.0.0.1', '2016-04-17 09:49:26', 1),
+(12, 'dingdejing', '127.0.0.1', '2016-04-17 15:55:01', 1),
+(13, 'dingdejing', '127.0.0.1', '2016-04-17 16:38:33', 1);
 
 -- --------------------------------------------------------
 
@@ -210,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `adm_userauth` (
 --
 
 INSERT INTO `adm_userauth` (`id`, `ctime`, `utime`, `user`, `uid`, `aid`) VALUES
-(11, '2016-04-16 05:57:25', '2016-04-16 05:57:25', 'dingdejing', 11, 11);
+(12, '2016-04-17 16:40:20', '2016-04-17 16:40:20', 'dingdejing', 11, 11);
 
 -- --------------------------------------------------------
 
@@ -255,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `sys_dbcache` (
 --
 
 INSERT INTO `sys_dbcache` (`skey`, `expiry`, `value`) VALUES
-('0cc175b9c0f1b6a831c399e269772661', 1460881100, 's:7:"DBCache";');
+('0cc175b9c0f1b6a831c399e269772661', 1460972688, 's:7:"session";');
 
 -- --------------------------------------------------------
 
@@ -279,10 +289,10 @@ INSERT INTO `sys_idgenter` (`obj`, `id`, `step`) VALUES
 ('adm_auths', 11, 1),
 ('adm_menugroup', 11, 1),
 ('adm_menus', 16, 1),
-('adm_userauth', 11, 1),
+('adm_userauth', 12, 1),
 ('adm_users', 12, 1),
 ('test_table', 14, 1),
-('users', 100001, 1);
+('users', 100002, 1);
 
 -- --------------------------------------------------------
 
@@ -302,8 +312,10 @@ CREATE TABLE IF NOT EXISTS `sys_sessions` (
 --
 
 INSERT INTO `sys_sessions` (`skey`, `expiry`, `value`) VALUES
-('ehe7d4stv6q0f55ffdo9g0vu83', 1460891236, 'security_code|s:4:"EGJL";adminUser|s:10:"dingdejing";'),
-('vc1fa0ja5kuf64u9rpuintsj41', 1460801989, 'a|i:1;');
+('ehe7d4stv6q0f55ffdo9g0vu83', 1460893828, 'security_code|s:4:"4PQU";adminUser|s:10:"dingdejing";'),
+('evdg51pqnefih15b68vf41dvk2', 1460918422, 'security_code|s:4:"AFMY";adminUser|s:10:"dingdejing";'),
+('k586rgjm7r2pn6ej1ucbdn8354', 1460915910, 'security_code|s:4:"EJSY";adminUser|s:10:"dingdejing";'),
+('p9cuihdul3v8s5c8fuqfhmq8k4', 1460893802, 'a|s:7:"session";');
 
 -- --------------------------------------------------------
 
@@ -354,7 +366,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ctime`, `utime`, `mobile`, `nickname`, `password`, `salt`, `status`) VALUES
-(100001, '2016-04-17 09:06:25', '2016-04-17 09:06:48', '15652202721', '夏雨晴空', '666', '666', 1);
+(100001, '2016-04-17 09:06:25', '2016-04-17 09:06:48', '15652202721', '夏雨晴空', '666', '666', 1),
+(100002, '2016-04-17 15:38:34', '2016-04-17 15:38:34', '15652202756', 'yuandalu', '632dcc9bed4b755c74a9876b3cad3ad1', '32ed87', 1);
 
 --
 -- Indexes for dumped tables
@@ -439,12 +452,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adm_actlog`
 --
 ALTER TABLE `adm_actlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `adm_loginlog`
 --
 ALTER TABLE `adm_loginlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
