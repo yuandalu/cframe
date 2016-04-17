@@ -40,7 +40,7 @@ class IndexController extends BaseController
         // var_dump(env('CAPTCHA_FONT_FILE', 'local'));
         $name = 'Frame';
         $this->assign('name', $name);
-        echo $name;
+        // echo $name;
         // return view('index');
         $data = UserConf::getUsers();
         // return $data;
