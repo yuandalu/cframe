@@ -44,22 +44,22 @@ class TestClassController extends BaseController
 
         // 参数校验，有时这是必须的
         // if (empty($param['name'])) {
-        //     return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
+        //     return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
         // }
 
         if ($id != '') {
             $param['utime'] = date('Y-m-d H:i:s');
             $obj = TestClassSvc::updateById($id, $param);
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '保存成功');
+            return ErrorSvc::format(ErrorSvc::ERR_OK, null, '保存成功');
         } else {
             $obj = TestClassSvc::add($param);
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '新增成功');
+            return ErrorSvc::format(ErrorSvc::ERR_OK, null, '新增成功');
         }
     }
 
     public function deleteAction()
     {
-        return ErrorSvc::showJson(
+        return ErrorSvc::format(
             ErrorSvc::ERR_OK,
             null,
             '请考虑清楚数据是否真的需要删除，是否可以使用状态标识来进行软删除'

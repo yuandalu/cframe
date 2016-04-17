@@ -68,53 +68,30 @@ class ErrorSvc
         /******主站业务STOP******/
     );
 
-    public static function getMsg( $errno )
+    public static function getMsg($errno)
     {
-        if ( empty( $errno ) )
-        {
+        if (empty($errno)) {
             return '';
         }
-        if ( !array_key_exists( $errno, self::$MSG ) )
-        {
+        if (!array_key_exists($errno, self::$MSG)) {
             return '未知错误';
         }
-
         return self::$MSG[$errno];
     }
 
-    public static function showMsg($result,$url='')
+    public static function showMsg($result, $url='')
     {
-        UtlsSvc::showMsg(ErrorSvc::getMsg($result['e']),$url);
-    }
-
-    /**
-     * [showJson 用于JSON的输出]
-     * @param  string $errno 错误号
-     * @param  string $data  数据
-     * @param  string $m     自定义提示信息
-     * @return json        返回json
-     */
-    public static function showJson($errno, $data = null, $m = '')
-    {
-        $m = $m ? $m : self::getMsg($errno);
-        $result = array(
-            'e' => $errno,
-            'm' => $m
-        );
-        if (!is_null($data)) {
-            $result['data'] = $data;
-        }
-        return $result;
+        UtlsSvc::showMsg(ErrorSvc::getMsg($result['e']), $url);
     }
     /**
-     * [showJC 根据参数决定是否输出回调]
+     * callback 格式化回调函数信息
      * @param  string $callback 回调函数，留空则输出json
      * @param  string $errno 错误号
      * @param  string $data  数据
      * @param  string $m     自定义提示信息
-     * @return array        返回数组
+     * @return string
      */
-    public static function showJC($callback, $errno, $data = null, $m = '')
+    public static function callback($callback, $errno, $data = null, $m = '')
     {
         $m = $m ? $m : self::getMsg($errno);
         $result = array(
@@ -125,20 +102,19 @@ class ErrorSvc
             $result['data'] = $data;
         }
         if ($callback) {
-            echo ' ' . htmlspecialchars($callback) . '(' . json_encode($result) . ')';
+            return ' ' . htmlspecialchars($callback) . '(' . json_encode($result) . ')';
         } else {
-            echo json_encode($result);
+            return json_encode($result);
         }
-        exit;
     }
     /**
-     * [returnData 用于内部方法间的信息传递]
+     * format 格式化结果信息
      * @param  string $errno 错误号
      * @param  string $data  数据
      * @param  string $m     自定义提示信息
-     * @return array        返回数组
+     * @return array
      */
-    public static function returnData($errno, $data = null, $m = '')
+    public static function format($errno, $data = null, $m = '')
     {
         $m = $m ? $m : self::getMsg($errno);
         $result = array(
@@ -150,6 +126,7 @@ class ErrorSvc
         }
         return $result;
     }
+
     private static function formatShowParam($e, $url, $m, $time)
     {
         $t = time();
@@ -163,10 +140,12 @@ class ErrorSvc
             'time' => $time
         );
     }
+
     private static function makeShowSign($e, $t)
     {
         return md5($e . '|' . $t . '|' . self::SHOW_KEY);
     }
+
     public static function checkShowSign($e, $t, $s)
     {
         if ('' == $s) {
@@ -177,6 +156,7 @@ class ErrorSvc
         }
         return false;
     }
+
     public static function writeLog($errno, $input, $log_name, $lock_key = '')
     {
         if ('' != $lock_key) {

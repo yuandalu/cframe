@@ -326,22 +326,22 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         $admin_controller.="
         // 参数校验，有时这是必须的
         // if (empty(\$param['name'])) {
-        //     return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
+        //     return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
         // }
 
         if (\$id != '') {
             \$param['utime'] = date('Y-m-d H:i:s');
             \$obj = ".$entity."Svc::updateById(\$id, \$param);
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '保存成功');
+            return ErrorSvc::format(ErrorSvc::ERR_OK, null, '保存成功');
         } else {
             \$obj = ".$entity."Svc::add(\$param);
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '新增成功');
+            return ErrorSvc::format(ErrorSvc::ERR_OK, null, '新增成功');
         }
     }
 
     public function deleteAction()
     {
-        return ErrorSvc::showJson(
+        return ErrorSvc::format(
             ErrorSvc::ERR_OK,
             null,
             '请考虑清楚数据是否真的需要删除，是否可以使用状态标识来进行软删除'
@@ -903,14 +903,14 @@ class ".$entity."Controller extends BaseController
         ));
         if (\$is_valid !== true) {
             // var_dump(\$is_valid);exit;// 包含详细错误信息
-            return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
         }
 
         // \$obj = ".$entity."Svc::add(\$param);
         if (is_object(\$obj)) {
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, \$obj->toAry());
+            return ErrorSvc::format(ErrorSvc::ERR_OK, \$obj->toAry());
         } else {
-            return ErrorSvc::showJson(ErrorSvc::ERR_SYSTEM_ERROR);
+            return ErrorSvc::format(ErrorSvc::ERR_SYSTEM_ERROR);
         }
     }
 
@@ -937,15 +937,15 @@ class ".$entity."Controller extends BaseController
         ));
         if (\$is_valid !== true) {
             // var_dump(\$is_valid);exit;
-            return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
         }
 
         \$param['utime'] = date('Y-m-d H:i:s');
         // \$obj = ".$entity."Svc::updateById(\$id, \$param);
         if (\$obj) {
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK);
+            return ErrorSvc::format(ErrorSvc::ERR_OK);
         } else {
-            return ErrorSvc::showJson(ErrorSvc::ERR_SYSTEM_ERROR);
+            return ErrorSvc::format(ErrorSvc::ERR_SYSTEM_ERROR);
         }
     }
 
@@ -960,14 +960,14 @@ class ".$entity."Controller extends BaseController
         ));
         if (\$is_valid !== true) {
             // var_dump(\$is_valid);exit;
-            return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_INVALID, null, array_shift(\$is_valid));
         }
 
         // \$obj = ".$entity."Svc::getById(\$id);
         if (\$obj) {
-            return ErrorSvc::showJson(ErrorSvc::ERR_OK, \$obj->toAry());
+            return ErrorSvc::format(ErrorSvc::ERR_OK, \$obj->toAry());
         } else {
-            return ErrorSvc::showJson(ErrorSvc::ERR_NOT_EXISTX);
+            return ErrorSvc::format(ErrorSvc::ERR_NOT_EXISTX);
         }
     }
 
@@ -993,12 +993,12 @@ class ".$entity."Controller extends BaseController
 
         // 此处必须验证order排序白名单
         if (!empty(\$orderby) && !in_array(\$orderby, array('id desc'))) {
-            return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_EMPTY);
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY);
         }
 
         // \$list = ".$entity."Svc::lists(\$request,array('per_page'=>\$pagenum, 'page_param'=>'p', 'curr_page'=>\$p,'file_name'=>'/".$entity."/list/','orderby'=>\$orderby));
         
-        return ErrorSvc::showJson(ErrorSvc::ERR_OK, \$list);
+        return ErrorSvc::format(ErrorSvc::ERR_OK, \$list);
 
     }
 

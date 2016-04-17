@@ -45,7 +45,8 @@ class IndexController extends BaseController
         $data = UserConf::getUsers();
         // return $data;
         // return 666;
-        return ErrorSvc::showJson(ErrorSvc::ERR_OK, $data);
+        // return ErrorSvc::callback('test', ErrorSvc::ERR_OK, $data);
+        return ErrorSvc::format(ErrorSvc::ERR_OK, $data);
     }
 
     public function authAction()

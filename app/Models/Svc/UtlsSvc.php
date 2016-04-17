@@ -12,20 +12,6 @@ class UtlsSvc
         return mb_convert_encoding(trim(urldecode($simplexml_object)), 'gbk', 'utf-8');
     }
 
-    public static function is_id($id)
-    {
-        return is_numeric($id) && strlen($id) >= 8;
-    }
-
-    public static function is_numerics($id)
-    {
-        if (is_numeric($id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public static function u82gb($mix)
     {
         if (is_array($mix)) {
@@ -65,36 +51,11 @@ class UtlsSvc
         return $result;
     }
 
-    
-
     public static function goToAct($ctl, $act, $params = array())
     {
         header('location:' . self::getAct($ctl, $act, $params));
         exit;
     }
-
-    
-
-    public static function getTotalPage($total_cnt = '0', $row_num = '0')
-    {
-        if ('0' == $total_cnt || '0' == $row_num) {
-            return '1';
-        }
-        return ceil($total_cnt / $row_num);
-    }
-
-    
-
-    public static function getTime($unixtime = -1)
-    {
-        if ($unixtime == -1) {
-            return date('Y-m-d H:i:s');
-        } else {
-            return date('Y-m-d H:i:s', $unixtime);
-        }
-    }
-
-    
 
     public static function obj2array($obj)
     {
@@ -114,8 +75,6 @@ class UtlsSvc
         return $out;
     }
 
-    
-
     public static function fenToYuan($fen)
     {
         if (empty($fen) || !is_numeric($fen)) {
@@ -124,8 +83,6 @@ class UtlsSvc
         $result = number_format($fen / 100, 2, '.', '');
         return $result;
     }
-
-    
 
     //不带小数的元
     public static function fenToYuanInt($fen)
@@ -141,8 +98,6 @@ class UtlsSvc
         return $result;
     }
 
-    
-
     public static function yuanToFen($yuan)
     {
         if (empty($yuan) || !is_numeric($yuan)) {
@@ -151,8 +106,6 @@ class UtlsSvc
         $result = number_format($yuan * 100, 0, '', '');
         return $result;
     }
-
-    
 
     public static function call($url, $time_out = 30)
     {
@@ -187,8 +140,6 @@ class UtlsSvc
         curl_close($ch);
         return $result;
     }
-
-    
 
     public static function remote_get_contents($url, $expire = 600)
     {
@@ -276,14 +227,10 @@ class UtlsSvc
         return $result;
     }
 
-    
-
     public static function array2json($arr)
     {
         return json_encode(self::gb2u8($arr));
     }
-
-    
 
     public static function getClientIP()
     {
@@ -509,9 +456,7 @@ class UtlsSvc
         }
     }
 
-    /*
-     * 获得parse_str的指定变量
-     */
+    // 获得parse_str的指定变量
     public static function get_parse_str($str, $keys)
     {
         parse_str($str);
@@ -543,9 +488,7 @@ class UtlsSvc
         return (strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) || (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') !== false) || (strpos($_SERVER['HTTP_USER_AGENT'], 'iPod') !== false);
     }
 
-    /*
-    * 是否越狱
-    */
+    // 是否越狱
     public static function isJailBreak()
     {
         return true;
@@ -605,16 +548,13 @@ class UtlsSvc
         if (substr($ip, 0, 8) == '192.168.') {
             return true;
         }
-        if (in_array($ip, array('127.0.0.1', '58.132.172.36', '182.92.104.65', '182.92.103.136','106.2.178.238', '103.254.112.150', '123.57.39.20'))) {
+        if (in_array($ip, array('127.0.0.1'))) {
             return true;
         }
         return false;
     }
 
-    /*
-     * 只读模式
-     */
-
+    // 只读模式
     public static function isReadonly()
     {
         return env('READONLY_MODE', 'local') == '1';
@@ -644,66 +584,6 @@ class UtlsSvc
         }
         $ret = ($ret == "") ? $capNum[0] . $capUnit[3] : $ret;
         return $ret;
-    }
-
-    /**
-     * 二维数组排序
-     *
-     * @param $arr :数据
-     * @param $keys :排序的健值
-     * @param $type :升序/降序
-     *
-     * @return array
-     */
-    public static function arraySort($arr, $keys, $type = "asc")
-    {
-        if (!is_array($arr)) {
-            return false;
-        }
-        $keysvalue = array();
-        foreach ($arr as $key => $val) {
-            $keysvalue[$key] = $val[$keys];
-        }
-        if ($type == "asc") {
-            asort($keysvalue);
-        } else {
-            arsort($keysvalue);
-        }
-        reset($keysvalue);
-        foreach ($keysvalue as $key => $vals) {
-            $keysort[$key] = $key;
-        }
-        $new_array = array();
-        foreach ($keysort as $key => $val) {
-            $new_array[$key] = $arr[$val];
-        }
-        return $new_array;
-    }
-
-    public static function arraySort2($arr, $keys, $type = "asc")
-    {
-
-        if (!is_array($arr) || empty($arr)) {
-            return array();
-        }
-        $keysvalue = array();
-        foreach ($arr as $key => $val) {
-            $keysvalue[$key] = $val[$keys];
-        }
-        if ($type == "asc") {
-            asort($keysvalue);
-        } else {
-            arsort($keysvalue);
-        }
-        reset($keysvalue);
-        foreach ($keysvalue as $key => $vals) {
-            $keysort[$key] = $key;
-        }
-        $new_array = array();
-        foreach ($keysort as $key => $val) {
-            $new_array[] = $arr[$val];
-        }
-        return $new_array;
     }
 
     public static function seconds2Hms($seconds)
@@ -752,21 +632,6 @@ class UtlsSvc
         return $a;
     }
 
-    /**
-     * 获取某个时间段的日期数组
-     */
-    public static function intervalDate($begDate, $endDate)
-    {
-        $date = array();
-        $begTime = strtotime($begDate);
-        $endTime = strtotime($endDate);
-        while ($begTime - 86400 < $endTime) {
-            $date[] = date("Y-m-d", $begTime);
-            $begTime += 86400;
-        }
-        return $date;
-    }
-
     //16进制的8位唯一码 ：oPF2aa1e
     public static function unique32($a)
     {
@@ -778,8 +643,7 @@ class UtlsSvc
             $f = 0; $f < 8; $g = ord($a[$f]),
             $d .= $s[($g ^ ord($a[$f + 8])) - $g & 0x1F],
             $f++
-        )
-            ;
+        );
         return $d;
     }
 
@@ -787,29 +651,6 @@ class UtlsSvc
     {
         list($usec, $sec) = explode(" ", microtime());
         return intval(($usec * 1000 + (float)$sec * 1000));
-    }
-
-    public static function responseJSON($result)
-    {
-
-        $result = json_encode($result);
-
-        $expires = 1500;
-        $etag = md5($result);
-
-
-        if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
-            header("HTTP/1.1 304 Not Modified");
-            exit;
-        }
-
-        header("Etag: " . $etag);
-        header("Pragma: public");
-        header("Cache-Control: max-age=" . $expires);
-        header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
-
-        echo $result;
-        return;
     }
 
     public static function formatTime($time)

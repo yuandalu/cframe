@@ -17,7 +17,7 @@ class BaseController extends Controller
         if ($require_login) {
             if (!$user) {
                 if (UtlsSvc::isMobile()) {
-                    $result =  ErrorSvc::showJson(ErrorSvc::ERR_NO_LOGIN);
+                    $result =  ErrorSvc::format(ErrorSvc::ERR_NO_LOGIN);
                     echo json_encode($result);exit;
                 }
                 header('Location: /Login/index?go='.urlencode('http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']));

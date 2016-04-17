@@ -42,13 +42,13 @@ class LoginController extends BaseController
             $login = UserSvc::login($mobile, $password);
             if ($login['e'] == ErrorSvc::ERR_OK) {
                 if (UtlsSvc::isMobile()) {
-                    return ErrorSvc::showJson($login['e'], null, $login['m']);
+                    return ErrorSvc::format($login['e'], null, $login['m']);
                 } else {
                     header("location:".$go);
                 }
             } else {
                 if (!UtlsSvc::isMobile()) {
-                    return ErrorSvc::showJson($login['e'], null, $login['m']);
+                    return ErrorSvc::format($login['e'], null, $login['m']);
                 } else {
                     header("location:/Login/index?error=".urlencode($login['m']));
                 }
@@ -68,9 +68,9 @@ class LoginController extends BaseController
             if ($result['e'] == ErrorSvc::ERR_OK) {
                 UserSvc::loginCore($result['data']);
             }
-            return ErrorSvc::showJson($result['e'], null, $result['m']);
+            return ErrorSvc::format($result['e'], null, $result['m']);
         } else {
-            return ErrorSvc::showJson(ErrorSvc::ERR_PARAM_EMPTY);
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY);
         }
     }
 

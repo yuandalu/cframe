@@ -70,13 +70,13 @@ class UserSvc
         $verify = self::validatePassword($user, $password);
         if ($verify !== false) {
             if ($user['status'] == User::STATUS_N) {
-                return ErrorSvc::returnData(ErrorSvc::ERR_LOGININFO_ERROR, '', '用户已经被限制登录');
+                return ErrorSvc::format(ErrorSvc::ERR_LOGININFO_ERROR, '', '用户已经被限制登录');
             }
             return self::loginCore($user, $expire);
         } else {
             setcookie('F', '', -1, '/', env('DOMAIN_NAME', 'local'));
             setcookie('B', '', -1, '/', env('DOMAIN_NAME', 'local'));
-            return ErrorSvc::returnData(ErrorSvc::ERR_LOGININFO_ERROR, '', '账户名或密码错误，请重试');
+            return ErrorSvc::format(ErrorSvc::ERR_LOGININFO_ERROR, '', '账户名或密码错误，请重试');
         }
     }
 
@@ -87,7 +87,7 @@ class UserSvc
         foreach ($cookie as $key=>$val) {
             setcookie($key, $val, $expire, '/', env('DOMAIN_NAME', 'local'));
         }
-        return ErrorSvc::returnData(ErrorSvc::ERR_OK, '', '登陆成功');
+        return ErrorSvc::format(ErrorSvc::ERR_OK, '', '登陆成功');
     }
 
     public static function register($mobile, $password, $param)
@@ -97,7 +97,7 @@ class UserSvc
 
         if (UserSvc::getByMobile($mobile)) {
             MysqlSvc::releaseLock($lock);
-            return ErrorSvc::returnData(ErrorSvc::ERR_EXISTS);
+            return ErrorSvc::format(ErrorSvc::ERR_EXISTS);
         }
         $salt     = substr(md5(uniqid().microtime(true)),rand(0,25),6);
         $password = md5($password.$salt);
@@ -117,12 +117,12 @@ class UserSvc
             Loader::loadExecutor()->commit();
             MysqlSvc::releaseLock($lock);
             //记录注册动作
-            return ErrorSvc::returnData(ErrorSvc::ERR_OK, $user);
+            return ErrorSvc::format(ErrorSvc::ERR_OK, $user);
         }
 
         Loader::loadExecutor()->rollback();
         MysqlSvc::releaseLock($lock);
-        return ErrorSvc::returnData(ErrorSvc::ERR_REGISTER_FAILED);
+        return ErrorSvc::format(ErrorSvc::ERR_REGISTER_FAILED);
     }
 
     public static function validatePassword($user, $password)
