@@ -6,6 +6,7 @@ use App\Support\Loader;
 use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\LogSvc;
 use App\Models\Svc\ErrorSvc;
+use App\Models\Svc\UserSvc;
 use App\Conf\UserConf;
 
 class IndexController extends BaseController
@@ -49,6 +50,6 @@ class IndexController extends BaseController
 
     public function authAction()
     {
-        return 'login';
+        return UserSvc::info(true)->toAry();
     }
 }

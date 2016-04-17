@@ -18,17 +18,17 @@ class TestClassSvc
 
     public static function updateById($id, $param)
     {
-        return self::getDao()->updateById($id, $param, self::OBJ);
+        return self::getDao()->updateById($id, $param);
     }
 
     public static function getById($id = '0')
     {
-        return self::getDao()->getById($id , self::OBJ);
+        return self::getDao()->getById($id);
     }
 
     public static function deleteById($id)
     {
-        return self::getDao()->deleteById($id, self::OBJ);
+        return self::getDao()->deleteById($id);
     }
 
     public static function getAll()

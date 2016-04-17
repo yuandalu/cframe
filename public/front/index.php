@@ -6,7 +6,7 @@ define('BASE_DIR', dirname(dirname(dirname(__FILE__))));
 require BASE_DIR.'/bootstrap/autoload.php';
 
 \App\Support\Loader::init();
-\App\Support\Loader::regSess('f');
+\App\Support\Loader::regSess('front');
 
 $app = require_once BASE_DIR.'/bootstrap/app.php';
 
@@ -29,8 +29,8 @@ Container::find('QFrameRouter')->addRoute('user',$userroute);
 
 $app->run();
 
-echo '<br>';
-echo $timer->resourceUsage();
+// echo '<br>';
+// echo $timer->resourceUsage();
 
 class Timer
 {

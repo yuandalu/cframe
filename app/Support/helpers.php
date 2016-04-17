@@ -22,14 +22,20 @@ if (!function_exists('loader')) {
             case 'dbcache':
                 return Loader::loadDBCache();
                 break;
+            case 'cache':
+                return Loader::loadCache();
+                break;
             case 'session':
                 return Loader::loadSess();
                 break;
-            case 'dbcache':
-                return Loader::loadDBCache();
+            case 'httpsqs':
+                return Loader::loadHttpsqs();
                 break;
-            case 'dbcache':
-                return Loader::loadDBCache();
+            case 'mredis':
+                return Loader::loadMasterRedis();
+                break;
+            case 'sredis':
+                return Loader::loadSlaveRedis();
                 break;
             default:
                 return null;

@@ -17,14 +17,14 @@ class SimpleObject
     public function __get($key)
     {
         if ($this->have($key)) {
-            return $this->_attr[ $key ];
+            return $this->_attr[$key];
         }
         return '';
     }
 
     public function __set($key, $value)
     {
-        $this->_attr[ $key ] = $value;
+        $this->_attr[$key] = $value;
     }
 
     public function have($key)
@@ -40,7 +40,7 @@ class SimpleObject
     public function remove($key)
     {
         if ($this->have($key)) {
-            unset($this->_attr[ $key ]);
+            unset($this->_attr[$key]);
         }
     }
 
