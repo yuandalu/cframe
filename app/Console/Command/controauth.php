@@ -1,5 +1,7 @@
 <?php
+
 require_once "../header.php";
+
 $arr = glob(BASE_DIR."/app/Controllers/Admin/*.php", GLOB_NOCHECK);//获取所有controller
 $auth = array();
 foreach ($arr as $value) {

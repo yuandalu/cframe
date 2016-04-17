@@ -6,6 +6,7 @@ use App\Support\Loader;
 use App\Models\Svc\UtlsSvc;
 use App\Models\Svc\LogSvc;
 use App\Models\Svc\ErrorSvc;
+use App\Conf\UserConf;
 
 class IndexController extends BaseController
 {
@@ -40,7 +41,7 @@ class IndexController extends BaseController
         $this->assign('name', $name);
         echo $name;
         // return view('index');
-        $data = array('type'=>'json', 'name'=>'api');
+        $data = UserConf::getUsers();
         // return $data;
         // return 666;
         return ErrorSvc::showJson(ErrorSvc::ERR_OK, $data);
