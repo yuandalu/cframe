@@ -14,7 +14,7 @@ class EntityController extends BaseController
 
     public function indexAction()
     {
-
+        return view('index');
     }
 
     public function indexSubmitAction()
@@ -81,12 +81,10 @@ class EntityController extends BaseController
         $entity = $this->getRequest('entity');
         if(file_exists(BASE_DIR.'/app/Models/Entity/'.$entity.'.php'))
         {
-            echo json_encode(array('code'=>'fail'));
-            exit;
+            return json_encode(array('code'=>'fail'));
         }else
         {
-            echo json_encode(array('code'=>'succ'));
-            exit;
+            return json_encode(array('code'=>'succ'));
         }
     }
 
@@ -95,12 +93,10 @@ class EntityController extends BaseController
         $table_name = $this->getRequest('table_name');
         if(file_exists(BASE_DIR.'/resources/database/'.$table_name.'.sql'))
         {
-            echo json_encode(array('code'=>'fail'));
-            exit;
+            return json_encode(array('code'=>'fail'));
         }else
         {
-            echo json_encode(array('code'=>'succ'));
-            exit;
+            return json_encode(array('code'=>'succ'));
         }
     }
 

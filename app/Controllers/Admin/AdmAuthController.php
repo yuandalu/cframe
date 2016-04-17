@@ -19,6 +19,7 @@ class AdmAuthController extends BaseController
     {
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauth');
+        return view('index');
     }
 
     public function addAction()
@@ -75,5 +76,6 @@ class AdmAuthController extends BaseController
 
         $this->assign($request);
         $this->assign('orderby', $orderby);
+        return view('list');
     }
 }

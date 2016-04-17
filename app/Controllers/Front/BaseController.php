@@ -6,12 +6,12 @@ use Elephant\Foundation\Controller;
 
 class BaseController extends Controller
 {
-    // public function __construct($require_login = true)
-    // {
+    public function __construct($require_login = true)
+    {
     //     //#mark用户信息变更需要更新用户的cookie，或者让用户重新登录
     //     $user = UserSvc::info(true);
     //     //用户登录认证
-    //     if ($require_login) {
+        if ($require_login) {
     //         if (!$user) {
     //             if (UtlsSvc::isMobile()) {
     //                 ErrorSvc::showJson(ErrorSvc::ERR_NO_LOGIN);
@@ -50,7 +50,7 @@ class BaseController extends Controller
     //         }
     //         $this->assign('loginUser', $user);
     //         $this->assign('currentCompany', $company);
-    //     }
+        }
     //     if(!isset($_COOKIE['L']))
     //     {
     //         setcookie("L", time(),time()+7200, "/", "b.youmi.cn");
@@ -60,5 +60,5 @@ class BaseController extends Controller
     //         $param_uaction['roleid']=$user->roleid;
     //         UactionSvc::add($param_uaction);
     //     }
-    // }
+    }
 }

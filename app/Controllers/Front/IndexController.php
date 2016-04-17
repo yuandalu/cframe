@@ -45,4 +45,9 @@ class IndexController extends BaseController
         // return 666;
         return ErrorSvc::showJson(ErrorSvc::ERR_OK, $data);
     }
+
+    public function authAction()
+    {
+        return 'login';
+    }
 }

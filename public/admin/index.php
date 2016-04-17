@@ -16,8 +16,8 @@ $app->setViewPath(BASE_DIR.'/resources/views/admin/');
 
 $app->run();
 
-echo '<br>';
-echo $timer->resourceUsage();
+// echo '<br>';
+// echo $timer->resourceUsage();
 
 class Timer
 {

@@ -18,6 +18,7 @@ class LogController extends BaseController
         $this->assign('list', $list);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_log');
+        return view('index');
     }
 
     public function operateAction()
@@ -41,6 +42,7 @@ class LogController extends BaseController
 
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_operate');
+        return view('operate');
     }
 
     public function getLogDetailAction()

@@ -25,7 +25,7 @@ class AdmMenuController extends BaseController
         $this->assign("auths",$auths);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
-
+        return view('index');
     }
 
 
@@ -64,6 +64,9 @@ class AdmMenuController extends BaseController
         $auths = AdmAuthSvc::getAllauth();
         $this->assign("auths",$auths);
         $this->assign("data",$data);
+        $this->assign('curr_menu', 'manage');
+        $this->assign('curr_submenu', 'manage_admmenu');
+        return view('edit');
     }
 
     public function modifyAction()
@@ -128,6 +131,7 @@ class AdmMenuController extends BaseController
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
         $this->assign('orderby', $orderby);
+        return view('list');
     }
 
 

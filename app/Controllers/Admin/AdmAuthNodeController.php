@@ -23,7 +23,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign("auth",$auth);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauthnode');
-
+        return view('index');
     }
 
     public function addAction()
@@ -78,6 +78,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign('auths', $auths );
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauthnode');
+        return view('edit');
     }
 
     public function modifyAction()
@@ -125,5 +126,6 @@ class AdmAuthNodeController extends BaseController
         $this->assign($request);
         $this->assign( 'authconf',  AdmAuthSvc::getConf());
         $this->assign('orderby', $orderby);
+        return view('list');
     }
 }

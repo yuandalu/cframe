@@ -4,10 +4,10 @@ namespace App\Controllers\Admin;
 
 use App\Models\Svc\ErrorSvc;
 use App\Models\Svc\UtlsSvc;
-use App\Models\Svc\TestClassSvc;
+use App\Models\Svc\UserSvc;
 
 
-class TestClassController extends BaseController
+class UserController extends BaseController
 {
     // 默认分页数
     const PER_PAGE_NUM = 15;
@@ -21,14 +21,14 @@ class TestClassController extends BaseController
     {
         $id = $this->getRequest('id','');
         if ($id > 0) {
-            $TestClass = TestClassSvc::getById($id);
-            if (is_null($TestClass)) {
-                UtlsSvc::showMsg('没有这个ID', '/TestClass/list');
+            $User = UserSvc::getById($id);
+            if (is_null($User)) {
+                UtlsSvc::showMsg('没有这个ID', '/User/list');
             }
-            $this->assign($TestClass->toAry());
+            $this->assign($User->toAry());
         }
-        $this->assign('curr_menu', 'TestClass');
-        $this->assign('curr_submenu', 'TestClass_add');
+        $this->assign('curr_menu', 'User');
+        $this->assign('curr_submenu', 'User_add');
         return view('index');
     }
 
@@ -37,10 +37,11 @@ class TestClassController extends BaseController
     {
         $param = array();
         $id    = $this->getRequest('id','');
-        $param['tdata'] = $this->getRequest('tdata','');
+        $param['mobile'] = $this->getRequest('mobile','');
+        $param['nickname'] = $this->getRequest('nickname','');
+        $param['password'] = $this->getRequest('password','');
+        $param['salt'] = $this->getRequest('salt','');
         $param['status'] = $this->getRequest('status','');
-        $param['tableidname'] = $this->getRequest('tableidname','');
-        $param['name'] = $this->getRequest('name','');
 
         // 参数校验，有时这是必须的
         // if (empty($param['name'])) {
@@ -49,10 +50,10 @@ class TestClassController extends BaseController
 
         if ($id != '') {
             $param['utime'] = date('Y-m-d H:i:s');
-            $obj = TestClassSvc::updateById($id, $param);
+            $obj = UserSvc::updateById($id, $param);
             return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '保存成功');
         } else {
-            $obj = TestClassSvc::add($param);
+            $obj = UserSvc::add($param);
             return ErrorSvc::showJson(ErrorSvc::ERR_OK, null, '新增成功');
         }
     }
@@ -73,26 +74,27 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['tdata'] = $this->getRequest('tdata','');
+        $request['mobile'] = $this->getRequest('mobile','');
+        $request['nickname'] = $this->getRequest('nickname','');
+        $request['password'] = $this->getRequest('password','');
+        $request['salt'] = $this->getRequest('salt','');
         $request['status'] = $this->getRequest('status','');
-        $request['tableidname'] = $this->getRequest('tableidname','');
-        $request['name'] = $this->getRequest('name','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
-        $list = TestClassSvc::lists($request, array(
+        $list = UserSvc::lists($request, array(
             'per_page'=>self::PER_PAGE_NUM,
             'page_param'=>'p',
             'curr_page'=>$this->getRequest('p',1),
-            'file_name'=>'/TestClass/list/',
+            'file_name'=>'/User/list/',
             'orderby'=>$orderby
         ));
 
         $this->assign($request);
         $this->assign('orderby', $orderby);
         $this->assign('list', $list);
-        $this->assign('curr_menu', 'TestClass');
-        $this->assign('curr_submenu', 'TestClass_list');
+        $this->assign('curr_menu', 'User');
+        $this->assign('curr_submenu', 'User_list');
         return view('list');
     }
 
@@ -103,43 +105,45 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['tdata'] = $this->getRequest('tdata','');
+        $request['mobile'] = $this->getRequest('mobile','');
+        $request['nickname'] = $this->getRequest('nickname','');
+        $request['password'] = $this->getRequest('password','');
+        $request['salt'] = $this->getRequest('salt','');
         $request['status'] = $this->getRequest('status','');
-        $request['tableidname'] = $this->getRequest('tableidname','');
-        $request['name'] = $this->getRequest('name','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
-        $list = TestClassSvc::lists($request, array(
+        $list = UserSvc::lists($request, array(
             'per_page'=>self::PER_PAGE_NUM,
             'page_param'=>'p',
             'curr_page'=>$this->getRequest('p',1),
-            'file_name'=>'/TestClass/list/',
+            'file_name'=>'/User/list/',
             'orderby'=>$orderby
         ), true);
 
         // 表格导出
         $table = '<table border="1"><tr>
-        <th>ID</th><th>创建时间</th><th>修改时间</th><th>时间</th><th>status</th><th>idname</th><th>test</th>
+        <th>ID</th><th>创建时间</th><th>修改时间</th><th>手机号</th><th>昵称</th><th>密码</th><th>加密</th><th>状态</th>
         </tr>';
         foreach ($list as $k => $v) {
             $table .= '<tr>';
-            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['tdata'].'</th><th>'.$v['status'].'</th><th>'.$v['tableidname'].'</th><th>'.$v['name'].'</th>';
+            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['mobile'].'</th><th>'.$v['nickname'].'</th><th>'.$v['password'].'</th><th>'.$v['salt'].'</th><th>'.$v['status'].'</th>';
             $table .= '</tr>';
         }
         $table .= '</table>';
         echo $table;
         // CSV导出
-        // $str = "ID,创建时间,修改时间,时间,status,idname,test\n";
+        // $str = "ID,创建时间,修改时间,手机号,昵称,密码,加密,状态\n";
         // foreach ($list as $k => $v) {
             // $id = $v['id'];
             // $ctime = $v['ctime'];
             // $utime = $v['utime'];
-            // $tdata = $v['tdata'];
+            // $mobile = $v['mobile'];
+            // $nickname = $v['nickname'];
+            // $password = $v['password'];
+            // $salt = $v['salt'];
             // $status = $v['status'];
-            // $tableidname = $v['tableidname'];
-            // $name = $v['name'];
-            // $str .= $id.','.$ctime.','.$utime.','.$tdata.','.$status.','.$tableidname.','.$name."\n";
+            // $str .= $id.','.$ctime.','.$utime.','.$mobile.','.$nickname.','.$password.','.$salt.','.$status."\n";
         // }
         // header("Content-type:text/csv");   
         // header("Content-Disposition:attachment;filename=".date('Ymd').'.csv');   

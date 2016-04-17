@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-用户</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>用户<small><?php echo $this->id?'Edit':'Add';?></small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            用户
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <div class="pull-right">
+                        <?php if ($this->id): ?>
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <a class="glyphicon glyphicon-plus" href="/User/index"></a>
+                        <a class="glyphicon glyphicon-th-list" href="/User/list"></a>
+                        <?php else: ?>
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <a class="glyphicon glyphicon-th-list" href="/User/list"></a>
+                        <?php endif ?>
+                    </div>
+                </div>
+                <form class="form-horizontal" method="post" action="/User/add/" name="myform" id="myform">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">手机号</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="mobile" value="<?php echo $this->mobile; ?>" placeholder="请输入手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">昵称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="nickname" value="<?php echo $this->nickname; ?>" placeholder="请输入昵称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">密码</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="password" value="<?php echo $this->password; ?>" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">加密</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="salt" value="<?php echo $this->salt; ?>" placeholder="请输入加密">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">状态</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" style="width:200px;"  name="status">
+                                <?php foreach (\App\Models\Entity\User::$STATUS as $k => $v): ?>
+                                    <?php if ($k == $this->status) {
+                                        echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
+                                    } else {
+                                        echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
+                                    } ?>
+                                <?php endforeach ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <input type="hidden" name="id" value="<?php echo $this->id; ?>">
+                        <button type="submit" id="myButton" data-loading-text="Loading..." class="btn btn-primary">确 定</button>
+                    </div>
+                </form>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script src="/static/plugins/jquery-form/jquery.form.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            var btnSubmit;
+            $("#myform").ajaxForm({
+                dataType: "json",
+                beforeSubmit: function() {
+                    btnSubmit = $("#myButton").button('loading');
+                },
+                success: processJson
+            });
+            function processJson(data){
+                $('.alert.alert-warning').remove();
+                if (data.e == "9999") {
+                    setTimeout(function(){
+                        btnSubmit.button('reset');
+                        window.location.href = "<?php echo $_SERVER['HTTP_REFERER'];?>";
+                    }, 500);
+                } else {
+                    $.confirm({
+                        title: false,
+                        content: data.m,
+                        cancelButton: false,
+                        confirmButton: false,
+                        closeIcon: false,
+                    });
+                    btnSubmit.button('reset');
+                }
+            }
+        });
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

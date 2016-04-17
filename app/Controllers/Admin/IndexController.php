@@ -22,6 +22,7 @@ class IndexController extends BaseController
             UtlsSvc::goToAct('Index', 'login');
         }
         $this->assign('adminUserObj', $adminUserObj);
+        return view('index');
     }
 
     public function loginAction()
@@ -41,6 +42,7 @@ class IndexController extends BaseController
         if ($adminUserObj) {
             UtlsSvc::goToAct('Index', 'index');
         }
+        return view('login');
     }
 
     public function noauthAction()

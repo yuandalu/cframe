@@ -24,6 +24,7 @@ class AdmUserController extends BaseController
         $this->assign('name', $request['name']);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admuser');
+        return view('index');
     }
 
     public function addAction()
@@ -122,6 +123,7 @@ class AdmUserController extends BaseController
         $this->assign('data',$auth);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admuser');
+        return view('modifyauth');
     }
     
     /***
