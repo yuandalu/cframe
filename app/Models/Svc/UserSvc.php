@@ -66,14 +66,13 @@ class UserSvc
 
     public static function login($mobile, $password, $expire = 0)
     {
-        $expire = $expire?$expire+time():315360000+time();
         $user   = self::getByMobile($mobile);
         $verify = self::validatePassword($user, $password);
         if ($verify !== false) {
             if ($user['status'] == User::STATUS_N) {
                 return ErrorSvc::returnData(ErrorSvc::ERR_LOGININFO_ERROR, '', '用户已经被限制登录');
             }
-            return self::loginCore($user);
+            return self::loginCore($user, $expire);
         } else {
             setcookie('F', '', -1, '/', env('DOMAIN_NAME', 'local'));
             setcookie('B', '', -1, '/', env('DOMAIN_NAME', 'local'));
@@ -81,8 +80,9 @@ class UserSvc
         }
     }
 
-    public static function loginCore($user)
+    public static function loginCore($user, $expire = 0)
     {
+        $expire = $expire?$expire+time():315360000+time();
         $cookie = self::createCookie($user);
         foreach ($cookie as $key=>$val) {
             setcookie($key, $val, $expire, '/', env('DOMAIN_NAME', 'local'));
