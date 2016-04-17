@@ -2,7 +2,7 @@
 
 use Elephant\Container\Factory;
 use App\Support\ObjectFinder;
-use App\Support\DBCache;
+use App\Support\Loader;
 use App\Support\Logs;
 
 if (!function_exists('view')) {
@@ -18,21 +18,24 @@ if (!function_exists('view')) {
 if (!function_exists('loader')) {
     function loader($name)
     {
-        $obj = ObjectFinder::find($name);
-        if (is_object($obj)) {
-            return $obj;
-        }
         switch ($name) {
-            case 'DBCache':
-                $obj = new DBCache();
-                ObjectFinder::register('DBCache', $obj);
+            case 'dbcache':
+                return Loader::loadDBCache();
                 break;
-            
+            case 'session':
+                return Loader::loadSess();
+                break;
+            case 'dbcache':
+                return Loader::loadDBCache();
+                break;
+            case 'dbcache':
+                return Loader::loadDBCache();
+                break;
             default:
                 return null;
                 break;
         }
-        return $obj;
+        return null;
     }
 }
 

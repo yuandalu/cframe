@@ -16,7 +16,7 @@ class BaseController extends Controller
         if (in_array($controllerName, array('Include', 'Index', 'include', 'index'))) {
             return "";
         }
-        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUser    = loader('session')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if (!$adminUserObj) {
             UtlsSvc::goToAct("Index", "login");

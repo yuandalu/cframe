@@ -9,7 +9,7 @@ class AdminSvc
 {
     public static function getLoginUser()
     {
-        $user = loader('Sess')->get('adminUser');
+        $user = loader('session')->get('adminUser');
         if ($user) {
             return $user;
         } else {
@@ -28,13 +28,13 @@ class AdminSvc
         if (true && self::staffAuth($user, $pwd)) {
             $param['result'] = '1';
             LogSvc::loginLog($param);
-            loader('Sess')->set('adminUser', $user);
+            loader('session')->set('adminUser', $user);
             setcookie('adminUser',$user, 0, '/');
             return true;
         } else {
             $param['result'] = '0';
             LogSvc::loginLog($param);
-            loader('Sess')->destroy('adminUser');
+            loader('session')->destroy('adminUser');
             setcookie('adminUser',$user,0);
             return false;
         }

@@ -23,20 +23,22 @@ $result = $httpsqs->synctime($num); //9. Change the interval to sync updated con
 ----------------------------------------------------------------------------------------------------------------
 */
 
-class httpsqs
+namespace App\Support;
+
+class HttpsqsDriver
 {
-        public $httpsqs_host;
-        public $httpsqs_port;
-        public $httpsqs_auth;
-        public $httpsqs_charset;
-        
-        public function __construct($host='127.0.0.1', $port=1218, $auth='', $charset='utf-8') {
-                $this->httpsqs_host = $host;
-                $this->httpsqs_port = $port;
-                $this->httpsqs_auth = $auth;
-                $this->httpsqs_charset = $charset;
-                return true;
-        }
+    public $httpsqs_host;
+    public $httpsqs_port;
+    public $httpsqs_auth;
+    public $httpsqs_charset;
+    
+    public function __construct($host='127.0.0.1', $port=1218, $auth='', $charset='utf-8') {
+            $this->httpsqs_host = $host;
+            $this->httpsqs_port = $port;
+            $this->httpsqs_auth = $auth;
+            $this->httpsqs_charset = $charset;
+            return true;
+    }
 
     public function http_get($query)
     {
@@ -226,4 +228,3 @@ class httpsqs
         return false;
     }
 }
-?>

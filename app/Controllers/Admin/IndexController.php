@@ -16,7 +16,7 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUser    = loader('session')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if (!$adminUserObj) {
             UtlsSvc::goToAct('Index', 'login');
@@ -37,7 +37,7 @@ class IndexController extends BaseController
             }
         }
 
-        $adminUser    = loader('Sess')->get('adminUser');
+        $adminUser    = loader('session')->get('adminUser');
         $adminUserObj = AdmUserSvc::getByEname($adminUser);
         if ($adminUserObj) {
             UtlsSvc::goToAct('Index', 'index');
@@ -54,7 +54,7 @@ class IndexController extends BaseController
     public function doLoginAction()
     {
         $captcha     = strtolower($this->getRequest('security_code', ''));
-        $session_val = strtolower(loader('Sess')->get('security_code'));
+        $session_val = strtolower(loader('session')->get('security_code'));
         $user        = $this->getRequest('user', '');
         $pwd         = $this->getRequest('pwd', '');
         if (UtlsSvc::inCompany() || true) {
@@ -75,7 +75,7 @@ class IndexController extends BaseController
     public function logoutAction()
     {
         //这里是后台
-        loader('Sess')->destroy('adminUser');
+        loader('session')->destroy('adminUser');
         UtlsSvc::goToAct('Index', 'index');
     }
 }

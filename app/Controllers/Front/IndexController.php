@@ -27,12 +27,12 @@ class IndexController extends BaseController
     {
         // $cache = Loader::loadDBCache()->set('a', 'DBCache');
         // echo $cache = Loader::loadDBCache()->get('a');
-        // $cache = loader('DBCache')->set('a', 'ttt ');
-        // $cache = loader('DBCache')->get('a');
+        // $cache = loader('dbcache')->set('a', 't6 ');
+        // echo $cache = loader('dbcache')->get('a');
         // Loader::loadSlaveRedis()->set('a', 2);
         // echo Loader::loadSlaveRedis()->get('a');
-        // loader('Sess')->set('a', 1);
-        // echo loader('Sess')->get('a');
+        // loader('session')->set('a', 'session');
+        // echo loader('session')->get('a');
         // echo UtlsSvc::fenToYuan(1000);
         // LogSvc::writeLog('test', 'test');
         // var_dump(env('CAPTCHA_FONT_FILE', 'local'));
