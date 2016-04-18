@@ -41,14 +41,14 @@ class AdmMenuController extends BaseController
     {
         $param = array();
         $param['name'] = $this->getRequest('name','');
-        $param['url'] = $this->getRequest('url','');
-        $param['sort'] = $this->getRequest('sort','');
+        $param['url']  = $this->getRequest('url','');
+        $param['sort'] = intval($this->getRequest('sort','0'));
         $class = $this->getRequest('groupid');
-        $crr = explode(',',$class);
-        $param['oneclass'] = $crr[1]?$crr[1]:$this->getRequest('oneclass');
-        $param['groupid'] = $crr[0];
-        $param['aid'] = $this->getRequest('aid','');
-        $param['curr_menu'] = $this->getRequest('curr_menu','');
+        $crr   = explode(',', $class);
+        $param['oneclass']     = $crr[1]?$crr[1]:$this->getRequest('oneclass');
+        $param['groupid']      = $crr[0];
+        $param['aid']          = $this->getRequest('aid','');
+        $param['curr_menu']    = $this->getRequest('curr_menu','');
         $param['curr_submenu'] = $this->getRequest('curr_submenu','');
 
         // 自己写判断参数检查
