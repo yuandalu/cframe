@@ -8,7 +8,7 @@ use App\Models\Entity\AdmMenu;
 class AdmMenuSvc
 {
     const OBJ = 'AdmMenu';
-    #warning 书写格式没有规范
+    
     public static function add($param)
     {
         $obj = AdmMenu::createByBiz($param);
@@ -122,7 +122,6 @@ class AdmMenuSvc
             $sql_condition[] = 'curr_submenu =?';
             $sql_param[]     = $request['curr_submenu'];
         }
-        //print_r($sql_condition);print_r($sql_param);exit;
         return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
     }
     

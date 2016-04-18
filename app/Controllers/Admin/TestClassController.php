@@ -9,12 +9,18 @@ use App\Models\Svc\TestClassSvc;
 
 class TestClassController extends BaseController
 {
-    // 默认分页数
-    const PER_PAGE_NUM = 15;
+    const PER_PAGE_NUM = 15;// 默认分页数
+    
+    static $NOT_LOGIN_ACTION  = array();// 排除登录验证
+    static $SUPER_MUST_VERIFY = array();// 必须具有权限包括超级管理员
 
     public function __construct()
     {
-        parent::__construct();
+        $isLogin  = true;
+        if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
+            $isLogin = false;
+        }
+        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
     }
 
     public function indexAction()

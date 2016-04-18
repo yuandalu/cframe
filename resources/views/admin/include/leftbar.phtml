@@ -34,6 +34,9 @@
             <li class="header">
                 Menu
             </li>
+            <li class="<?php echo empty($this->curr_menu)?'active':''; ?>">
+                <a href="/Index"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+            </li>
 <?php
 $curUid = $this->adminUserObj->id;
 $haveauth = \App\Models\Svc\AdmAuthSvc::getAuthByUid($curUid);//已经有的权限

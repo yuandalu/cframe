@@ -6,10 +6,18 @@ use App\Models\Svc\LogSvc;
 
 class LogController extends BaseController
 {
-    const PER_PAGE_NUM = 15;
+    const PER_PAGE_NUM = 15;// 默认分页数
+    
+    static $NOT_LOGIN_ACTION  = array();// 排除登录验证
+    static $SUPER_MUST_VERIFY = array('index', 'operate', 'getlogdetail');// 必须具有权限包括超级管理员
+
     public function __construct()
     {
-        parent::__construct();
+        $isLogin  = true;
+        if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
+            $isLogin = false;
+        }
+        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
     }
 
     public function indexAction()
@@ -28,7 +36,7 @@ class LogController extends BaseController
         $start = $this->getRequest('start');
         $end = $this->getRequest('end');
 
-        $request  = array('username'=>$username, 'kw'=>$kw, 'start'=>$start, 'end'=>$end);
+        $request = array('username'=>$username, 'kw'=>$kw, 'start'=>$start, 'end'=>$end);
 
         $action = LogSvc::getLogs('adm_actlog',array('per_page'=>self::PER_PAGE_NUM, 'page_param'=>'cp', 'curr_page'=>$this->getRequest('cp',1),'file_name'=>'/log/operate/'), $request);
         $this->assign('operate', $action);
@@ -51,8 +59,7 @@ class LogController extends BaseController
         $LogDetails = LogSvc::getDetailByid($logid);
         echo "<pre>";
         $content = unserialize($LogDetails[0]['content']);
-        foreach($LogDetails as $v)
-        {
+        foreach ($LogDetails as $v) {
             echo '<div><b>'.$v['username'].'</b> 于 '.$v['action_time'].' 在IP为：<b>'.$v['ip'].'</b> 的主机上 '.$v['action'].' 具体操作内容是：</div>';
         }
         print_r($content);

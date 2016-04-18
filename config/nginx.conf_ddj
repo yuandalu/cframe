@@ -41,13 +41,13 @@ server{
         fastcgi_param ENV_DB_PORT "3306";
         fastcgi_param ENV_DB_USER "root";
         fastcgi_param ENV_DB_PASS "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME "site_main";
+        fastcgi_param ENV_DB_NAME "yuandalu";
 
         fastcgi_param ENV_DB_HOST_R "127.0.0.1";
         fastcgi_param ENV_DB_PORT_R "3306";
         fastcgi_param ENV_DB_USER_R "root";
         fastcgi_param ENV_DB_PASS_R "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME_R "site_main";
+        fastcgi_param ENV_DB_NAME_R "yuandalu";
 
         fastcgi_param ENV_FINANCE_DB_HOST "127.0.0.1";
         fastcgi_param ENV_FINANCE_DB_PORT "3306";
@@ -125,13 +125,13 @@ server{
         fastcgi_param ENV_DB_PORT "3306";
         fastcgi_param ENV_DB_USER "root";
         fastcgi_param ENV_DB_PASS "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME "site_main";
+        fastcgi_param ENV_DB_NAME "yuandalu";
 
         fastcgi_param ENV_DB_HOST_R "127.0.0.1";
         fastcgi_param ENV_DB_PORT_R "3306";
         fastcgi_param ENV_DB_USER_R "root";
         fastcgi_param ENV_DB_PASS_R "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME_R "site_main";
+        fastcgi_param ENV_DB_NAME_R "yuandalu";
 
         fastcgi_param ENV_FINANCE_DB_HOST "127.0.0.1";
         fastcgi_param ENV_FINANCE_DB_PORT "3306";
@@ -209,13 +209,13 @@ server{
         fastcgi_param ENV_DB_PORT "3306";
         fastcgi_param ENV_DB_USER "root";
         fastcgi_param ENV_DB_PASS "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME "site_main";
+        fastcgi_param ENV_DB_NAME "yuandalu";
 
         fastcgi_param ENV_DB_HOST_R "127.0.0.1";
         fastcgi_param ENV_DB_PORT_R "3306";
         fastcgi_param ENV_DB_USER_R "root";
         fastcgi_param ENV_DB_PASS_R "guixueguomao_dev";
-        fastcgi_param ENV_DB_NAME_R "site_main";
+        fastcgi_param ENV_DB_NAME_R "yuandalu";
 
         fastcgi_param ENV_FINANCE_DB_HOST "127.0.0.1";
         fastcgi_param ENV_FINANCE_DB_PORT "3306";

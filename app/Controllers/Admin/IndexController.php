@@ -9,19 +9,22 @@ use App\Ext\Browser;
 
 class IndexController extends BaseController
 {
+    const PER_PAGE_NUM = 15;// 默认分页数
+    
+    static $NOT_LOGIN_ACTION  = array('login', 'dologin');// 排除登录验证
+    static $SUPER_MUST_VERIFY = array();// 必须具有权限包括超级管理员
+
     public function __construct()
     {
-        parent::__construct();
+        $isLogin  = true;
+        if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
+            $isLogin = false;
+        }
+        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
     }
 
     public function indexAction()
     {
-        $adminUser    = loader('session')->get('adminUser');
-        $adminUserObj = AdmUserSvc::getByEname($adminUser);
-        if (!$adminUserObj) {
-            UtlsSvc::goToAct('Index', 'login');
-        }
-        $this->assign('adminUserObj', $adminUserObj);
         return view('index');
     }
 
@@ -43,12 +46,6 @@ class IndexController extends BaseController
             UtlsSvc::goToAct('Index', 'index');
         }
         return view('login');
-    }
-
-    public function noauthAction()
-    {
-        UtlsSvc::showMsg('没有权限','/Index/login/');
-        exit;
     }
 
     public function doLoginAction()

@@ -8,13 +8,13 @@ use App\Models\Entity\AdmUserAuth;
 class AdmUserAuthSvc
 {
     const OBJ = 'AdmUserAuth';
-    #warning 书写格式没有规范
-    static public function add($param)
+    
+    public static function add($param)
     {
         $obj = AdmUserAuth::createByBiz($param);
         return self::getDao()->add($obj);
     }
-    static public function getById($id = '0')
+    public static function getById($id = '0')
     {
         if (empty($id))
         {
@@ -23,16 +23,16 @@ class AdmUserAuthSvc
         return self::getDao()->getById($id);
     }
 
-    static public function updateById($id, $param)
+    public static function updateById($id, $param)
     {
         return self::getDao()->updateById($id, $param);
     }
 
-    static public function getByUid($uid = '0')
+    public static function getByUid($uid = '0')
     {
         return self::getDao()->getByUid($uid);
     }
-    static public function getAid()
+    public static function getAid()
     {
         return self::getDao()->getAid();
     }
@@ -41,7 +41,7 @@ class AdmUserAuthSvc
         return Loader::loadDao(self::OBJ);
     }
 
-    static public function lists($request=array(), $options=array(), $export = false)
+    public static function lists($request=array(), $options=array(), $export = false)
     {
         $request_param = array();
         $sql_condition = array();

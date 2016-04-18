@@ -10,10 +10,18 @@ use App\Models\Svc\LogSvc;
 
 class AdmAuthNodeController extends BaseController
 {
-    const PER_PAGE_NUM = 20;
+    const PER_PAGE_NUM = 15;// 默认分页数
+    
+    static $NOT_LOGIN_ACTION  = array();// 排除登录验证
+    static $SUPER_MUST_VERIFY = array('index', 'add', 'updateauths', 'edit', 'modify', 'list');// 必须具有权限包括超级管理员
+
     public function __construct()
     {
-        parent::__construct();
+        $isLogin  = true;
+        if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
+            $isLogin = false;
+        }
+        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
     }
 
     public function indexAction()
@@ -45,18 +53,7 @@ class AdmAuthNodeController extends BaseController
         exit;
         //UtlsSvc::showMsg('添加成功','/AdmAuthNode/list/');
     }
-
-    public function addauthAction()
-    {
-        $param['name'] = trim($this->getRequest("name"));
-        $data['contr'] = $this->getRequest("contr");
-        $data['action'] = $this->getRequest("action");
-        $obj = AdmAuthSvc::add($param);
-        $data['aid'] = $obj->id;
-        $objs = AdmAuthNodeSvc::updateByCA($data);
-        UtlsSvc::showMsg('添加成功','/AdmAuthNode/list/');
-        exit;
-    }
+    
     public function updateAuthsAction()
     {
         $ids = $this->getRequest('ids');

@@ -9,10 +9,18 @@ use App\Models\Svc\AdmUserAuthSvc;
 
 class AdmAuthController extends BaseController
 {
-    const PER_PAGE_NUM = 20;
+    const PER_PAGE_NUM = 15;// 默认分页数
+    
+    static $NOT_LOGIN_ACTION  = array();// 排除登录验证
+    static $SUPER_MUST_VERIFY = array('index', 'add', 'addauth', 'list');// 必须具有权限包括超级管理员
+
     public function __construct()
     {
-        parent::__construct();
+        $isLogin  = true;
+        if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
+            $isLogin = false;
+        }
+        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
     }
 
     public function indexAction()
@@ -43,11 +51,12 @@ class AdmAuthController extends BaseController
         $admin = $this->getRequest("admin");
         $auths = $this->getRequest("auths");
         $uid = $this->getRequest("uid");
-        if(empty($auths)){UtlsSvc::showMsg('操作失败','/AdmUser/index/');}
+        if (empty($auths)) {
+            UtlsSvc::showMsg('操作失败','/AdmUser/index/');
+        }
         $param['uid'] = $uid;
         $param['user'] = $admin;
-        foreach($auths as $v)
-        {
+        foreach ($auths as $v) {
             $param['aid'] = $v;
             AdmUserAuthSvc::add($param);
         }

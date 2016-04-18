@@ -38,6 +38,7 @@ class IndexController extends BaseController
         // echo UtlsSvc::fenToYuan(1000);
         // LogSvc::writeLog('test', 'test');
         // var_dump(env('CAPTCHA_FONT_FILE', 'local'));
+        // logs('test')->log('test');
         $name = 'Frame';
         $this->assign('name', $name);
         // echo $name;

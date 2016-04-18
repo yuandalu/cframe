@@ -65,7 +65,7 @@ class AdmMenuDao extends BaseDao
         $aidStr = implode(',', $param);
         $sql.= "from ".$this->table;
         if (false == $super) {
-            $limit = array(0);#warning 排除系统权限菜单
+            $limit = array(0);#warning 排除系统权限菜单,目前改为必须验证，所以这里可以不写
             $limitStr = implode(',', $limit);
             if(empty($aidStr)) return array();
             $sql .= " where aid in(".$aidStr.") and id not in(".$limitStr.")";

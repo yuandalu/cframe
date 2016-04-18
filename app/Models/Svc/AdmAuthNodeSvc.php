@@ -8,6 +8,7 @@ use App\Models\Entity\AdmAuthNode;
 class AdmAuthNodeSvc
 {
     const OBJ = 'AdmAuthNode';
+
     public static function add($param)
     {
         $obj = AdmAuthNode::createByBiz($param);
@@ -91,7 +92,6 @@ class AdmAuthNodeSvc
             $sql_condition[] = 'action =?';
             $sql_param[]     = $request['action'];
         }
-        //print_r($sql_condition);print_r($sql_param);exit;
         return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
     }
 

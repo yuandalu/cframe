@@ -8,6 +8,7 @@ use App\Models\Entity\AdmAuth;
 class AdmAuthSvc
 {
     const OBJ = 'AdmAuth';
+
     public static function add($param)
     {
         $obj = AdmAuth::createByBiz($param);
@@ -15,14 +16,13 @@ class AdmAuthSvc
     }
     public static function getById($id = '0')
     {
-        if (empty($id))
-        {
+        if (empty($id)) {
             return null;
         }
         return self::getDao()->getById($id);
     }
-    #warning 书写格式没有规范
-    public static function verify($c,$a)
+
+    public static function verify($c, $a)
     {
         $admin = AdminSvc::getLoginUser();
         $auths = self::getDao()->getAidByUser($admin);
@@ -44,10 +44,9 @@ class AdmAuthSvc
     }
     public static function getConf()
     {
-        $all = self::getDao()->getAll();
+        $all  = self::getDao()->getAll();
         $conf = array();
-        foreach($all as $v)
-        {
+        foreach ($all as $v) {
             $conf[$v['id']] = $v['name'];
         }
         return $conf;
@@ -88,36 +87,29 @@ class AdmAuthSvc
         $request_param = array();
         $sql_condition = array();
 
-        if(isset($request['id']) && strlen($request['id'])>1)
-        {
+        if (isset($request['id']) && strlen($request['id'])>1) {
             $request_param[] = 'id=' . $request['id'];
             $sql_condition[] = 'id = ? '  ;
             $sql_param[]     = $request['id'];
         }
 
-        if($request['startdate'] != '')
-        {
+        if ($request['startdate'] != '') {
             $request_param[] = 'startdate=' . $request['startdate'];
             $sql_condition[] = 'ctime>=?';
             $sql_param[]     = $request['startdate'];
         }
-        if($request['enddate'] != '')
-        {
+        if ($request['enddate'] != '') {
             $request_param[] = 'enddate=' . $request['enddate'];
             $sql_condition[] = 'ctime<=?';
-            if('10' >= strlen($request['enddate']) )
-            {
+            if ('10' >= strlen($request['enddate'])) {
                 $sql_param[] = $request['enddate'].' 23:59:59';
-            }
-            else
-            {
+            } else {
                 $sql_param[] = $request['enddate'];
             }
         }
 
 
-        if($request['username'] != '')
-        {
+        if ($request['username'] != '') {
             $userinfo =  UserSdk::getInfoByUsername($request['username']);
             $query_uid = $userinfo['uid'];
             $request_param[] = 'username=' . urlencode($request['username']);
@@ -126,13 +118,11 @@ class AdmAuthSvc
         }
 
 
-        if($request['name'])
-        {
+        if ($request['name']) {
             $request_param[] = 'name=' . $request['name'];
             $sql_condition[] = 'name =?';
             $sql_param[]     = $request['name'];
         }
-        //print_r($sql_condition);print_r($sql_param);exit;
         return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
     }
 
