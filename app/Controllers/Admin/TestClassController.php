@@ -49,9 +49,9 @@ class TestClassController extends BaseController
         $param['name'] = $this->getRequest('name','');
 
         // 参数校验，有时这是必须的
-        // if (empty($param['name'])) {
-        //     return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
-        // }
+        if (empty($param['tdata'])) {
+            return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '时间不能为空');
+        }
 
         if ($id != '') {
             $param['utime'] = date('Y-m-d H:i:s');

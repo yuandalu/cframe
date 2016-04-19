@@ -853,7 +853,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                         content: data.m,
                         cancelButton: false,
                         confirmButton: false,
-                        closeIcon: false,
+                        closeIcon: false
                     });
                     btnSubmit.button(\'reset\');
                 }
