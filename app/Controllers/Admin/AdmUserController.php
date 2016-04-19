@@ -73,7 +73,7 @@ class AdmUserController extends BaseController
                 <div class="col-md-12">
                 <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">权限设置【'.$name.'】 <span style="color:red">已有的权限不会显示在此列表！</span></h3>
+                    <h3 class="box-title">权限设置 - '.$name.'</h3>
                     <div class="pull-right">
                     </div>
                 </div>
@@ -115,9 +115,9 @@ class AdmUserController extends BaseController
         $str .= "</table>";
         $str.='</form>
                 </div>
-                <div class="box-footer clearfix">
+                <!--<div class="box-footer clearfix">
                     <div class="pull-right">
-                    </div>
+                    </div>-->
                 </div>
                 </div>
                 </div>
@@ -155,29 +155,23 @@ class AdmUserController extends BaseController
     {
         $name = $this->getRequest("name");
         $res = AdmUserSvc::checkName($name);
-        if(!empty($res))
-        {
+        if (!empty($res)) {
             echo json_encode(array("code"=>"yes","msg"=>"该人已存在！"));
-        }else
-            {
+        } else {
             echo json_encode(array("code"=>"no","msg"=>"和邮箱前缀保持一致！"));
         }
         exit;
     }
 
-    /****
-    删除某条权限 2013-5-31
-    ****/
+    // 删除某条权限
     public function delauthAction()
     {
         $request['id'] = $this->getRequest('id');
         $request['uid'] = $this->getRequest('uid');
         $re = AdmUserSvc::delauth($request);
-        if($re)
-        {
+        if ($re) {
             echo json_encode(array('code'=>"succ"));
-        }else
-        {
+        } else {
             echo json_encode(array('code'=>"fail"));
         }
 
@@ -195,8 +189,7 @@ class AdmUserController extends BaseController
     public function deleteuserauthAction()
     {
         $id_auth = $this->getRequest('id_auth',array());
-        foreach($id_auth as $v)
-        {
+        foreach ($id_auth as $v) {
             list($aid, $uid) =  explode('_',$v);
             $request['id'] =$aid;
             $request['uid'] = $uid;
