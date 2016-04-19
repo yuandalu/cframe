@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Ext;
+
 class Timer
 {
     private $_start_time = 0;
