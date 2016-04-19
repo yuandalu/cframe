@@ -125,10 +125,7 @@ class AdmUserController extends BaseController
         return $str;
     }
 
-    /***
-    获取某个人所有权限
-    id--uid 2013-5-31
-    ****/
+    // 获取某个人所有权限
     public function modifyauthAction(){
         $id = $this->getRequest("uid",0);
         $auth = AdmUserSvc::getAuthByUid($id);
