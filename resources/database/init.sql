@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.2.10
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-04-17 16:40:56
--- 服务器版本： 5.7.11
--- PHP Version: 7.0.5
+-- Generation Time: 2016-04-19 15:25:30
+-- 服务器版本： 5.6.21
+-- PHP Version: 5.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `yuandalu`
@@ -30,20 +30,23 @@ USE `yuandalu`;
 
 DROP TABLE IF EXISTS `adm_actlog`;
 CREATE TABLE IF NOT EXISTS `adm_actlog` (
-  `id` int(10) NOT NULL,
+`id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
   `action` varchar(175) NOT NULL DEFAULT '',
   `content` text COMMENT '操作内容',
   `action_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ip` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- 转存表中的数据 `adm_actlog`
 --
 
 INSERT INTO `adm_actlog` (`id`, `username`, `action`, `content`, `action_time`, `ip`) VALUES
-(1, 'system', 'test', 's:4:"test";', '2016-04-17 09:45:05', '127.0.0.1');
+(1, 'system', 'test', 's:4:"test";', '2016-04-17 09:45:05', '127.0.0.1'),
+(2, 'system', '修改栏目[]', 'a:2:{s:6:"action";s:14:"修改栏目[]";s:7:"content";a:8:{s:8:"oneclass";s:12:"系统管理";s:4:"name";s:12:"菜单管理";s:3:"aid";s:2:"11";s:4:"sort";s:1:"0";s:3:"url";s:13:"/AdmMenu/list";s:9:"curr_menu";s:6:"manage";s:12:"curr_submenu";s:14:"manage_admmenu";s:4:"icon";s:16:"fa-cog text-aqua";}}', '2016-04-19 15:15:47', '192.168.0.18'),
+(3, 'system', '修改栏目[]', 'a:2:{s:6:"action";s:14:"修改栏目[]";s:7:"content";a:8:{s:8:"oneclass";s:12:"系统管理";s:4:"name";s:12:"菜单管理";s:3:"aid";s:2:"11";s:4:"sort";s:1:"0";s:3:"url";s:13:"/AdmMenu/list";s:9:"curr_menu";s:6:"manage";s:12:"curr_submenu";s:14:"manage_admmenu";s:4:"icon";s:6:"fa-cog";}}', '2016-04-19 15:16:01', '192.168.0.18'),
+(4, 'system', '修改栏目[]', 'a:2:{s:6:"action";s:14:"修改栏目[]";s:7:"content";a:8:{s:8:"oneclass";s:12:"系统管理";s:4:"name";s:12:"菜单管理";s:3:"aid";s:2:"11";s:4:"sort";s:1:"0";s:3:"url";s:13:"/AdmMenu/list";s:9:"curr_menu";s:6:"manage";s:12:"curr_submenu";s:14:"manage_admmenu";s:4:"icon";s:7:"fa-cogs";}}', '2016-04-19 15:16:22', '192.168.0.18');
 
 -- --------------------------------------------------------
 
@@ -140,12 +143,12 @@ INSERT INTO `adm_auths` (`id`, `ctime`, `utime`, `name`) VALUES
 
 DROP TABLE IF EXISTS `adm_loginlog`;
 CREATE TABLE IF NOT EXISTS `adm_loginlog` (
-  `id` int(10) NOT NULL,
+`id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
   `ip` varchar(15) NOT NULL,
   `login_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `result` tinyint(3) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 --
 -- 转存表中的数据 `adm_loginlog`
@@ -164,7 +167,8 @@ INSERT INTO `adm_loginlog` (`id`, `username`, `ip`, `login_time`, `result`) VALU
 (10, 'dingdejing', '127.0.0.1', '2016-04-17 08:42:46', 1),
 (11, 'dingdejing', '127.0.0.1', '2016-04-17 09:49:26', 1),
 (12, 'dingdejing', '127.0.0.1', '2016-04-17 15:55:01', 1),
-(13, 'dingdejing', '127.0.0.1', '2016-04-17 16:38:33', 1);
+(13, 'dingdejing', '127.0.0.1', '2016-04-17 16:38:33', 1),
+(14, 'dingdejing', '192.168.0.18', '2016-04-19 14:48:50', 1);
 
 -- --------------------------------------------------------
 
@@ -177,27 +181,28 @@ CREATE TABLE IF NOT EXISTS `adm_menus` (
   `id` int(10) unsigned NOT NULL,
   `ctime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `utime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `name` varchar(25) NOT NULL DEFAULT '',
+  `name` varchar(32) NOT NULL DEFAULT '',
   `url` varchar(128) NOT NULL DEFAULT '',
   `sort` tinyint(4) NOT NULL,
   `oneclass` varchar(35) NOT NULL COMMENT '一级导航',
   `groupid` int(11) NOT NULL,
   `aid` int(4) NOT NULL,
-  `curr_menu` char(75) NOT NULL DEFAULT '',
-  `curr_submenu` char(75) NOT NULL DEFAULT ''
+  `curr_menu` char(64) NOT NULL DEFAULT '',
+  `curr_submenu` char(64) NOT NULL DEFAULT '',
+  `icon` varchar(64) NOT NULL DEFAULT 'fa fa-circle-o text-aqua'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 转存表中的数据 `adm_menus`
 --
 
-INSERT INTO `adm_menus` (`id`, `ctime`, `utime`, `name`, `url`, `sort`, `oneclass`, `groupid`, `aid`, `curr_menu`, `curr_submenu`) VALUES
-(11, '2014-07-28 01:44:30', '2014-07-28 01:44:30', '菜单管理', '/AdmMenu/list', 0, '系统管理', 11, 11, 'manage', 'manage_admmenu'),
-(12, '2014-07-28 02:23:05', '2014-07-28 02:23:05', '后台用户', '/AdmUser/index/', 0, '系统管理', 11, 11, 'manage', 'manage_admuser'),
-(13, '2014-07-28 02:24:30', '2014-07-28 02:24:30', '权限管理', '/AdmAuth/list', 0, '系统管理', 11, 11, 'manage', 'manage_admauth'),
-(14, '2014-07-28 02:26:10', '2014-07-28 02:26:10', '权限节点', '/AdmAuthNode/list', 0, '系统管理', 11, 11, 'manage', 'manage_admauthnode'),
-(15, '2014-07-28 23:34:33', '2014-07-28 23:34:33', '登陆日志', '/Log/index', 0, '系统管理', 11, 11, 'manage', 'manage_log'),
-(16, '2014-07-28 23:39:02', '2014-07-28 23:39:02', '操作日志', '/Log/operate', 0, '系统管理', 11, 11, 'manage', 'manage_operate');
+INSERT INTO `adm_menus` (`id`, `ctime`, `utime`, `name`, `url`, `sort`, `oneclass`, `groupid`, `aid`, `curr_menu`, `curr_submenu`, `icon`) VALUES
+(11, '2014-07-28 01:44:30', '2014-07-28 01:44:30', '菜单管理', '/AdmMenu/list', 0, '系统管理', 11, 11, 'manage', 'manage_admmenu', 'fa-cogs'),
+(12, '2014-07-28 02:23:05', '2014-07-28 02:23:05', '后台用户', '/AdmUser/index/', 0, '系统管理', 11, 11, 'manage', 'manage_admuser', 'fa-circle-o text-aqua'),
+(13, '2014-07-28 02:24:30', '2014-07-28 02:24:30', '权限管理', '/AdmAuth/list', 0, '系统管理', 11, 11, 'manage', 'manage_admauth', 'fa-circle-o text-aqua'),
+(14, '2014-07-28 02:26:10', '2014-07-28 02:26:10', '权限节点', '/AdmAuthNode/list', 0, '系统管理', 11, 11, 'manage', 'manage_admauthnode', 'fa-circle-o text-aqua'),
+(15, '2014-07-28 23:34:33', '2014-07-28 23:34:33', '登陆日志', '/Log/index', 0, '系统管理', 11, 11, 'manage', 'manage_log', 'fa-circle-o text-aqua'),
+(16, '2014-07-28 23:39:02', '2014-07-28 23:39:02', '操作日志', '/Log/operate', 0, '系统管理', 11, 11, 'manage', 'manage_operate', 'fa-circle-o text-aqua');
 
 -- --------------------------------------------------------
 
@@ -307,16 +312,6 @@ CREATE TABLE IF NOT EXISTS `sys_sessions` (
   `value` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- 转存表中的数据 `sys_sessions`
---
-
-INSERT INTO `sys_sessions` (`skey`, `expiry`, `value`) VALUES
-('ehe7d4stv6q0f55ffdo9g0vu83', 1460893828, 'security_code|s:4:"4PQU";adminUser|s:10:"dingdejing";'),
-('evdg51pqnefih15b68vf41dvk2', 1460918422, 'security_code|s:4:"AFMY";adminUser|s:10:"dingdejing";'),
-('k586rgjm7r2pn6ej1ucbdn8354', 1460915910, 'security_code|s:4:"EJSY";adminUser|s:10:"dingdejing";'),
-('p9cuihdul3v8s5c8fuqfhmq8k4', 1460893802, 'a|s:7:"session";');
-
 -- --------------------------------------------------------
 
 --
@@ -377,72 +372,67 @@ INSERT INTO `users` (`id`, `ctime`, `utime`, `mobile`, `nickname`, `password`, `
 -- Indexes for table `adm_actlog`
 --
 ALTER TABLE `adm_actlog`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `adm_auths`
 --
 ALTER TABLE `adm_auths`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `adm_loginlog`
 --
 ALTER TABLE `adm_loginlog`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `adm_menus`
 --
 ALTER TABLE `adm_menus`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `adm_userauth`
 --
 ALTER TABLE `adm_userauth`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user` (`user`);
+ ADD PRIMARY KEY (`id`), ADD KEY `user` (`user`);
 
 --
 -- Indexes for table `adm_users`
 --
 ALTER TABLE `adm_users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ename` (`ename`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `ename` (`ename`);
 
 --
 -- Indexes for table `sys_dbcache`
 --
 ALTER TABLE `sys_dbcache`
-  ADD UNIQUE KEY `skey` (`skey`);
+ ADD UNIQUE KEY `skey` (`skey`);
 
 --
 -- Indexes for table `sys_idgenter`
 --
 ALTER TABLE `sys_idgenter`
-  ADD PRIMARY KEY (`obj`);
+ ADD PRIMARY KEY (`obj`);
 
 --
 -- Indexes for table `sys_sessions`
 --
 ALTER TABLE `sys_sessions`
-  ADD PRIMARY KEY (`skey`),
-  ADD KEY `sessions_expiry` (`expiry`);
+ ADD PRIMARY KEY (`skey`), ADD KEY `sessions_expiry` (`expiry`);
 
 --
 -- Indexes for table `test_table`
 --
 ALTER TABLE `test_table`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -452,12 +442,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adm_actlog`
 --
 ALTER TABLE `adm_actlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `adm_loginlog`
 --
 ALTER TABLE `adm_loginlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

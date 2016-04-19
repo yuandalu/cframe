@@ -9,11 +9,6 @@ class AdmMenu extends Entity
 {
     const ID_OBJ  = 'adm_menus';
 
-    public static $ICON = array(
-        '系统管理' => 'fa-gears',
-        '权限管理' => 'fa-unlock-alt',
-    );
-
     public static function createByBiz($param)
     {
         $cls = __CLASS__;

@@ -48,8 +48,19 @@
                 <form id="searchform" method="post" action="/AdmAuthNode/list">
                 <table id="search" class="table">
                     <tr>
-                        <td width="80px">aid:</td>
-                        <td width="150px"><input type="text" name="aid" value="<?php echo $this->aid; ?>" class="form-control" placeholder="aid"></td>
+                        <td width="80px">权限:</td>
+                        <td width="150px">
+                        <select class="form-control" name="aid">
+                            <option value="">All</option>
+                            <?php foreach ($this->authconf as $k => $v): ?>
+                                <?php if ($this->aid == $k): ?>
+                                    <option value="<?php echo $k; ?>" selected="selected"><?php echo $v; ?></option>
+                                <?php else: ?>
+                                    <option value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </select>
+                        </td>
                         <td width="80px">contr:</td>
                         <td width="150px"><input type="text" name="contr" value="<?php echo $this->contr; ?>" class="form-control" placeholder="contr"></td>
                         <td width="80px">action:</td>
@@ -78,7 +89,7 @@
                 <table id="list" class="table table-bordered table-condensed table-striped table-hover">
                 <tbody>
                     <tr>
-                        <th width="50px"><input type="checkbox" onclick="checkAll(this.checked)"></th>
+                        <th width="50px"><input type="checkbox" onclick="checkAll(this.checked)"> #</th>
                         <th>权限ID</th>
                         <th>权限名称</th>
                         <th><b>contr</b></th>
@@ -132,7 +143,7 @@
         <script>
         function checkAll(c)
         {
-            $('.checklist').attr('checked', c);
+            $('.checklist').prop('checked', c);
         }
         </script>
         <!-- JavaScript引用和代码请集中写入此处 End -->

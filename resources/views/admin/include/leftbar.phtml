@@ -64,7 +64,7 @@ foreach($auths as $key=>$value)
             <?php foreach ($tempArr as $key => $value): ?>
             <li class="treeview<?php if($this->curr_menu==$value[0]['curr_menu'] && in_array($this->curr_submenu, $curr_submenus[$key])){echo ' active';}?>">
                 <a href="#">
-                    <i class="fa<?php echo (isset(\App\Models\Entity\AdmMenu::$ICON[$key])?' '.\App\Models\Entity\AdmMenu::$ICON[$key]:' fa-circle'); ?>"></i>
+                    <i class="fa <?php echo $value[0]['icon']; ?>"></i>
                     <span><?php echo $key; ?></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>

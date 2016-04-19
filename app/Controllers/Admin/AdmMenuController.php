@@ -50,6 +50,7 @@ class AdmMenuController extends BaseController
         $param['aid']          = $this->getRequest('aid','');
         $param['curr_menu']    = $this->getRequest('curr_menu','');
         $param['curr_submenu'] = $this->getRequest('curr_submenu','');
+        $param['icon']         = $this->getRequest('icon','');
 
         // 自己写判断参数检查
         if (AdmMenuSvc::getByName($param['name'])) {
@@ -87,6 +88,7 @@ class AdmMenuController extends BaseController
         $request['url'] = $this->getRequest("url");
         $request['curr_menu'] = $this->getRequest("curr_menu");
         $request['curr_submenu'] = $this->getRequest("curr_submenu");
+        $request['icon']         = $this->getRequest('icon','');
         $data = explode("/",$request['url']);
         $param['contr'] = $data[1]?$data[1]:$data[0];
         $param['action'] = $data[2]?$data[2]:$data[1];
@@ -98,14 +100,12 @@ class AdmMenuController extends BaseController
         }
         $re  = AdmMenuSvc::updateById($id,$request);
         $res = AdmAuthNodeSvc::updateByCA($param);
-        if($re)
-        {
-            $action = '修改栏目['.$column.']';
-            LogSvc::writeLog($action,array('action'=>$action,'content'=>$request));
+        if ($re) {
+            $action = '修改栏目[菜单管理]';// action记录表名，content记录详情，必须包含ID
+            LogSvc::writeLog($action, array('action'=>$action, 'content'=>$request));
             UtlsSvc::showMsg('修改成功', "/AdmMenu/list/?id={$id}");
             exit;
-        }else
-        {
+        } else {
             UtlsSvc::showMsg('未做任何改变', "/AdmMenu/list/?id={$id}");
             exit;
         }
