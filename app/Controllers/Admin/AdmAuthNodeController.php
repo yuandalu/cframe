@@ -96,6 +96,7 @@ class AdmAuthNodeController extends BaseController
         }
         exit;
     }
+
     public function listAction()
     {
         $request = array();
@@ -107,9 +108,7 @@ class AdmAuthNodeController extends BaseController
         $request['contr'] = $this->getRequest('contr','');
         $request['action'] = $this->getRequest('action','');
         $orderby  = $this->getRequest('orderby');
-
-
-
+        
         $list = AdmAuthNodeSvc::lists($request,array('per_page'=>self::PER_PAGE_NUM, 'page_param'=>'cp', 'curr_page'=>$this->getRequest('cp',1),'file_name'=>'/AdmAuthNode/list/','orderby'=>$orderby));
 
         $this->assign('request',$request);

@@ -137,9 +137,7 @@ class AdmUserController extends BaseController
         return view('modifyauth');
     }
     
-    /***
-    账号禁用
-    ***/
+    // 账号禁用
     public function forbiddenAction()
     {
         $id = $this->getRequest('id');
@@ -183,6 +181,7 @@ class AdmUserController extends BaseController
         echo json_encode(array('code'=>"yes"));
         exit;
     }
+    
     public function deleteuserauthAction()
     {
         $id_auth = $this->getRequest('id_auth',array());

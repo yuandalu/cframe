@@ -71,7 +71,6 @@ class IndexController extends BaseController
 
     public function logoutAction()
     {
-        //这里是后台
         loader('session')->destroy('adminUser');
         UtlsSvc::goToAct('Index', 'index');
     }

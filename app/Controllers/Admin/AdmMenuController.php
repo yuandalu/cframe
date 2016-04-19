@@ -62,8 +62,6 @@ class AdmMenuController extends BaseController
         var_dump($obj);
         exit;
         //UtlsSvc::showMsg('添加成功','/AdmMenu/list/');
-
-
     }
 
     public function editAction()
@@ -112,6 +110,7 @@ class AdmMenuController extends BaseController
         exit;
 
     }
+
     public function listAction()
     {
         $request = array();
@@ -141,6 +140,4 @@ class AdmMenuController extends BaseController
         $this->assign('orderby', $orderby);
         return view('list');
     }
-
-
 }
