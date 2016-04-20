@@ -297,15 +297,6 @@ CREATE TABLE IF NOT EXISTS `test_class` (
   `testint_table` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'int_table'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测试';
 
---
--- 转存表中的数据 `test_class`
---
-
-INSERT INTO `test_class` (`id`, `ctime`, `utime`, `testdatetime`, `testdata`, `testtime`, `testint`, `testtinyint`, `testvarchar`, `testint_table`) VALUES
-(100001, '2016-04-20 15:05:11', '2016-04-20 15:05:11', '2015-01-01 00:00:00', '2015-01-01', '12:23:21', 22, 1, 'ss', 100001),
-(100002, '2016-04-20 15:05:27', '2016-04-20 15:05:27', '2016-04-20 15:05:27', '2016-04-20', '15:05:27', 0, 1, '666', 100001),
-(100003, '2016-04-20 15:05:41', '2016-04-20 15:05:41', '2016-04-20 15:05:41', '2016-04-20', '15:05:41', 0, 1, 'default', 100001);
-
 -- --------------------------------------------------------
 
 --
