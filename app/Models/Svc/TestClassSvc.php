@@ -75,25 +75,25 @@ class TestClassSvc
             $request_param[] = 'orderby='.urlencode($options['orderby']);
         }
 
-        if ($request['tdata']) {
-            $request_param[] = 'tdata='.$request['tdata'];
-            $sql_condition[] = 'tdata = ?';
-            $sql_param[]    = $request['tdata'];
+        if ($request['name_test']) {
+            $request_param[] = 'name_test='.$request['name_test'];
+            $sql_condition[] = 'name_test = ?';
+            $sql_param[]    = $request['name_test'];
+        }
+        if ($request['userid']) {
+            $request_param[] = 'userid='.$request['userid'];
+            $sql_condition[] = 'userid = ?';
+            $sql_param[]    = $request['userid'];
+        }
+        if ($request['sort']) {
+            $request_param[] = 'sort='.$request['sort'];
+            $sql_condition[] = 'sort = ?';
+            $sql_param[]    = $request['sort'];
         }
         if ($request['status']) {
             $request_param[] = 'status='.$request['status'];
             $sql_condition[] = 'status = ?';
             $sql_param[]    = $request['status'];
-        }
-        if ($request['tableidname']) {
-            $request_param[] = 'tableidname='.$request['tableidname'];
-            $sql_condition[] = 'tableidname = ?';
-            $sql_param[]    = $request['tableidname'];
-        }
-        if ($request['name']) {
-            $request_param[] = 'name='.$request['name'];
-            $sql_condition[] = 'name = ?';
-            $sql_param[]    = $request['name'];
         }
         return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
     }

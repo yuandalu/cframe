@@ -80,6 +80,7 @@ class EntitySvc
                 case "ctime":
                 case "utime":
                     $create_sql.= "`$name` datetime DEFAULT CURRENT_TIMESTAMP,\n";
+                    // $create_sql.= "`$name` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',\n";
                     break;
                 case "int unsigned":
                 case "int":
@@ -99,6 +100,7 @@ class EntitySvc
                 case "date":
                 case "time":
                     $create_sql.= "`$name` $type DEFAULT CURRENT_TIMESTAMP COMMENT '".$f_description[$k]."',\n";
+                    // $create_sql.= "`$name` $type NOT NULL DEFAULT '".$f_default[$k]."' COMMENT '".$f_description[$k]."',\n";
                     break;
                 case "decimal":
                     $create_sql.= "`$name` decimal(".$f_attr[$k].") NOT NULL DEFAULT ".$f_default[$k]." COMMENT '".$f_description[$k]."',\n";
@@ -289,7 +291,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
     
-    static \$NOT_LOGIN_ACTION   = array();// 排除登录验证
+    static \$NOT_LOGIN_ACTION  = array();// 排除登录验证
     static \$SUPER_MUST_VERIFY = array();// 必须具有权限包括超级管理员
 
     public function __construct()

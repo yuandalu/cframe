@@ -43,15 +43,15 @@ class TestClassController extends BaseController
     {
         $param = array();
         $id    = $this->getRequest('id','');
-        $param['tdata'] = $this->getRequest('tdata','');
+        $param['name_test'] = $this->getRequest('name_test','');
+        $param['userid'] = $this->getRequest('userid','');
+        $param['sort'] = $this->getRequest('sort','');
         $param['status'] = $this->getRequest('status','');
-        $param['tableidname'] = $this->getRequest('tableidname','');
-        $param['name'] = $this->getRequest('name','');
 
         // 参数校验，有时这是必须的
-        if (empty($param['tdata'])) {
-            return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '时间不能为空');
-        }
+        // if (empty($param['name'])) {
+        //     return ErrorSvc::format(ErrorSvc::ERR_PARAM_EMPTY, null, '姓名不能为空');
+        // }
 
         if ($id != '') {
             $param['utime'] = date('Y-m-d H:i:s');
@@ -79,10 +79,10 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['tdata'] = $this->getRequest('tdata','');
+        $request['name_test'] = $this->getRequest('name_test','');
+        $request['userid'] = $this->getRequest('userid','');
+        $request['sort'] = $this->getRequest('sort','');
         $request['status'] = $this->getRequest('status','');
-        $request['tableidname'] = $this->getRequest('tableidname','');
-        $request['name'] = $this->getRequest('name','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
@@ -109,10 +109,10 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['tdata'] = $this->getRequest('tdata','');
+        $request['name_test'] = $this->getRequest('name_test','');
+        $request['userid'] = $this->getRequest('userid','');
+        $request['sort'] = $this->getRequest('sort','');
         $request['status'] = $this->getRequest('status','');
-        $request['tableidname'] = $this->getRequest('tableidname','');
-        $request['name'] = $this->getRequest('name','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
@@ -126,26 +126,26 @@ class TestClassController extends BaseController
 
         // 表格导出
         $table = '<table border="1"><tr>
-        <th>ID</th><th>创建时间</th><th>修改时间</th><th>时间</th><th>status</th><th>idname</th><th>test</th>
+        <th>ID</th><th>创建时间</th><th>修改时间</th><th>name</th><th>用户</th><th>排序</th><th>状态</th>
         </tr>';
         foreach ($list as $k => $v) {
             $table .= '<tr>';
-            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['tdata'].'</th><th>'.$v['status'].'</th><th>'.$v['tableidname'].'</th><th>'.$v['name'].'</th>';
+            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['name_test'].'</th><th>'.$v['userid'].'</th><th>'.$v['sort'].'</th><th>'.$v['status'].'</th>';
             $table .= '</tr>';
         }
         $table .= '</table>';
         echo $table;
         // CSV导出
-        // $str = "ID,创建时间,修改时间,时间,status,idname,test\n";
+        // $str = "ID,创建时间,修改时间,name,用户,排序,状态\n";
         // foreach ($list as $k => $v) {
             // $id = $v['id'];
             // $ctime = $v['ctime'];
             // $utime = $v['utime'];
-            // $tdata = $v['tdata'];
+            // $name_test = $v['name_test'];
+            // $userid = $v['userid'];
+            // $sort = $v['sort'];
             // $status = $v['status'];
-            // $tableidname = $v['tableidname'];
-            // $name = $v['name'];
-            // $str .= $id.','.$ctime.','.$utime.','.$tdata.','.$status.','.$tableidname.','.$name."\n";
+            // $str .= $id.','.$ctime.','.$utime.','.$name_test.','.$userid.','.$sort.','.$status."\n";
         // }
         // header("Content-type:text/csv");   
         // header("Content-Disposition:attachment;filename=".date('Ymd').'.csv');   

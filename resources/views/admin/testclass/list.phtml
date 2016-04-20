@@ -73,9 +73,26 @@
                     </tr>
                     <!-- 请自己按照数量调整好 colspan 使表格看起来更协调 -->
                     <tr>
-                        <td>时间</td>
-                        <td><input type="text" name="tdata" value="<?php echo $this->tdata; ?>" class="form-control" placeholder="查询的时间"></td>
-                        <td>status</td>
+                        <td>name</td>
+                        <td><input type="text" name="name_test" value="<?php echo $this->name_test; ?>" class="form-control" placeholder="查询的name"></td>
+                        <td>用户</td>
+                        <td>
+                            <select class="form-control" name="userid">
+                            <option value="">All</option>
+                            <?php foreach (\App\Models\Svc\UserSvc::getAll() as $k => $v): ?>
+                                <?php if ($v['id'] == $this->userid) {
+                                    echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['nickname'].'</option>';
+                                } else {
+                                    echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['nickname'].'</option>';
+                                } ?>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td>排序</td>
+                        <td><input type="text" name="sort" value="<?php echo $this->sort; ?>" class="form-control" placeholder="查询的排序"></td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
                         <td>
                             <select class="form-control" name="status">
                             <option value="">All</option>
@@ -88,23 +105,6 @@
                             <?php endforeach ?>
                             </select>
                         </td>
-                        <td>idname</td>
-                        <td>
-                            <select class="form-control" name="tableidname">
-                            <option value="">All</option>
-                            <?php foreach (\App\Models\Svc\TestClassSvc::getAll() as $k => $v): ?>
-                                <?php if ($v['id'] == $this->tableidname) {
-                                    echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['name'].'</option>';
-                                } else {
-                                    echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['name'].'</option>';
-                                } ?>
-                            <?php endforeach ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>test</td>
-                        <td><input type="text" name="name" value="<?php echo $this->name; ?>" class="form-control" placeholder="查询的test"></td>
                     </tr>
                 </table>
                 </form>
@@ -135,10 +135,10 @@
                         <th width="10px">#</th>
                         <th>创建时间</th>
                         <th>修改时间</th>
-                        <th>时间</th>
-                        <th>status</th>
-                        <th>idname</th>
-                        <th>test</th>
+                        <th>name</th>
+                        <th>用户</th>
+                        <th>排序</th>
+                        <th>状态</th>
                         <th>操作</th>
                     </tr>
                     <?php foreach ($this->list['records'] as $v) {
@@ -146,10 +146,10 @@
                         echo '<td>'.$v['id'].'</td>';
                         echo '<td>'.$v['ctime'].'</td>';
                         echo '<td>'.$v['utime'].'</td>';
-                        echo '<td>'.$v['tdata'].'</td>';
+                        echo '<td>'.$v['name_test'].'</td>';
+                        echo '<td>'.$v['userid'].'</td>';
+                        echo '<td>'.$v['sort'].'</td>';
                         echo '<td>'.$v['status'].'</td>';
-                        echo '<td>'.$v['tableidname'].'</td>';
-                        echo '<td>'.$v['name'].'</td>';
                         echo '<td><a class="glyphicon glyphicon-edit" href="/TestClass/index?id='.$v['id'].'"></a>&nbsp;<a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del('.$v['id'].');return false;"></a></td>';
                     echo '</tr>';
                     } ?>
