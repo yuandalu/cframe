@@ -43,10 +43,13 @@ class TestClassController extends BaseController
     {
         $param = array();
         $id    = $this->getRequest('id','');
-        $param['name_test'] = $this->getRequest('name_test','');
-        $param['userid'] = $this->getRequest('userid','');
-        $param['sort'] = $this->getRequest('sort','');
-        $param['status'] = $this->getRequest('status','');
+        $param['testdatetime'] = $this->getRequest('testdatetime','');
+        $param['testdata'] = $this->getRequest('testdata','');
+        $param['testtime'] = $this->getRequest('testtime','');
+        $param['testint'] = $this->getRequest('testint','');
+        $param['testtinyint'] = $this->getRequest('testtinyint','');
+        $param['testvarchar'] = $this->getRequest('testvarchar','');
+        $param['testint_table'] = $this->getRequest('testint_table','');
 
         // 参数校验，有时这是必须的
         // if (empty($param['name'])) {
@@ -79,10 +82,13 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['name_test'] = $this->getRequest('name_test','');
-        $request['userid'] = $this->getRequest('userid','');
-        $request['sort'] = $this->getRequest('sort','');
-        $request['status'] = $this->getRequest('status','');
+        $request['testdatetime'] = $this->getRequest('testdatetime','');
+        $request['testdata'] = $this->getRequest('testdata','');
+        $request['testtime'] = $this->getRequest('testtime','');
+        $request['testint'] = $this->getRequest('testint','');
+        $request['testtinyint'] = $this->getRequest('testtinyint','');
+        $request['testvarchar'] = $this->getRequest('testvarchar','');
+        $request['testint_table'] = $this->getRequest('testint_table','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
@@ -109,10 +115,13 @@ class TestClassController extends BaseController
         $request['startdate'] = $this->getRequest('startdate','');
         $request['enddate'] = $this->getRequest('enddate','');
         $request['utime'] = $this->getRequest('utime','');
-        $request['name_test'] = $this->getRequest('name_test','');
-        $request['userid'] = $this->getRequest('userid','');
-        $request['sort'] = $this->getRequest('sort','');
-        $request['status'] = $this->getRequest('status','');
+        $request['testdatetime'] = $this->getRequest('testdatetime','');
+        $request['testdata'] = $this->getRequest('testdata','');
+        $request['testtime'] = $this->getRequest('testtime','');
+        $request['testint'] = $this->getRequest('testint','');
+        $request['testtinyint'] = $this->getRequest('testtinyint','');
+        $request['testvarchar'] = $this->getRequest('testvarchar','');
+        $request['testint_table'] = $this->getRequest('testint_table','');
         $orderby  = $this->getRequest('orderby');
         // 必须校验 orderby 此处没有做预处理
 
@@ -126,26 +135,29 @@ class TestClassController extends BaseController
 
         // 表格导出
         $table = '<table border="1"><tr>
-        <th>ID</th><th>创建时间</th><th>修改时间</th><th>name</th><th>用户</th><th>排序</th><th>状态</th>
+        <th>ID</th><th>创建时间</th><th>修改时间</th><th>datetime</th><th>data</th><th>time</th><th>int</th><th>tinyint</th><th>varchar</th><th>int_table</th>
         </tr>';
         foreach ($list as $k => $v) {
             $table .= '<tr>';
-            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['name_test'].'</th><th>'.$v['userid'].'</th><th>'.$v['sort'].'</th><th>'.$v['status'].'</th>';
+            $table .= '<th>'.$v['id'].'</th><th>'.$v['ctime'].'</th><th>'.$v['utime'].'</th><th>'.$v['testdatetime'].'</th><th>'.$v['testdata'].'</th><th>'.$v['testtime'].'</th><th>'.$v['testint'].'</th><th>'.$v['testtinyint'].'</th><th>'.$v['testvarchar'].'</th><th>'.$v['testint_table'].'</th>';
             $table .= '</tr>';
         }
         $table .= '</table>';
         echo $table;
         // CSV导出
-        // $str = "ID,创建时间,修改时间,name,用户,排序,状态\n";
+        // $str = "ID,创建时间,修改时间,datetime,data,time,int,tinyint,varchar,int_table\n";
         // foreach ($list as $k => $v) {
             // $id = $v['id'];
             // $ctime = $v['ctime'];
             // $utime = $v['utime'];
-            // $name_test = $v['name_test'];
-            // $userid = $v['userid'];
-            // $sort = $v['sort'];
-            // $status = $v['status'];
-            // $str .= $id.','.$ctime.','.$utime.','.$name_test.','.$userid.','.$sort.','.$status."\n";
+            // $testdatetime = $v['testdatetime'];
+            // $testdata = $v['testdata'];
+            // $testtime = $v['testtime'];
+            // $testint = $v['testint'];
+            // $testtinyint = $v['testtinyint'];
+            // $testvarchar = $v['testvarchar'];
+            // $testint_table = $v['testint_table'];
+            // $str .= $id.','.$ctime.','.$utime.','.$testdatetime.','.$testdata.','.$testtime.','.$testint.','.$testtinyint.','.$testvarchar.','.$testint_table."\n";
         // }
         // header("Content-type:text/csv");   
         // header("Content-Disposition:attachment;filename=".date('Ymd').'.csv');   

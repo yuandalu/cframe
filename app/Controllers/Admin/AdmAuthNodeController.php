@@ -13,7 +13,7 @@ class AdmAuthNodeController extends BaseController
     const PER_PAGE_NUM = 15;// 默认分页数
     
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
-    static $SUPER_MUST_VERIFY = array('index', 'add', 'updateauths', 'edit', 'modify', 'list');// 必须具有权限包括超级管理员
+    static $SUPER_MUST_VERIFY = [];static $a=array('index', 'add', 'updateauths', 'edit', 'modify', 'list');// 必须具有权限包括超级管理员
 
     public function __construct()
     {

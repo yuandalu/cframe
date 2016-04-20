@@ -178,7 +178,7 @@
             var f_attr = $('#f_attr').val();
             var f_default = $('#f_default').val();
             if (!/^[a-z][a-z0-9\_]*$/.test(f_name)) {
-                alertMsg('字段名需要以字母开头，字母、数字、下划线的组合');
+                alertMsg('字段名需要以小写字母开头，小写字母、数字、下划线的组合');
                 return;
             }
             if (!f_description) {

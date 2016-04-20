@@ -47,40 +47,58 @@
                 <form class="form-horizontal" method="post" action="/TestClass/add/" name="myform" id="myform">
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">name</label>
+                            <label class="col-sm-2 control-label">datetime</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" style="width:200px;" name="name_test" value="<?php echo $this->name_test; ?>" placeholder="请输入name">
+                                <input type="text" class="form-control" style="width:200px;" name="testdatetime" value="<?php echo $this->testdatetime; ?>" placeholder="请输入datetime">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">用户</label>
+                            <label class="col-sm-2 control-label">data</label>
                             <div class="col-sm-10">
-                                <select class="form-control" style="width:200px;"  name="userid">
-                                <?php foreach (\App\Models\Svc\UserSvc::getAll() as $k => $v): ?>
-                                    <?php if ($v['id'] == $this->userid) {
-                                        echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['nickname'].'</option>';
+                                <input type="text" class="form-control" style="width:200px;" name="testdata" value="<?php echo $this->testdata; ?>" placeholder="请输入data">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">time</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="testtime" value="<?php echo $this->testtime; ?>" placeholder="请输入time">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">int</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" style="width:200px;" name="testint" value="<?php echo $this->testint; ?>" placeholder="请输入int">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">tinyint</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" style="width:200px;"  name="testtinyint">
+                                <?php foreach (\App\Models\Entity\TestClass::$TESTTINYINT as $k => $v): ?>
+                                    <?php if ($k == $this->testtinyint) {
+                                        echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
                                     } else {
-                                        echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['nickname'].'</option>';
+                                        echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
                                     } ?>
                                 <?php endforeach ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">排序</label>
+                            <label class="col-sm-2 control-label">varchar</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" style="width:200px;" name="sort" value="<?php echo $this->sort; ?>" placeholder="请输入排序">
+                                <input type="text" class="form-control" style="width:200px;" name="testvarchar" value="<?php echo $this->testvarchar; ?>" placeholder="请输入varchar">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">状态</label>
+                            <label class="col-sm-2 control-label">int_table</label>
                             <div class="col-sm-10">
-                                <select class="form-control" style="width:200px;"  name="status">
-                                <?php foreach (\App\Models\Entity\TestClass::$STATUS as $k => $v): ?>
-                                    <?php if ($k == $this->status) {
-                                        echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
+                                <select class="form-control" style="width:200px;"  name="testint_table">
+                                <?php foreach (\App\Models\Svc\UserSvc::getAll() as $k => $v): ?>
+                                    <?php if ($v['id'] == $this->testint_table) {
+                                        echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['nickname'].'</option>';
                                     } else {
-                                        echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
+                                        echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['nickname'].'</option>';
                                     } ?>
                                 <?php endforeach ?>
                                 </select>

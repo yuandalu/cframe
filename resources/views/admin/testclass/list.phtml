@@ -73,34 +73,42 @@
                     </tr>
                     <!-- 请自己按照数量调整好 colspan 使表格看起来更协调 -->
                     <tr>
-                        <td>name</td>
-                        <td><input type="text" name="name_test" value="<?php echo $this->name_test; ?>" class="form-control" placeholder="查询的name"></td>
-                        <td>用户</td>
+                        <td>datetime</td>
+                        <td><input type="text" name="testdatetime" value="<?php echo $this->testdatetime; ?>" class="form-control" placeholder="查询的datetime"></td>
+                        <td>data</td>
+                        <td><input type="text" name="testdata" value="<?php echo $this->testdata; ?>" class="form-control" placeholder="查询的data"></td>
+                        <td>time</td>
+                        <td><input type="text" name="testtime" value="<?php echo $this->testtime; ?>" class="form-control" placeholder="查询的time"></td>
+                    </tr>
+                    <tr>
+                        <td>int</td>
+                        <td><input type="text" name="testint" value="<?php echo $this->testint; ?>" class="form-control" placeholder="查询的int"></td>
+                        <td>tinyint</td>
                         <td>
-                            <select class="form-control" name="userid">
+                            <select class="form-control" name="testtinyint">
                             <option value="">All</option>
-                            <?php foreach (\App\Models\Svc\UserSvc::getAll() as $k => $v): ?>
-                                <?php if ($v['id'] == $this->userid) {
-                                    echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['nickname'].'</option>';
+                            <?php foreach (\App\Models\Entity\TestClass::$TESTTINYINT as $k => $v): ?>
+                                <?php if ($k == $this->testtinyint) {
+                                    echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
                                 } else {
-                                    echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['nickname'].'</option>';
+                                    echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
                                 } ?>
                             <?php endforeach ?>
                             </select>
                         </td>
-                        <td>排序</td>
-                        <td><input type="text" name="sort" value="<?php echo $this->sort; ?>" class="form-control" placeholder="查询的排序"></td>
+                        <td>varchar</td>
+                        <td><input type="text" name="testvarchar" value="<?php echo $this->testvarchar; ?>" class="form-control" placeholder="查询的varchar"></td>
                     </tr>
                     <tr>
-                        <td>状态</td>
+                        <td>int_table</td>
                         <td>
-                            <select class="form-control" name="status">
+                            <select class="form-control" name="testint_table">
                             <option value="">All</option>
-                            <?php foreach (\App\Models\Entity\TestClass::$STATUS as $k => $v): ?>
-                                <?php if ($k == $this->status) {
-                                    echo '<option value="'.$k.'" selected>'.$v['name'].'-'.$k.'</option>';
+                            <?php foreach (\App\Models\Svc\UserSvc::getAll() as $k => $v): ?>
+                                <?php if ($v['id'] == $this->testint_table) {
+                                    echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['nickname'].'</option>';
                                 } else {
-                                    echo '<option value="'.$k.'">'.$v['name'].'-'.$k.'</option>';
+                                    echo '<option value="'.$v['id'].'">'.$v['id'].'-'.$v['nickname'].'</option>';
                                 } ?>
                             <?php endforeach ?>
                             </select>
@@ -135,10 +143,13 @@
                         <th width="10px">#</th>
                         <th>创建时间</th>
                         <th>修改时间</th>
-                        <th>name</th>
-                        <th>用户</th>
-                        <th>排序</th>
-                        <th>状态</th>
+                        <th>datetime</th>
+                        <th>data</th>
+                        <th>time</th>
+                        <th>int</th>
+                        <th>tinyint</th>
+                        <th>varchar</th>
+                        <th>int_table</th>
                         <th>操作</th>
                     </tr>
                     <?php foreach ($this->list['records'] as $v) {
@@ -146,10 +157,13 @@
                         echo '<td>'.$v['id'].'</td>';
                         echo '<td>'.$v['ctime'].'</td>';
                         echo '<td>'.$v['utime'].'</td>';
-                        echo '<td>'.$v['name_test'].'</td>';
-                        echo '<td>'.$v['userid'].'</td>';
-                        echo '<td>'.$v['sort'].'</td>';
-                        echo '<td>'.$v['status'].'</td>';
+                        echo '<td>'.$v['testdatetime'].'</td>';
+                        echo '<td>'.$v['testdata'].'</td>';
+                        echo '<td>'.$v['testtime'].'</td>';
+                        echo '<td>'.$v['testint'].'</td>';
+                        echo '<td>'.$v['testtinyint'].'</td>';
+                        echo '<td>'.$v['testvarchar'].'</td>';
+                        echo '<td>'.$v['testint_table'].'</td>';
                         echo '<td><a class="glyphicon glyphicon-edit" href="/TestClass/index?id='.$v['id'].'"></a>&nbsp;<a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del('.$v['id'].');return false;"></a></td>';
                     echo '</tr>';
                     } ?>

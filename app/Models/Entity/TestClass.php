@@ -7,14 +7,14 @@ use App\Support\Entity;
 
 class TestClass extends Entity
 {
-    const ID_OBJ  = 'test_table';
+    const ID_OBJ  = 'test_class';
 
-    // 状态
-    const STATUS_YES = '1';
-    const STATUS_NO = '2';
-    public static $STATUS = array(
-        self::STATUS_YES => array('name' => '可用'),
-        self::STATUS_NO => array('name' => '不可用'),
+    // tinyint
+    const TESTTINYINT_YES = '1';
+    const TESTTINYINT_NO = '2';
+    public static $TESTTINYINT = array(
+        self::TESTTINYINT_YES => array('name' => '可用'),
+        self::TESTTINYINT_NO => array('name' => '不可用'),
     );
 
     public static function createByBiz($param)
@@ -24,10 +24,13 @@ class TestClass extends Entity
         $obj->id = Loader::loadIdGenter()->create(self::ID_OBJ);
         $obj->ctime = date('Y-m-d H:i:s');
         $obj->utime = date('Y-m-d H:i:s');
-        $obj->name_test = $param['name_test']?$param['name_test']:'';
-        $obj->userid = $param['userid']?$param['userid']:'0';
-        $obj->sort = $param['sort']?$param['sort']:'0';
-        $obj->status = $param['status']?$param['status']:self::STATUS_YES;
+        $obj->testdatetime = $param['testdatetime']?$param['testdatetime']:date('Y-m-d H:i:s');
+        $obj->testdata = $param['testdata']?$param['testdata']:date('Y-m-d');
+        $obj->testtime = $param['testtime']?$param['testtime']:date('H:i:s');
+        $obj->testint = $param['testint']?$param['testint']:'0';
+        $obj->testtinyint = $param['testtinyint']?$param['testtinyint']:self::TESTTINYINT_YES;
+        $obj->testvarchar = $param['testvarchar']?$param['testvarchar']:'default';
+        $obj->testint_table = $param['testint_table']?$param['testint_table']:'0';
         return $obj;
 
     }

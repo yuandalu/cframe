@@ -45,6 +45,15 @@ class EntitySvc
                 case "utime":
                     $entity_file.="\n        \$obj->$name = date('Y-m-d H:i:s');";
                     break;
+                case "datetime":
+                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('Y-m-d H:i:s');";
+                    break;
+                case "date":
+                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('Y-m-d');";
+                    break;
+                case "time":
+                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('H:i:s');";
+                    break;
                 default:
                     $default_value = "'{$f_default[$k]}'";
                     $oparr = explode('|', $f_default[$k]);
@@ -79,8 +88,7 @@ class EntitySvc
                     break;
                 case "ctime":
                 case "utime":
-                    $create_sql.= "`$name` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n";
-                    // $create_sql.= "`$name` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',\n";
+                    $create_sql.= "`$name` datetime NOT NULL,\n";
                     break;
                 case "int unsigned":
                 case "int":
@@ -99,8 +107,7 @@ class EntitySvc
                 case "datetime":
                 case "date":
                 case "time":
-                    $create_sql.= "`$name` $type NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '".$f_description[$k]."',\n";
-                    // $create_sql.= "`$name` $type NOT NULL DEFAULT '".$f_default[$k]."' COMMENT '".$f_description[$k]."',\n";
+                    $create_sql.= "`$name` $type NOT NULL COMMENT '".$f_description[$k]."',\n";
                     break;
                 case "decimal":
                     $create_sql.= "`$name` decimal(".$f_attr[$k].") NOT NULL DEFAULT ".$f_default[$k]." COMMENT '".$f_description[$k]."',\n";

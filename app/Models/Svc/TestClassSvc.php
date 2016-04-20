@@ -75,25 +75,40 @@ class TestClassSvc
             $request_param[] = 'orderby='.urlencode($options['orderby']);
         }
 
-        if ($request['name_test']) {
-            $request_param[] = 'name_test='.$request['name_test'];
-            $sql_condition[] = 'name_test = ?';
-            $sql_param[]    = $request['name_test'];
+        if ($request['testdatetime']) {
+            $request_param[] = 'testdatetime='.$request['testdatetime'];
+            $sql_condition[] = 'testdatetime = ?';
+            $sql_param[]    = $request['testdatetime'];
         }
-        if ($request['userid']) {
-            $request_param[] = 'userid='.$request['userid'];
-            $sql_condition[] = 'userid = ?';
-            $sql_param[]    = $request['userid'];
+        if ($request['testdata']) {
+            $request_param[] = 'testdata='.$request['testdata'];
+            $sql_condition[] = 'testdata = ?';
+            $sql_param[]    = $request['testdata'];
         }
-        if ($request['sort']) {
-            $request_param[] = 'sort='.$request['sort'];
-            $sql_condition[] = 'sort = ?';
-            $sql_param[]    = $request['sort'];
+        if ($request['testtime']) {
+            $request_param[] = 'testtime='.$request['testtime'];
+            $sql_condition[] = 'testtime = ?';
+            $sql_param[]    = $request['testtime'];
         }
-        if ($request['status']) {
-            $request_param[] = 'status='.$request['status'];
-            $sql_condition[] = 'status = ?';
-            $sql_param[]    = $request['status'];
+        if ($request['testint']) {
+            $request_param[] = 'testint='.$request['testint'];
+            $sql_condition[] = 'testint = ?';
+            $sql_param[]    = $request['testint'];
+        }
+        if ($request['testtinyint']) {
+            $request_param[] = 'testtinyint='.$request['testtinyint'];
+            $sql_condition[] = 'testtinyint = ?';
+            $sql_param[]    = $request['testtinyint'];
+        }
+        if ($request['testvarchar']) {
+            $request_param[] = 'testvarchar='.$request['testvarchar'];
+            $sql_condition[] = 'testvarchar = ?';
+            $sql_param[]    = $request['testvarchar'];
+        }
+        if ($request['testint_table']) {
+            $request_param[] = 'testint_table='.$request['testint_table'];
+            $sql_condition[] = 'testint_table = ?';
+            $sql_param[]    = $request['testint_table'];
         }
         return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
     }

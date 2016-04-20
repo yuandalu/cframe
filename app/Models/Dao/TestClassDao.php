@@ -6,7 +6,7 @@ use App\Support\Pager;
 
 class TestClassDao extends BaseDao
 {
-    protected $table = 'test_table';
+    protected $table = 'test_class';
 
     public function getByUid($uid)
     {

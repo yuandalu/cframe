@@ -23,7 +23,7 @@ class AdminSvc
         $ip = UtlsSvc::getClientIP();
         $param['ip'] = $ip;
         $param['username'] = $user;
-        $param['time'] = date('Y-m-d H:i:s',time());
+        $param['time'] = date('Y-m-d H:i:s');
         #warning 检查是否有这个用户
         if (true && self::staffAuth($user, $pwd)) {
             $param['result'] = '1';
