@@ -79,7 +79,7 @@ class EntitySvc
                     break;
                 case "ctime":
                 case "utime":
-                    $create_sql.= "`$name` datetime DEFAULT CURRENT_TIMESTAMP,\n";
+                    $create_sql.= "`$name` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,\n";
                     // $create_sql.= "`$name` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',\n";
                     break;
                 case "int unsigned":
@@ -99,7 +99,7 @@ class EntitySvc
                 case "datetime":
                 case "date":
                 case "time":
-                    $create_sql.= "`$name` $type DEFAULT CURRENT_TIMESTAMP COMMENT '".$f_description[$k]."',\n";
+                    $create_sql.= "`$name` $type NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '".$f_description[$k]."',\n";
                     // $create_sql.= "`$name` $type NOT NULL DEFAULT '".$f_default[$k]."' COMMENT '".$f_description[$k]."',\n";
                     break;
                 case "decimal":
