@@ -45,7 +45,9 @@ $tempArr = array();
 $curr_submenus = array();
 
 foreach ($menuList as $v) {
-    if (!$this->adminUserObj->isSuper() && (!$v['aid'] || !in_array($v['aid'], $haveauth))) {
+    if (in_array($v['aid'], array('11')) && !in_array($v['aid'], $haveauth)) {
+        continue;
+    } elseif (!$this->adminUserObj->isSuper() && (!$v['aid'] || !in_array($v['aid'], $haveauth))) {
         continue;
     }
     $tempArr[$v['oneclass']][] = $v;
