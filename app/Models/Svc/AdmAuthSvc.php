@@ -32,7 +32,7 @@ class AdmAuthSvc
             $adminUserObj = AdmUserSvc::getByEname($adminUser);
         }
         // 2、获取节点信息，不存在节点的直接无权限
-        // $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
+        $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
         // if (!$admAuthNode) {
         //     return 'fail';
         // }
