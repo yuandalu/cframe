@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
+-- version 4.2.10
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-04-20 15:32:56
--- 服务器版本： 5.7.11
--- PHP Version: 7.0.5
+-- Generation Time: 2016-04-21 18:14:13
+-- 服务器版本： 5.6.21
+-- PHP Version: 5.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `yuandalu`
@@ -30,7 +30,7 @@ USE `yuandalu`;
 
 DROP TABLE IF EXISTS `adm_actlog`;
 CREATE TABLE IF NOT EXISTS `adm_actlog` (
-  `id` int(10) NOT NULL,
+`id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
   `action` varchar(175) NOT NULL DEFAULT '',
   `content` text COMMENT '操作内容',
@@ -51,61 +51,62 @@ CREATE TABLE IF NOT EXISTS `adm_authnode` (
   `utime` datetime NOT NULL,
   `aid` int(10) unsigned NOT NULL DEFAULT '0',
   `contr` varchar(35) NOT NULL DEFAULT '',
-  `action` varchar(35) NOT NULL DEFAULT ''
+  `action` varchar(35) NOT NULL DEFAULT '',
+  `verify` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '验证规则'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- 转存表中的数据 `adm_authnode`
 --
 
-INSERT INTO `adm_authnode` (`id`, `ctime`, `utime`, `aid`, `contr`, `action`) VALUES
-(11, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuth', 'index'),
-(12, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuth', 'add'),
-(13, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuth', 'addauth'),
-(14, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuth', 'list'),
-(15, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'index'),
-(16, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'add'),
-(17, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'updateAuths'),
-(18, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'edit'),
-(19, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'modify'),
-(20, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmAuthNode', 'list'),
-(21, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmMenu', 'index'),
-(22, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmMenu', 'add'),
-(23, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmMenu', 'edit'),
-(24, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmMenu', 'modify'),
-(25, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmMenu', 'list'),
-(26, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'index'),
-(27, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'add'),
-(28, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'addGrade'),
-(29, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'modifyauth'),
-(30, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'forbidden'),
-(31, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'checkname'),
-(32, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'delauth'),
-(33, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'saverole'),
-(34, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'AdmUser', 'deleteuserauth'),
-(35, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Entity', 'index'),
-(36, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Entity', 'indexSubmit'),
-(37, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Entity', 'ajaxQueryEntity'),
-(38, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Entity', 'ajaxQueryTableName'),
-(39, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Include', 'showimg'),
-(40, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Include', 'showHtmlImage'),
-(41, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Index', 'index'),
-(42, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Index', 'login'),
-(43, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Index', 'doLogin'),
-(44, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'Index', 'logout'),
-(45, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Log', 'index'),
-(46, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Log', 'operate'),
-(47, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 11, 'Log', 'getLogDetail'),
-(48, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'TestClass', 'index'),
-(49, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'TestClass', 'add'),
-(50, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'TestClass', 'delete'),
-(51, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'TestClass', 'list'),
-(52, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'TestClass', 'export'),
-(53, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'User', 'index'),
-(54, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'User', 'add'),
-(55, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'User', 'delete'),
-(56, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'User', 'list'),
-(57, '2016-04-20 15:22:49', '2016-04-20 15:22:49', 0, 'User', 'export');
+INSERT INTO `adm_authnode` (`id`, `ctime`, `utime`, `aid`, `contr`, `action`, `verify`) VALUES
+(11, '2016-04-21 17:56:05', '2016-04-21 17:56:05', 11, 'AdmAuth', 'index', 3),
+(12, '2016-04-21 17:56:05', '2016-04-21 17:56:05', 11, 'AdmAuth', 'add', 3),
+(13, '2016-04-21 17:56:05', '2016-04-21 17:56:05', 11, 'AdmAuth', 'addauth', 3),
+(14, '2016-04-21 17:56:05', '2016-04-21 17:56:05', 11, 'AdmAuth', 'list', 3),
+(15, '2016-04-21 17:56:05', '2016-04-21 17:56:05', 11, 'AdmAuthNode', 'index', 3),
+(16, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmAuthNode', 'add', 3),
+(17, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmAuthNode', 'updateAuths', 3),
+(18, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmAuthNode', 'edit', 3),
+(19, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmAuthNode', 'modify', 3),
+(20, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmAuthNode', 'list', 3),
+(21, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmMenu', 'index', 3),
+(22, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmMenu', 'add', 3),
+(23, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmMenu', 'edit', 3),
+(24, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmMenu', 'modify', 3),
+(25, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmMenu', 'list', 3),
+(26, '2016-04-21 17:56:06', '2016-04-21 17:56:06', 11, 'AdmUser', 'index', 3),
+(27, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'add', 3),
+(28, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'addGrade', 3),
+(29, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'modifyauth', 3),
+(30, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'forbidden', 3),
+(31, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'checkname', 3),
+(32, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'delauth', 3),
+(33, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'saverole', 3),
+(34, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'AdmUser', 'deleteuserauth', 3),
+(35, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'Entity', 'index', 3),
+(36, '2016-04-21 17:56:07', '2016-04-21 17:56:07', 11, 'Entity', 'indexSubmit', 3),
+(37, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 11, 'Entity', 'ajaxQueryEntity', 3),
+(38, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 11, 'Entity', 'ajaxQueryTableName', 3),
+(39, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Include', 'showimg', 2),
+(40, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Include', 'showHtmlImage', 2),
+(41, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Index', 'index', 2),
+(42, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Index', 'login', 2),
+(43, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Index', 'doLogin', 2),
+(44, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'Index', 'logout', 2),
+(45, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 11, 'Log', 'index', 3),
+(46, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 11, 'Log', 'operate', 3),
+(47, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 11, 'Log', 'getLogDetail', 3),
+(48, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'TestClass', 'index', 1),
+(49, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'TestClass', 'add', 1),
+(50, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'TestClass', 'delete', 1),
+(51, '2016-04-21 17:56:08', '2016-04-21 17:56:08', 0, 'TestClass', 'list', 1),
+(52, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'TestClass', 'export', 1),
+(53, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'index', 1),
+(54, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'add', 1),
+(55, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'delete', 1),
+(56, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'list', 1),
+(57, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'export', 1);
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `adm_auths` (
 --
 
 INSERT INTO `adm_auths` (`id`, `ctime`, `utime`, `name`) VALUES
-(11, '2016-04-16 05:52:58', '2016-04-16 05:52:58', '系统管理');
+(11, '2016-04-21 17:56:55', '2016-04-21 17:56:55', '系统管理');
 
 -- --------------------------------------------------------
 
@@ -136,7 +137,7 @@ INSERT INTO `adm_auths` (`id`, `ctime`, `utime`, `name`) VALUES
 
 DROP TABLE IF EXISTS `adm_loginlog`;
 CREATE TABLE IF NOT EXISTS `adm_loginlog` (
-  `id` int(10) NOT NULL,
+`id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
   `ip` varchar(15) NOT NULL,
   `login_time` datetime NOT NULL,
@@ -198,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `adm_userauth` (
 --
 
 INSERT INTO `adm_userauth` (`id`, `ctime`, `utime`, `user`, `uid`, `aid`) VALUES
-(11, '2016-04-17 16:40:20', '2016-04-17 16:40:20', 'dingdejing', 11, 11);
+(11, '2016-04-21 18:11:50', '2016-04-21 18:11:50', 'dingdejing', 11, 11);
 
 -- --------------------------------------------------------
 
@@ -261,7 +262,7 @@ INSERT INTO `sys_idgenter` (`obj`, `id`, `step`) VALUES
 ('adm_menus', 16, 1),
 ('adm_userauth', 11, 1),
 ('adm_users', 11, 1),
-('test_class', 100003, 1),
+('test_class', 100000, 1),
 ('users', 100002, 1);
 
 -- --------------------------------------------------------
@@ -320,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ctime`, `utime`, `mobile`, `nickname`, `password`, `salt`, `status`) VALUES
-(100001, '2016-04-17 09:06:25', '2016-04-17 09:06:48', '15652202721', '夏雨晴空', '666', '666', 1),
+(100001, '2016-04-17 09:06:25', '2016-04-17 09:06:48', '15652202721', '夏雨晴空', '632dcc9bed4b755c74a9876b3cad3ad1', '32ed87', 1),
 (100002, '2016-04-17 15:38:34', '2016-04-17 15:38:34', '15652202756', 'yuandalu', '632dcc9bed4b755c74a9876b3cad3ad1', '32ed87', 1);
 
 --
@@ -331,78 +332,73 @@ INSERT INTO `users` (`id`, `ctime`, `utime`, `mobile`, `nickname`, `password`, `
 -- Indexes for table `adm_actlog`
 --
 ALTER TABLE `adm_actlog`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `adm_authnode`
 --
 ALTER TABLE `adm_authnode`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `adm_auths`
 --
 ALTER TABLE `adm_auths`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `adm_loginlog`
 --
 ALTER TABLE `adm_loginlog`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `adm_menus`
 --
 ALTER TABLE `adm_menus`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `adm_userauth`
 --
 ALTER TABLE `adm_userauth`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user` (`user`);
+ ADD PRIMARY KEY (`id`), ADD KEY `user` (`user`);
 
 --
 -- Indexes for table `adm_users`
 --
 ALTER TABLE `adm_users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ename` (`ename`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `ename` (`ename`);
 
 --
 -- Indexes for table `sys_dbcache`
 --
 ALTER TABLE `sys_dbcache`
-  ADD UNIQUE KEY `skey` (`skey`);
+ ADD UNIQUE KEY `skey` (`skey`);
 
 --
 -- Indexes for table `sys_idgenter`
 --
 ALTER TABLE `sys_idgenter`
-  ADD PRIMARY KEY (`obj`);
+ ADD PRIMARY KEY (`obj`);
 
 --
 -- Indexes for table `sys_sessions`
 --
 ALTER TABLE `sys_sessions`
-  ADD PRIMARY KEY (`skey`),
-  ADD KEY `sessions_expiry` (`expiry`);
+ ADD PRIMARY KEY (`skey`), ADD KEY `sessions_expiry` (`expiry`);
 
 --
 -- Indexes for table `test_class`
 --
 ALTER TABLE `test_class`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -412,12 +408,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `adm_actlog`
 --
 ALTER TABLE `adm_actlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `adm_loginlog`
 --
 ALTER TABLE `adm_loginlog`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

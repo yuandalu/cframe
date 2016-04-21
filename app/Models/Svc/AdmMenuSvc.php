@@ -27,9 +27,9 @@ class AdmMenuSvc
         return self::getDao()->updateById($id, $param);
     }
 
-    public static function getMenus($param, $super)
+    public static function getMenus($param = null)
     {
-        return self::getDao()->getMenus($param, $super);
+        return self::getDao()->getMenus($param);
     }
     public static function getByUid($uid = '0')
     {

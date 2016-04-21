@@ -71,17 +71,14 @@ class AdmAuthNodeDao extends BaseDao
         $re = $this->getExecutor()->querys($sql);
         return $re;
     }
-    public function verify($c, $a)
+    public function getByCA($c, $a)
     {
-        $sql = "select aid from ".$this->table." where contr= ? and action= ?";
-        $data = $this->getExecutor()->querys($sql, array($c, $a));
+        $sql = "select aid,verify from ".$this->table." where contr= ? and action= ?";
+        $data = $this->getExecutor()->query($sql, array($c, $a));
         if (empty($data)) {
-            return array();
+            return null;
         }
-        foreach ($data as $value) {
-            $datas[] = $value['aid'];
-        }
-        return $datas;
+        return $data;
     }
     public function updateByCA($param)
     {

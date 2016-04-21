@@ -4,6 +4,8 @@ namespace App\Models\Svc;
 
 use App\Support\Loader;
 use App\Models\Entity\AdmAuth;
+use App\Models\Entity\AdmAuthNode;
+use App\Models\Svc\AdmUserAuthSvc;
 
 class AdmAuthSvc
 {
@@ -22,22 +24,26 @@ class AdmAuthSvc
         return self::getDao()->getById($id);
     }
 
-    public static function verify($c, $a)
+    public static function verify($c, $a, $adminUserObj = null)
     {
-        $admin = AdminSvc::getLoginUser();
-        $auths = self::getDao()->getAidByUser($admin);
-        $data  = AdmAuthNodeSvc::verify($c, $a);
-        /*echo "<pre>";
-        print_r($data);
-        echo "所有权限";
-        echo "<hr>";
-        print_r($auths);
-        echo "我的权限";
-        exit;*/
-        foreach ($data as $value) {
-            if (in_array($value,$auths)) {
-                return "succ";
-            }
+        // 1、获取用户信息
+        if (!$adminUserObj) {
+            $adminUser    = AdminSvc::getLoginUser();
+            $adminUserObj = AdmUserSvc::getByEname($adminUser);
+        }
+        // 2、获取节点信息，不存在节点的直接无权限
+        $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
+        if (!$admAuthNode) {
+            return 'fail';
+        }
+        // 3、无需验证的放权
+        if ($admAuthNode['verify'] == AdmAuthNode::VERIFY_NOT) {
+            return 'succ';
+        }
+        // 4、获取用户对此节点的权限，并判断是否必须校验并进行处理
+        $admUserAuth = AdmUserAuthSvc::verifyUidAid($adminUserObj->id, $admAuthNode['aid']);
+        if ($admUserAuth || ($admAuthNode['verify'] == AdmAuthNode::VERIFY_DEFAULT && $adminUserObj->isSuper())) {
+            return 'succ';
         }
         return "fail";
 

@@ -39,25 +39,20 @@
             </li>
 <?php
 $curUid = $this->adminUserObj->id;
-$haveauth = \App\Models\Svc\AdmAuthSvc::getAuthByUid($curUid);//已经有的权限
+$haveauth = \App\Models\Svc\AdmAuthSvc::getAuthByUid($curUid);// 已经有的权限
+$menuList = \App\Models\Svc\AdmMenuSvc::getMenus();
 $tempArr = array();
-//echo '$haveauth<br>';
-//print_r($haveauth);
-if('超级管理员' == $this->adminUserObj->role){
-    $auths = \App\Models\Svc\AdmMenuSvc::getMenus($haveauth,true);
-}else{
-    $auths = \App\Models\Svc\AdmMenuSvc::getMenus($haveauth,false);
-}
-//echo '$auths<br>';
-//print_r($auths);
 $curr_submenus = array();
 
-foreach($auths as $key=>$value)
-{
-    $nodsclass = \App\Models\Svc\AdmMenuSvc::getByonclass($value['oneclass']);
-    $tempArr[$value['oneclass']] = $nodsclass;
-    foreach ($nodsclass as $_nodek =>$_nodev) {
-        $curr_submenus[$value['oneclass']][] = $_nodev['curr_submenu'];
+foreach ($menuList as $v) {
+    if (!$this->adminUserObj->isSuper() && (!$v['aid'] || !in_array($v['aid'], $haveauth))) {
+        continue;
+    }
+    $tempArr[$v['oneclass']][] = $v;
+}
+foreach ($tempArr as $k => $v) {
+    foreach ($v as $vv) {
+        $curr_submenus[$k][] = $vv['curr_submenu'];
     }
 }
 ?>
@@ -70,9 +65,6 @@ foreach($auths as $key=>$value)
                 </a>
                 <ul class="treeview-menu"<?php if($this->curr_menu==$value[0]['curr_menu']){echo ' active';}?>>
                     <?php foreach ($value as $v): ?>
-                        <?php if(!in_array($v['aid'], $haveauth) && ('超级管理员' != $this->adminUserObj->role)) {
-                            continue;
-                        } ?>
                     <li<?php if($this->curr_submenu==$v['curr_submenu']){echo ' class="active"';}?>>
                         <a href="<?php echo $v['url']; ?>">
                         <i class="fa fa-circle-o text-aqua"></i>

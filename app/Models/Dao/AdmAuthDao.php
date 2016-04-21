@@ -92,9 +92,9 @@ class AdmAuthDao extends BaseDao
         return $datas;
     }
 
-    public function getAidByUser($user)
+    public function getAidByUid($uid)
     {
-        $sql = "select aid from adm_userauth where user= ?";
+        $sql = "select aid from adm_userauth where uid= ?";
         $data = $this->getExecutor()->querys($sql, array($user));
         if (empty($data)) {
             return array();

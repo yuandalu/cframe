@@ -59,26 +59,22 @@ class AdmMenuDao extends BaseDao
 
     }
 
-    public function getMenus($param ,$super = false)
+    public function getMenus($param = null)
     {
-        $sql = "select id,name,url,oneclass,curr_menu,curr_submenu ";
-        $aidStr = implode(',', $param);
-        $sql.= "from ".$this->table;
-        if (false == $super) {
-            $limit = array(0);#warning 排除系统权限菜单,目前改为必须验证，所以这里可以不写
-            $limitStr = implode(',', $limit);
-            if(empty($aidStr)) return array();
-            $sql .= " where aid in(".$aidStr.") and id not in(".$limitStr.")";
+        $sql = "select * from ".$this->table;
+        if (!is_null($param)) {
+            if (empty($param)) {
+                return array();
+            }
+            $aidStr = implode(',', $param);
+            $sql .= " where aid in(".$aidStr.")";
         }
-        
-        $sql .= " order by id asc"; 
-        //echo $sql;die();
+        $sql .= " order by sort desc";
         $data = $this->getExecutor()->querys($sql, array());
         if (empty($data)) {
             return array();
         }
         return $data;
-
     }
     public function getOneclass()
     {

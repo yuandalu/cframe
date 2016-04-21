@@ -36,6 +36,10 @@ class AdmUserAuthSvc
     {
         return self::getDao()->getAid();
     }
+    public static function verifyUidAid($uid, $aid)
+    {
+        return self::getDao()->where('uid', $uid)->where('aid', $aid)->find();
+    }
     private static function getDao()
     {
         return Loader::loadDao(self::OBJ);

@@ -13,7 +13,6 @@ class AdmAuthNodeController extends BaseController
     const PER_PAGE_NUM = 15;// 默认分页数
     
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
-    static $SUPER_MUST_VERIFY = array('index', 'add', 'updateauths', 'edit', 'modify', 'list');// 必须具有权限包括超级管理员
 
     public function __construct()
     {
@@ -21,14 +20,14 @@ class AdmAuthNodeController extends BaseController
         if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
             $isLogin = false;
         }
-        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
+        parent::__construct($isLogin);
     }
 
     public function indexAction()
     {
         $auth = AdmAuthSvc::getauth();
         $auths = AdmAuthSvc::getAllauth();
-        $this->assign("auth",$auth);
+        $this->assign("auth", $auth);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauthnode');
         return view('index');
@@ -41,12 +40,11 @@ class AdmAuthNodeController extends BaseController
         $param['contr'] = $this->getRequest('contr','');
         $param['action'] = $this->getRequest('action','');
 
-        /*自己写判断参数检查
-        if($param['ctype']==''||$param['name'])
-        {
-            UtlsSvc::showMsg('有为空的参数','/AdmAuthNode/create/');
+        // 自己写判断参数检查
+        if (AdmAuthNodeSvc::getByCA($param['contr'], $param['action'])) {
+            UtlsSvc::showMsg('已添加过','/AdmAuthNode/list/');
         }
-        */
+        
 
         $obj = AdmAuthNodeSvc::add($param);
         var_dump($obj);
@@ -84,14 +82,21 @@ class AdmAuthNodeController extends BaseController
         $param['contr'] = $this->getRequest('contr');
         $param['action'] = $this->getRequest('action');
         $param['aid'] = $this->getRequest('aid');
-        $re = AdmAuthNodeSvc::updateById($id,$param);
+        $param['verify'] = $this->getRequest('verify');
+        $admAuthNode = AdmAuthNodeSvc::getById($id);
+        if (($admAuthNode->contr != $param['contr']) || ($admAuthNode->action != $param['action'])) {
+            if (AdmAuthNodeSvc::getByCA($param['contr'], $param['action'])) {
+                UtlsSvc::showMsg('已添加过','/AdmAuthNode/list/?id='.$id);
+            }
+        }
+        $re = AdmAuthNodeSvc::updateById($id, $param);
         if ($re) {
             $action = '修改程序权限['.$id.']';
             LogSvc::writeLog($action,array('action'=>$action,'content'=>$param));
             UtlsSvc::showMsg('修改成功', '/AdmAuthNode/list/');
             exit;
         } else {
-            UtlsSvc::showMsg('未做任何改变', '/AdmAuthNode/list/?id='.$id.'');
+            UtlsSvc::showMsg('未做任何改变', '/AdmAuthNode/list/?id='.$id);
             exit;
         }
         exit;

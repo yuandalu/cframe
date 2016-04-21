@@ -12,7 +12,6 @@ class AdmAuthController extends BaseController
     const PER_PAGE_NUM = 15;// 默认分页数
     
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
-    static $SUPER_MUST_VERIFY = array('index', 'add', 'addauth', 'list');// 必须具有权限包括超级管理员
 
     public function __construct()
     {
@@ -20,7 +19,7 @@ class AdmAuthController extends BaseController
         if (in_array(strtolower($this->getActionName()), self::$NOT_LOGIN_ACTION)) {
             $isLogin = false;
         }
-        parent::__construct($isLogin, self::$SUPER_MUST_VERIFY);
+        parent::__construct($isLogin);
     }
 
     public function indexAction()
@@ -33,9 +32,12 @@ class AdmAuthController extends BaseController
     public function addAction()
     {
         $param = array();
-        $param['name'] = $this->getRequest('name','');
+        $param['name'] = trim($this->getRequest('name',''));
 
         //自己写判断参数检查
+        if (empty($param['name'])) {
+            UtlsSvc::showMsg('权限名称不能为空','/AdmAuth/index/');
+        }
         if (AdmAuthSvc::getByName($param['name'])) {
             UtlsSvc::showMsg('已存在','/AdmAuth/index/');
         }

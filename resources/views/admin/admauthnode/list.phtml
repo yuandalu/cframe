@@ -94,6 +94,7 @@
                         <th>权限名称</th>
                         <th><b>contr</b></th>
                         <th><b>action</b></th>
+                        <th><b>验证模式</b></th>
                         <th><b>修改</b></th>
                     </tr>
                     <?php foreach ($this->list['records'] as $v) {
@@ -107,13 +108,14 @@
                         }
                         echo '<td >'.$v['contr'].'</td>';
                         echo '<td >'.$v['action'].'</td>';
+                        echo '<td >'.\App\Models\Entity\AdmAuthNode::$VERIFY[$v['verify']]['name'].'</td>';
                         echo '<td><a class="glyphicon glyphicon-edit" href="/AdmAuthNode/edit/?id='.$v['id'].'"></a></td>';
                     echo '</tr>';
                     } ?>
                     <tr>
-                        <td colspan="4"></td>
+                        <td colspan="5"></td>
                         <td><select name="auths" class="form-control">
-                        <option value="">选择要分配的权限</option>
+                        <option value="0">选择要分配的权限</option>
                         <?php foreach ($this->authconf as $id=>$name) {
                             echo "<option value='".$id."'>".$id."-".$name."</option>";
                         } ?>

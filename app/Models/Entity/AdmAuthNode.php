@@ -7,6 +7,16 @@ use App\Support\Entity;
 
 class AdmAuthNode extends Entity
 {
+    const VERIFY_DEFAULT = 1;
+    const VERIFY_NOT     = 2;
+    const VERIFY_MUST    = 3;
+
+    public static $VERIFY = array(
+        self::VERIFY_DEFAULT => array('name'=>'验证'),
+        self::VERIFY_NOT     => array('name'=>'无需验证'),
+        self::VERIFY_MUST    => array('name'=>'必须验证')
+    );
+
     const ID_OBJ  = 'adm_authnode';
     public static function createByBiz( $param )
     {

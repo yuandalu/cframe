@@ -104,9 +104,9 @@ class AdmAuthNodeSvc
     {
         return self::getDao()->getActionauth();
     }
-    public static function verify($c,$a)
+    public static function getByCA($c, $a)
     {
-        return self::getDao()->verify($c,$a);
+        return self::getDao()->getByCA($c, $a);
     }
     public static function updateByCA($param)
     {
