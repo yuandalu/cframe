@@ -81,8 +81,8 @@ class AdmMenuController extends BaseController
         $id = $this->getRequest("id");
         $request['oneclass'] = $this->getRequest("oneclass");
         $request['name'] = $this->getRequest("name");
-        $request['aid'] = $this->getRequest("aid");
-        $request['sort'] = $this->getRequest("sort");
+        $request['aid'] = intval($this->getRequest("aid", '0'));
+        $request['sort'] = intval($this->getRequest("sort", '0'));
         $request['url'] = $this->getRequest("url");
         $request['curr_menu'] = $this->getRequest("curr_menu");
         $request['curr_submenu'] = $this->getRequest("curr_submenu");
@@ -91,13 +91,13 @@ class AdmMenuController extends BaseController
         $param['contr'] = $data[1]?$data[1]:$data[0];
         $param['action'] = $data[2]?$data[2]:$data[1];
         $param['aid'] = $request['aid'];
-        if(empty($request['name']) || empty($request['aid'])  || empty($request['oneclass'])  || empty($request['url']) || empty($request['curr_menu']) || empty($request['curr_submenu']) )
+        if(empty($request['name']) || empty($request['oneclass'])  || empty($request['url']) || empty($request['curr_menu']) || empty($request['curr_submenu']))
         {
             UtlsSvc::showMsg('信息不全', "/AdmMenu/list/?id={$id}");
             exit();
         }
         $re  = AdmMenuSvc::updateById($id,$request);
-        $res = AdmAuthNodeSvc::updateByCA($param);
+        // $res = AdmAuthNodeSvc::updateByCA($param);
         if ($re) {
             $action = '修改栏目[菜单管理]';// action记录表名，content记录详情，必须包含ID
             LogSvc::writeLog($action, array('action'=>$action, 'content'=>$request));
@@ -130,10 +130,10 @@ class AdmMenuController extends BaseController
 
         $list = AdmMenuSvc::lists($request,array('per_page'=>self::PER_PAGE_NUM, 'page_param'=>'cp', 'curr_page'=>$this->getRequest('cp',1),'file_name'=>'/AdmMenu/list/','orderby'=>$orderby));
 
-        $this->assign('request',$request);
+        $this->assign('request', $request);
 
-        $this->assign( 'list', $list );
-        $this->assign( 'per_page_num', self::PER_PAGE_NUM );
+        $this->assign('list', $list);
+        $this->assign('per_page_num', self::PER_PAGE_NUM);
 
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
