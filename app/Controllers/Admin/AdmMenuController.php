@@ -47,7 +47,7 @@ class AdmMenuController extends BaseController
         $crr   = explode(',', $class);
         $param['oneclass']     = $crr[1]?$crr[1]:$this->getRequest('oneclass');
         $param['groupid']      = $crr[0];
-        $param['aid']          = $this->getRequest('aid','');
+        $param['aid']          = intval($this->getRequest('aid','0'));
         $param['curr_menu']    = $this->getRequest('curr_menu','');
         $param['curr_submenu'] = $this->getRequest('curr_submenu','');
         $param['icon']         = $this->getRequest('icon','');

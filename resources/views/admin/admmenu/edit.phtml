@@ -69,6 +69,7 @@
                             <label class="col-sm-2 control-label">权限：</label>
                             <div class="col-sm-10">
                                 <select class="form-control" style="width:200px;"  name="aid">
+                                <option value="">请选择</option>
                                 <?php foreach ($this->auths as $k => $v): ?>
                                     <?php if ($v['id'] == $data->aid) {
                                         echo '<option value="'.$v['id'].'" selected>'.$v['id'].'-'.$v['name'].'</option>';

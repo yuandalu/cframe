@@ -49,11 +49,11 @@
                 <table id="search" class="table">
                     <tr>
                         <td width="80px">ID：</td>
-                        <td width="150px"><input type="text" name="id" value="<?php echo $this->id; ?>" class="form-control" placeholder="ID"></td>
+                        <td width="150px"><input type="text" name="id" value="<?php echo $this->request['id']; ?>" class="form-control" placeholder="ID"></td>
                         <td width="80px">一级菜单：</td>
-                        <td width="150px"><input type="text" name="oneclass" value="<?php echo $this->oneclass; ?>" class="form-control" placeholder="一级菜单"></td>
+                        <td width="150px"><input type="text" name="oneclass" value="<?php echo $this->request['oneclass']; ?>" class="form-control" placeholder="一级菜单"></td>
                         <td width="80px">二级菜单：</td>
-                        <td width="150px"><input type="text" name="name" value="<?php echo $this->name; ?>" class="form-control" placeholder="二级菜单"></td>
+                        <td width="150px"><input type="text" name="name" value="<?php echo $this->request['name']; ?>" class="form-control" placeholder="二级菜单"></td>
                         <td width="80px"><input type="submit" class="btn btn-default" value="查询"></td>
                     </tr>
                 </table>

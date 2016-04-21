@@ -70,7 +70,7 @@ foreach($auths as $key=>$value)
                 </a>
                 <ul class="treeview-menu"<?php if($this->curr_menu==$value[0]['curr_menu']){echo ' active';}?>>
                     <?php foreach ($value as $v): ?>
-                        <?php if(!in_array($v['aid'], $haveauth) && ('超级管理员' != $adminuserobj->role)) {
+                        <?php if(!in_array($v['aid'], $haveauth) && ('超级管理员' != $this->adminUserObj->role)) {
                             continue;
                         } ?>
                     <li<?php if($this->curr_submenu==$v['curr_submenu']){echo ' class="active"';}?>>
