@@ -32,16 +32,17 @@ class AdmAuthSvc
             $adminUserObj = AdmUserSvc::getByEname($adminUser);
         }
         // 2、获取节点信息，不存在节点的直接无权限
-        $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
-        if (!$admAuthNode) {
-            return 'fail';
-        }
+        // $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
+        // if (!$admAuthNode) {
+        //     return 'fail';
+        // }
         // 3、无需验证的放权
-        if ($admAuthNode['verify'] == AdmAuthNode::VERIFY_NOT) {
+        if ($admAuthNode && $admAuthNode['verify'] == AdmAuthNode::VERIFY_NOT) {
             return 'succ';
         }
         // 4、获取用户对此节点的权限，并判断是否必须校验并进行处理
-        $admUserAuth = AdmUserAuthSvc::verifyUidAid($adminUserObj->id, $admAuthNode['aid']);
+        $aid = isset($admAuthNode['aid'])?$admAuthNode['aid']:0;
+        $admUserAuth = AdmUserAuthSvc::verifyUidAid($adminUserObj->id, $aid);
         if ($admUserAuth || ($admAuthNode['verify'] == AdmAuthNode::VERIFY_DEFAULT && $adminUserObj->isSuper())) {
             return 'succ';
         }
