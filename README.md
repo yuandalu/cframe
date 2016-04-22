@@ -6,7 +6,7 @@
 ```php
 self::getDao()->select('id', 'ctime as time', 'title')
     //->select(array('id', 'ctime as time', 'title'))// 此方式经常用于查询字段从上层变量中获取时使用
-    ->where('id>? and title>=? and ctime<=?', array(1, 3, 6))
+    ->where('id>? and title>=? and ctime<=?', array(1, 3, 6))// 需要()或者or查询时可以用此方法
     ->where(array('id'=>6, 'title'=>'1', array('ctime', '>=', date('Y-m-d H:i:s'))))// 此方式经常用于查询条件从上层变量中获取时使用
     ->where('id', '>=', 5)
     ->where('id', 6)
