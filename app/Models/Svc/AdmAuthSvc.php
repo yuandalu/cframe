@@ -31,7 +31,7 @@ class AdmAuthSvc
             $adminUser    = AdminSvc::getLoginUser();
             $adminUserObj = AdmUserSvc::getByEname($adminUser);
         }
-        // 2、获取节点信息，不存在的节点如果是管理员则通过
+        // 2、获取节点信息，不存在的节点如果是超级管理员则通过
         $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
         if (!$admAuthNode && $adminUserObj->isSuper()) {
             return 'succ';
