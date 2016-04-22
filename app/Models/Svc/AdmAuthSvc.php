@@ -31,11 +31,11 @@ class AdmAuthSvc
             $adminUser    = AdminSvc::getLoginUser();
             $adminUserObj = AdmUserSvc::getByEname($adminUser);
         }
-        // 2、获取节点信息，不存在节点的直接无权限
+        // 2、获取节点信息，不存在的节点如果是管理员则通过
         $admAuthNode  = AdmAuthNodeSvc::getByCA($c, $a);
-        // if (!$admAuthNode) {
-        //     return 'fail';
-        // }
+        if (!$admAuthNode && $adminUserObj->isSuper()) {
+            return 'succ';
+        }
         // 3、无需验证的放权
         if ($admAuthNode && $admAuthNode['verify'] == AdmAuthNode::VERIFY_NOT) {
             return 'succ';

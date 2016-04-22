@@ -45,6 +45,7 @@ $tempArr = array();
 $curr_submenus = array();
 
 foreach ($menuList as $v) {
+    // 由于之前的表结构所设定，所以如果强制验证某个节点之后要排除他对应的菜单，请在数组加入排除的权限ID，最好节点单独建立一个权限
     if (in_array($v['aid'], array('11')) && !in_array($v['aid'], $haveauth)) {
         continue;
     } elseif (!$this->adminUserObj->isSuper() && (!$v['aid'] || !in_array($v['aid'], $haveauth))) {
