@@ -19,7 +19,7 @@ self::getDao()->select('id', 'ctime as time', 'title')
     ->count('id');// count() 默认使用 count(*)
 ```
 
-[image](readme.jpeg)
+![image](readme.jpeg)
 
 ├── all_check_syntax.sh           语法检查工具，请安装tree命令后使用
 ├── app                           App应用目录，主要的业务目录
