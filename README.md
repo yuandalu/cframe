@@ -1,5 +1,23 @@
-# cframe
+# frame
 
+#### 对于简单的查询来说可以在Svc中使用这样的方式，复杂的查询仍在Dao中实现
+ - select、find、gets、count 再一次query中只能调用一次
+
+```php
+self::getDao()->select('id', 'ctime as time', 'title')
+    //->select(array('id', 'ctime as time', 'title'))// 此方式经常用于查询字段从上层变量中获取时使用
+    ->where('id>? and title>=? and ctime<=?', array(1, 3, 6))
+    ->where(array('id'=>6, 'title'=>'1', array('ctime', '>=', date('Y-m-d H:i:s'))))// 此方式经常用于查询条件从上层变量中获取时使用
+    ->where('id', '>=', 5)
+    ->where('id', 6)
+    ->whereIn('id', array(1, 3, 6))
+    ->isNull('id')
+    ->orderBy('id desc', 'ctime asc')
+    ->orderBy(array('id desc', 'ctime asc'))// 此方式经常用于查询排序从上层变量中获取时使用
+    ->find();// find(true) 返回对象
+    ->gets(10);// gets() 返回全部数据
+    ->count('id');// count() 默认使用 count(*)
+```
 
 ├── all_check_syntax.sh           语法检查工具，请安装tree命令后使用
 ├── app                           App应用目录，主要的业务目录
