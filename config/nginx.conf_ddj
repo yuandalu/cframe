@@ -67,18 +67,6 @@ server{
         fastcgi_param ENV_REDIS_SERVER_AUTH_R "redis:redis";
         
         fastcgi_param ENV_MEMCACHED_SERVERS "127.0.0.1:11311:memcached:guixueguomaodev";
-
-        fastcgi_param ENV_CLIENT_USER_DIR "/home/dingdejing/userengine.guixue.com";
-        fastcgi_param ENV_CLIENT_USER_HOST "182.92.104.65";
-        fastcgi_param ENV_CLIENT_USER_PORT "80";
-        fastcgi_param ENV_CLIENT_USER_PATH "interface.php";
-        fastcgi_param ENV_CLIENT_USER_DOMAIN "userengine.guixue.com";
-
-        fastcgi_param ENV_CLIENT_SMS_DIR "/home/dingdejing/sms.guixue.com";
-        fastcgi_param ENV_CLIENT_SMS_HOST "127.0.0.1";
-        fastcgi_param ENV_CLIENT_SMS_PORT "80";
-        fastcgi_param ENV_CLIENT_SMS_PATH "interface.php";
-        fastcgi_param ENV_CLIENT_SMS_DOMAIN "ddj.smsengine.guixue.com";
     }
 }
 
@@ -235,17 +223,5 @@ server{
         fastcgi_param ENV_REDIS_SERVER_AUTH_R "redis:redis";
         
         fastcgi_param ENV_MEMCACHED_SERVERS "127.0.0.1:11311:memcached:guixueguomaodev";
-
-        fastcgi_param ENV_CLIENT_USER_DIR "/home/dingdejing/userengine.guixue.com";
-        fastcgi_param ENV_CLIENT_USER_HOST "182.92.104.65";
-        fastcgi_param ENV_CLIENT_USER_PORT "80";
-        fastcgi_param ENV_CLIENT_USER_PATH "interface.php";
-        fastcgi_param ENV_CLIENT_USER_DOMAIN "userengine.guixue.com";
-
-        fastcgi_param ENV_CLIENT_SMS_DIR "/home/dingdejing/sms.guixue.com";
-        fastcgi_param ENV_CLIENT_SMS_HOST "127.0.0.1";
-        fastcgi_param ENV_CLIENT_SMS_PORT "80";
-        fastcgi_param ENV_CLIENT_SMS_PATH "interface.php";
-        fastcgi_param ENV_CLIENT_SMS_DOMAIN "ddj.smsengine.guixue.com";
     }
 }
