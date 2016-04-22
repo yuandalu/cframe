@@ -671,7 +671,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                         echo '<td>'.\$v['".$name."'].'</td>';";
                     }
                     $admin_list_file.='
-                        echo \'<td><a class="glyphicon glyphicon-edit" href="/'.$entity.'/index?id=\'.$v[\'id\'].\'"></a>&nbsp;<a  class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del(\'.$v[\'id\'].\');return false;"></a></td>\';
+                        echo \'<td><a class="glyphicon glyphicon-edit" href="/'.$entity.'/index?id=\'.$v[\'id\'].\'"></a>&nbsp;<a class="glyphicon glyphicon-trash" href="javascript:void(0);" onclick="del(\'.$v[\'id\'].\');return false;"></a></td>\';
                     echo \'</tr>\';
                     } ?>
                 </tbody>
