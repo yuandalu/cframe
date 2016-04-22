@@ -19,6 +19,8 @@ self::getDao()->select('id', 'ctime as time', 'title')
     ->count('id');// count() 默认使用 count(*)
 ```
 
+[image](readme.jpeg)
+
 ├── all_check_syntax.sh           语法检查工具，请安装tree命令后使用
 ├── app                           App应用目录，主要的业务目录
 │   ├── Conf                          业务配置目录，存放一些业务需要的配置数据，当做文件数据库使用
