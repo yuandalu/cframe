@@ -542,7 +542,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                     </div>
                 </div>
                 <div class="box-body table-responsive" style="display: block;">
-                <form id="searchform" method="post" action="/'.$entity.'/list/">
+                <form id="searchform" method="get" action="/'.$entity.'/list/">
                 <table id="search" class="table">
                     <tr>
                         <td width="80px">ID</td>

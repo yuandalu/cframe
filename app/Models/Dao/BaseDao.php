@@ -89,7 +89,6 @@ class BaseDao {
 
     public function updateById($id, $param)
     {
-
         $updkey = array();
         $updval = array();
         foreach ($param as $k => $v) {
@@ -106,7 +105,6 @@ class BaseDao {
 
     public function updateByUid($uid, $param)
     {
-
         $updkey = array();
         $updval = array();
         foreach ($param as $k => $v) {

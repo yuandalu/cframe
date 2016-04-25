@@ -3,8 +3,8 @@ INSERT INTO sys_idgenter(obj,id,step)VALUES('users',100000,1);
 DROP TABLE IF EXISTS users;
 create table `users` (
 `id` int unsigned NOT NULL,
-`ctime` datetime DEFAULT CURRENT_TIMESTAMP,
-`utime` datetime DEFAULT CURRENT_TIMESTAMP,
+`ctime` datetime NOT NULL,
+`utime` datetime NOT NULL,
 `mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号',
 `nickname` varchar(32) NOT NULL DEFAULT '' COMMENT '昵称',
 `password` char(32) NOT NULL DEFAULT '' COMMENT '密码',
