@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `adm_actlog` (
 `id` int(10) NOT NULL,
   `username` varchar(32) NOT NULL,
   `action` varchar(175) NOT NULL DEFAULT '',
-  `content` text COMMENT '操作内容',
+  `content` text NOT NULL COMMENT '操作内容',
   `action_time` datetime NOT NULL,
   `ip` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -235,7 +235,7 @@ DROP TABLE IF EXISTS `sys_dbcache`;
 CREATE TABLE IF NOT EXISTS `sys_dbcache` (
   `skey` varchar(32) NOT NULL,
   `expiry` int(11) NOT NULL,
-  `value` text
+  `value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
