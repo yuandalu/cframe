@@ -45,6 +45,7 @@ class TestClassSvc
     {
         $request_param = array();
         $sql_condition = array();
+        $sql_param     = array();
 
         if (isset($request['id']) && $request['id'] > 0) {
             $request_param[] = 'id='.$request['id'];
@@ -110,7 +111,7 @@ class TestClassSvc
             $sql_condition[] = 'testint_table = ?';
             $sql_param[]    = $request['testint_table'];
         }
-        return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
+        return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options, $export);
     }
 
 }

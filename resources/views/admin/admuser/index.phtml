@@ -7,9 +7,9 @@
         <?php $this->render('include/headersource', true); ?>
         <!-- 此处引入资源文件或自定义样式及脚本 -->
         <style>
-            #list.table th, #list.table td, #search th, #search td { 
+            #list.table th, #list.table td, #search th, #search td {
                 text-align: center;
-                vertical-align: middle; 
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -88,7 +88,7 @@
                         echo "<td>".$v['ename']."</td>";
                         echo "<td>".$v['depart']."</td>";
                         echo "<td>".$v['position']."</td>";
-                        echo "<td><span id=\"r_".$v['id']."\"><a href='javascript:' onclick='uprole(".$v['id'].",\"".$v[role]."\")'>".$v['role']."</a></span></td>";
+                        echo "<td><span id=\"r_".$v['id']."\"><a href='javascript:' onclick='uprole(".$v['id'].",\"".$v['role']."\")'>".$v['role']."</a></span></td>";
                         if ($v['status']==\App\Models\Entity\AdmUser::ACTIVE_Y) {
                             echo "<td>正常</td>";
                         } else {

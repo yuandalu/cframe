@@ -12,7 +12,7 @@ use App\Models\Svc\LogSvc;
 class AdmMenuController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -56,7 +56,7 @@ class AdmMenuController extends BaseController
             echo '名称已存在';
             exit;
         }
-        
+
         $obj = AdmMenuSvc::add($param);
         var_dump($obj);
         exit;

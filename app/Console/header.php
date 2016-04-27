@@ -1,7 +1,7 @@
 <?php
 
 chdir(dirname(__FILE__));
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL | E_STRICT);
 define('BASE_DIR', dirname(dirname(dirname(__FILE__))));
 require BASE_DIR.'/bootstrap/autoload.php';
 require_once '../../config/server_conf.php';

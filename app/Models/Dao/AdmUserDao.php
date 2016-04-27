@@ -9,7 +9,7 @@ class AdmUserDao extends BaseDao
 {
     protected $table = 'adm_users';
 
-    public function getPager( $request_param, $sql_condition =array(), $sql_param=array() , $options)
+    public function getPager( $request_param, $sql_condition =array(), $sql_param=array() , $options, $export = false)
     {
         $sql = "select * ";
         $sql.= "from ".$this->table." ";
@@ -34,7 +34,7 @@ class AdmUserDao extends BaseDao
         }
         return $list;
     }
-    
+
     public function getByEname($ename)
     {
         $sql = "select * from ".$this->table." where ename= ? and status=".AdmUser::ACTIVE_Y;

@@ -31,7 +31,7 @@ class AdmAuthNodeSvc
     {
         return self::getDao()->getByUid($uid);
     }
-    
+
     private static function getDao()
     {
         return Loader::loadDao(self::OBJ);
@@ -44,8 +44,7 @@ class AdmAuthNodeSvc
     {
         $request_param = array();
         $sql_condition = array();
-
-
+        $sql_param     = array();
 
         if (isset($request['id']) && strlen($request['id'])>1) {
             $request_param[] = 'id=' . $request['id'];
@@ -69,14 +68,6 @@ class AdmAuthNodeSvc
             }
         }
 
-        if ($request['username'] != '') {
-            $userinfo  =  $request['username'];
-            $query_uid = $userinfo['uid'];
-            $request_param[] = 'username=' . urlencode($request['username']);
-            $sql_condition[] = 'uid=?'  ;
-            $sql_param[]     = $query_uid;
-        }
-
         if ($request['aid']) {
             $request_param[] = 'aid=' . $request['aid'];
             $sql_condition[] = 'aid =?';
@@ -92,7 +83,7 @@ class AdmAuthNodeSvc
             $sql_condition[] = 'action =?';
             $sql_param[]     = $request['action'];
         }
-        return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
+        return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options, $export);
     }
 
     public static function getControauth()

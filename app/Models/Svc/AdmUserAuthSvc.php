@@ -8,7 +8,7 @@ use App\Models\Entity\AdmUserAuth;
 class AdmUserAuthSvc
 {
     const OBJ = 'AdmUserAuth';
-    
+
     public static function add($param)
     {
         $obj = AdmUserAuth::createByBiz($param);
@@ -49,6 +49,7 @@ class AdmUserAuthSvc
     {
         $request_param = array();
         $sql_condition = array();
+        $sql_param     = array();
 
         if (isset($request['id']) && strlen($request['id'])>1) {
             $request_param[] = 'id=' . $request['id'];

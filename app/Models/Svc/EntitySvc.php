@@ -176,6 +176,7 @@ $svc_file .= " ".$entity."Svc
     {
         \$request_param = array();
         \$sql_condition = array();
+        \$sql_param     = array();
 
         if (isset(\$request['id']) && \$request['id'] > 0) {
             \$request_param[] = 'id='.\$request['id'];
@@ -297,7 +298,7 @@ class";
 $admin_controller .=" ".$entity."Controller extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static \$NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -481,11 +482,11 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         $admin_controller.= $admin_controller_tmp.".\"\\n\";";
         $admin_controller.="
         // }
-        // header(\"Content-type:text/csv\");   
-        // header(\"Content-Disposition:attachment;filename=\".date('Ymd').'.csv');   
-        // header('Cache-Control:must-revalidate,post-check=0,pre-check=0');   
-        // header('Expires:0');   
-        // header('Pragma:public');  
+        // header(\"Content-type:text/csv\");
+        // header(\"Content-Disposition:attachment;filename=\".date('Ymd').'.csv');
+        // header('Cache-Control:must-revalidate,post-check=0,pre-check=0');
+        // header('Expires:0');
+        // header('Pragma:public');
         // echo \$str;
         exit;
     }
@@ -504,9 +505,9 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         <?php $this->render(\'include/headersource\', true); ?>
         <!-- 此处引入资源文件或自定义样式及脚本 -->
         <style>
-            #list.table th, #list.table td, #search th, #search td { 
+            #list.table th, #list.table td, #search th, #search td {
                 text-align: center;
-                vertical-align: middle; 
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -716,7 +717,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
 ';
         return $admin_list_file;
     }
- 
+
     public static function createAdminIndexFile($f_type,$f_name,$f_description,$f_attr,$f_default,$entity,$table_name,$id_genter_start,$table_annotation)
     {
         $admin_index_file = '<!DOCTYPE html>
@@ -1011,7 +1012,7 @@ class ".$entity."Controller extends BaseController
         }
 
         // \$list = ".$entity."Svc::lists(\$request,array('per_page'=>\$pagenum, 'page_param'=>'p', 'curr_page'=>\$p,'file_name'=>'/".$entity."/list/','orderby'=>\$orderby));
-        
+
         return ErrorSvc::format(ErrorSvc::ERR_OK, \$list);
 
     }

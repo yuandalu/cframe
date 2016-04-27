@@ -29,14 +29,15 @@ class AdmUserSvc
     {
         $request_param = array();
         $sql_condition = array();
-        
+        $sql_param     = array();
+
         if ($request['name']) {
             $request_param[] = 'name=' . $request['name'];
             $sql_condition[] = 'name =? or ename=?';
             $sql_param[]     = $request['name'];
             $sql_param[]     = $request['name'];
         }
-        return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options );
+        return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options);
     }
 
     public static function forbiddenAccount($id)

@@ -93,6 +93,7 @@ class AdmAuthSvc
     {
         $request_param = array();
         $sql_condition = array();
+        $sql_param     = array();
 
         if (isset($request['id']) && strlen($request['id'])>1) {
             $request_param[] = 'id=' . $request['id'];
@@ -115,22 +116,12 @@ class AdmAuthSvc
             }
         }
 
-
-        if ($request['username'] != '') {
-            $userinfo =  UserSdk::getInfoByUsername($request['username']);
-            $query_uid = $userinfo['uid'];
-            $request_param[] = 'username=' . urlencode($request['username']);
-            $sql_condition[] = 'uid=?'  ;
-            $sql_param[]     = $query_uid;
-        }
-
-
         if ($request['name']) {
             $request_param[] = 'name=' . $request['name'];
             $sql_condition[] = 'name =?';
             $sql_param[]     = $request['name'];
         }
-        return self::getDao()->getPager($request_param, $sql_condition,$sql_param , $options, $export);
+        return self::getDao()->getPager($request_param, $sql_condition, $sql_param, $options, $export);
     }
 
     public static function getauth()
