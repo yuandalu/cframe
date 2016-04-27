@@ -7,9 +7,9 @@
         <?php $this->render('include/headersource', true); ?>
         <!-- 此处引入资源文件或自定义样式及脚本 -->
         <style>
-            #list.table th, #list.table td, #search th, #search td { 
+            #list.table th, #list.table td, #search th, #search td {
                 text-align: center;
-                vertical-align: middle; 
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="box-body table-responsive" style="display: block;">
-                <form id="searchform" method="post" action="/TestClass/list/">
+                <form id="searchform" method="get" action="/TestClass/list/">
                 <table id="search" class="table">
                     <tr>
                         <td width="80px">ID</td>
