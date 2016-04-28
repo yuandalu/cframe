@@ -147,7 +147,7 @@ class BaseDao {
         $sql = "select * ";
         $sql.= "from ".$this->getTableName()." ";
         $sql.= "where id = ? ";
-        $row = $this->getExecutor()->query($sql, array($id));
+        $row = $this->getSlaveExecutor()->query($sql, array($id));
         if (is_null($row)) {
             return null;
         }
@@ -173,7 +173,7 @@ class BaseDao {
     }
 
     final public function select()
-    {   
+    {
         if (func_num_args() == 1 && is_array(func_get_arg(0))) {
             $this->select = implode(',', func_get_arg(0));
         } else {
@@ -196,7 +196,7 @@ class BaseDao {
                     $this->whereParam[] = $v[2];
                 } else {
                     throw new \Exception("where param error");
-                } 
+                }
             }
         } elseif ($numArgs == 2) {
             if (is_string($args[0]) && (is_string($args[1]) || is_numeric($args[1]))) {
@@ -269,7 +269,7 @@ class BaseDao {
         if ($num) {
             $sql.= ' limit '.intval($num);
         }
-        $rows = $this->getExecutor()->querys($sql, $this->whereParam);
+        $rows = $this->getSlaveExecutor()->querys($sql, $this->whereParam);
         $this->cleanSelect();
         if (empty($rows)) {
             return array();
@@ -288,7 +288,7 @@ class BaseDao {
             $sql.= ' order by '.$this->orderBy;
         }
         $sql.= ' limit 1';
-        $row = $this->getExecutor()->query($sql, $this->whereParam);
+        $row = $this->getSlaveExecutor()->query($sql, $this->whereParam);
         $this->cleanSelect();
         if (empty($row)) {
             return null;
@@ -310,7 +310,7 @@ class BaseDao {
             $sql .= ' where '.implode(' and ', $this->where);
         }
         $sql .= ' limit 1';
-        $row = $this->getExecutor()->query($sql, $this->whereParam);
+        $row = $this->getSlaveExecutor()->query($sql, $this->whereParam);
         $this->cleanSelect();
         if (empty($row)) {
             return 0;
