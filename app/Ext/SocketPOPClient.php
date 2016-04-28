@@ -185,14 +185,11 @@ class SocketPOPClient
     //提取请求是否成功 
     function getRestIsSucceed($strRespMessage='') 
     { 
-        if (trim($responseMessage)=='') 
+        if ($this->strResponse=='') 
         { 
-            if ($this->strResponse=='') 
-            { 
-                $this->getLineResponse(); 
-            } 
-            $strRespMessage = $this->strResponse; 
+            $this->getLineResponse(); 
         } 
+        $strRespMessage = $this->strResponse; 
         if (trim($strRespMessage)=='') 
         { 
             $this->setMessage('Response message is empty', 2003); 

@@ -16,7 +16,7 @@ class AdmUserDao extends BaseDao
         if (!empty( $sql_condition )) {
             $sql.= 'where '. implode(' and ', $sql_condition);
         }
-        if ($options['orderby']) {
+        if (isset($options['orderby'])) {
             $sql.= " order by ".$options['orderby']." ";
         } else {
             $sql.= " order by id desc ";

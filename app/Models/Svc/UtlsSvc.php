@@ -527,7 +527,7 @@ class UtlsSvc
 
     public static function inApple()
     {
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        $ip = isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:'';
         if (!$ip) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
@@ -540,7 +540,7 @@ class UtlsSvc
 
     public static function inCompany($level = 0)
     {
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        $ip = isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:'';
         if (!$ip) {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
