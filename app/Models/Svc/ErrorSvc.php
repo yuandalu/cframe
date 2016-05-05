@@ -127,6 +127,11 @@ class ErrorSvc
         return $result;
     }
 
+    public static function show($errno)
+    {
+        UtlsSvc::goToAct('error', 'show', self::formatShowParam($errno));
+    }
+
     private static function formatShowParam($e, $url, $m, $time)
     {
         $t = time();

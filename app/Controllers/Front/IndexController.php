@@ -47,6 +47,7 @@ class IndexController extends BaseController
         // return $data;
         // return 666;
         // return ErrorSvc::callback('test', ErrorSvc::ERR_OK, $data);
+        // ErrorSvc::show(ErrorSvc::ERR_NOT_EXISTX);
         return ErrorSvc::format(ErrorSvc::ERR_OK, $data);
     }
 
