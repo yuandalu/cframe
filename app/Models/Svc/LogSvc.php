@@ -24,22 +24,22 @@ class LogSvc
         $sql_condition = array();
         $sql_param     = array();
 
-        if (isset($request['username'])) {
+        if (isset($request['username']) && !empty($request['username'])) {
             $request_param[] = 'username='.$request['username'];
             $sql_condition[] = 'username=?';
             $sql_param[] = $request['username'];
         }
-        if (isset($request['kw'])) {
+        if (isset($request['kw']) && !empty($request['kw'])) {
             $request_param[] = 'kw='.$request['kw'];
             $sql_condition[] = '`content` like ?';
             $sql_param[] = '%'.$request['kw'].'%';
         }
-        if (isset($request['start'])) {
+        if (isset($request['start']) && !empty($request['start'])) {
             $request_param[] = 'start='.$request['start'];
             $sql_condition[] = 'action_time >= ?';
             $sql_param[] = $request['start'];
         }
-        if (isset($request['end'])) {
+        if (isset($request['end']) && !empty($request['end'])) {
             $request_param[] = 'end='.$request['end'];
             $sql_condition[] = 'action_time<=?';
             if ('10' >= strlen($request['end'])) {

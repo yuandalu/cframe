@@ -118,7 +118,7 @@ class AdmMenuSvc
 
     public static function getAll()
     {
-        $data = self::getDao()->getAll($tag);
+        $data = self::getDao()->getAll();
         return $data;
     }
 

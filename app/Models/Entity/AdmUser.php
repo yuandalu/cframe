@@ -28,7 +28,7 @@ class AdmUser extends Entity
         $obj->position = $param['position'];
         $obj->role     = $param['role'];
         $obj->token    = isset($param['token'])?$param['token']:'';
-        $obj->status   = $param['status']?$param['status']:1;
+        $obj->status   = isset($param['status'])?$param['status']:1;
         return $obj;
     }
 

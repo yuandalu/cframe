@@ -44,7 +44,7 @@ class AdmMenuController extends BaseController
         $param['sort'] = intval($this->getRequest('sort','0'));
         $class = $this->getRequest('groupid');
         $crr   = explode(',', $class);
-        $param['oneclass']     = $crr[1]?$crr[1]:$this->getRequest('oneclass');
+        $param['oneclass']     = isset($crr[1])?$crr[1]:$this->getRequest('oneclass');
         $param['groupid']      = $crr[0];
         $param['aid']          = intval($this->getRequest('aid','0'));
         $param['curr_menu']    = $this->getRequest('curr_menu','');

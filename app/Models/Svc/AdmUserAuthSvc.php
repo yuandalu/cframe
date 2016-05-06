@@ -72,16 +72,6 @@ class AdmUserAuthSvc
             }
         }
 
-
-        if ($request['username'] != '') {
-            $userinfo =  UserSdk::getInfoByUsername($request['username']);
-            $query_uid = $userinfo['uid'];
-            $request_param[] = 'username=' . urlencode($request['username']);
-            $sql_condition[] = 'uid=?'  ;
-            $sql_param[]     = $query_uid;
-        }
-
-
         if ($request['user']) {
             $request_param[] = 'user=' . $request['user'];
             $sql_condition[] = 'user =?';

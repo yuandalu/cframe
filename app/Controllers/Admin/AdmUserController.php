@@ -9,7 +9,7 @@ use App\Models\Svc\AdmAuthSvc;
 class AdmUserController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -42,6 +42,11 @@ class AdmUserController extends BaseController
         $request['depart'] = $this->getRequest("depart");
         $request['position'] = $this->getRequest("position");
         $request['role'] = $this->getRequest("role");
+        if (AdmUserSvc::getByEname($request['ename'])) {
+            $data = array("code"=>"fail","msg"=>"用户已存在");
+            echo json_encode($data);
+            exit;
+        }
         $re = AdmUserSvc::add($request);
         $res = $re->toAry();
         if(!empty($res))
@@ -52,6 +57,7 @@ class AdmUserController extends BaseController
         }else
         {
             $data = array("code"=>"fail","msg"=>"提交失败，或数据重复");
+            echo json_encode($data);
             exit;
         }
 
@@ -135,7 +141,7 @@ class AdmUserController extends BaseController
         $this->assign('curr_submenu', 'manage_admuser');
         return view('modifyauth');
     }
-    
+
     // 账号禁用
     public function forbiddenAction()
     {
@@ -180,7 +186,7 @@ class AdmUserController extends BaseController
         echo json_encode(array('code'=>"yes"));
         exit;
     }
-    
+
     public function deleteuserauthAction()
     {
         $id_auth = $this->getRequest('id_auth',array());

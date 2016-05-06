@@ -7,9 +7,9 @@
         <?php $this->render('include/headersource', true); ?>
         <!-- 此处引入资源文件或自定义样式及脚本 -->
         <style>
-            #list.table th, #list.table td, #search th, #search td { 
+            #list.table th, #list.table td, #search th, #search td {
                 text-align: center;
-                vertical-align: middle; 
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -54,9 +54,9 @@
                         <th>系统角色</th>
                         <th>操作</th>
                     </tr>
-                    <?php foreach ($this->data as $v) {
+                    <?php foreach ($this->data as $k => $v) {
                     echo "<tr id=\"m_".$v['aid']."\">";
-                        echo "<td>".($key+1)."</td>";
+                        echo "<td>".($k+1)."</td>";
                         echo "<td>".$this->admin[0]['name']."</td>";
                         echo "<td>".$v['name']."</td>";
                         echo "<td>".$this->admin[0]['role']."</td>";
