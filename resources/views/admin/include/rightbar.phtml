@@ -26,24 +26,10 @@
                         </i>
                         <div class="menu-info">
                             <h4 class="control-sidebar-subheading">
-                                AdminLte后台模板示例1
+                                AdminLte后台模板示例
                             </h4>
                             <p>
-                                
-                            </p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="/static/admin-lte/index2.html" target="_blank">
-                        <i class="menu-icon fa fa-birthday-cake bg-red">
-                        </i>
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">
-                                AdminLte后台模板示例2
-                            </h4>
-                            <p>
-                                
+
                             </p>
                         </div>
                     </a>
@@ -57,7 +43,7 @@
                                 AdminLte后台图标
                             </h4>
                             <p>
-                                
+
                             </p>
                         </div>
                     </a>
@@ -71,31 +57,39 @@
                                 jQueryConfirm示例页面
                             </h4>
                             <p>
-                                
+
                             </p>
                         </div>
                     </a>
                 </li>
             </ul>
-            <!-- <h3 class="control-sidebar-heading">
-                Recent Activity
+            <h3 class="control-sidebar-heading">
+                Bind Token
             </h3>
             <ul class="control-sidebar-menu">
                 <li>
-                    <a href="javascript::;">
-                        <i class="menu-icon fa fa-birthday-cake bg-red">
-                        </i>
-                        <div class="menu-info">
-                            <h4 class="control-sidebar-subheading">
-                                Langdon's Birthday
-                            </h4>
-                            <p>
-                                Will be 23 on April 24th
-                            </p>
-                        </div>
+                    <a href="javascript:void(0);" onclick="newQRcode();">
+                        <img id="qrcode" width="150" src="/Index/qrcode" title="<?php echo $this->adminUserObj->token; ?>">
                     </a>
                 </li>
-            </ul> -->
+                <script>
+                    function newQRcode() {
+                        $.confirm({
+                            title: '',
+                            content: '确认更换新的Token吗？',
+                            confirmButtonClass: 'btn-primary',
+                            cancelButtonClass: 'btn-danger',
+                            confirmButton: '更换',
+                            cancelButton: '取消',
+                            confirm: function () {
+                                $("#qrcode").attr('src', '/Index/qrcode?new=new');
+                            },
+                            cancel: function () {
+                            }
+                        });
+                    }
+                </script>
+            </ul>
             <!-- /.control-sidebar-menu -->
             <!-- <h3 class="control-sidebar-heading">
                 Tasks Progress

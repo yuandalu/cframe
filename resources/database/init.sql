@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-04-21 18:14:13
+-- Generation Time: 2016-05-06 15:23:16
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.4.33
 
@@ -106,7 +106,8 @@ INSERT INTO `adm_authnode` (`id`, `ctime`, `utime`, `aid`, `contr`, `action`, `v
 (54, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'add', 1),
 (55, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'delete', 1),
 (56, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'list', 1),
-(57, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'export', 1);
+(57, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'export', 1),
+(58, '2016-05-06 15:20:33', '2016-05-06 15:20:33', 0, 'Index', 'qrcode', 2);
 
 -- --------------------------------------------------------
 
@@ -215,6 +216,7 @@ CREATE TABLE IF NOT EXISTS `adm_users` (
   `depart` char(10) NOT NULL,
   `position` char(10) NOT NULL,
   `role` char(10) NOT NULL,
+  `token` varchar(32) NOT NULL DEFAULT '',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;
 
@@ -222,8 +224,8 @@ CREATE TABLE IF NOT EXISTS `adm_users` (
 -- 转存表中的数据 `adm_users`
 --
 
-INSERT INTO `adm_users` (`id`, `name`, `ename`, `depart`, `position`, `role`, `status`) VALUES
-(11, '管理员', 'dingdejing', '技术', '工程师', '超级管理员', 1);
+INSERT INTO `adm_users` (`id`, `name`, `ename`, `depart`, `position`, `role`, `token`, `status`) VALUES
+(11, '管理员', 'dingdejing', '技术', '工程师', '超级管理员', '', 1);
 
 -- --------------------------------------------------------
 
@@ -256,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `sys_idgenter` (
 --
 
 INSERT INTO `sys_idgenter` (`obj`, `id`, `step`) VALUES
-('adm_authnode', 57, 1),
+('adm_authnode', 58, 1),
 ('adm_auths', 11, 1),
 ('adm_menugroup', 11, 1),
 ('adm_menus', 16, 1),

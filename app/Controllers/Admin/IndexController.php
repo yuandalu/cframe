@@ -10,7 +10,7 @@ use App\Ext\Browser;
 class IndexController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array('login', 'dologin');// 排除登录验证
 
     public function __construct()
@@ -25,6 +25,20 @@ class IndexController extends BaseController
     public function indexAction()
     {
         return view('index');
+    }
+
+    public function qrcodeAction()
+    {
+        $adminUser = loader('session')->get('adminUser');
+        $user      = AdmUserSvc::getByEname($adminUser);
+        $token     = $user->token?$user->token:\App\Ext\Google2FA::generate_secret_key();
+        $new = $this->getRequest('new', false);
+        if ($new || ($user->token == '')) {
+            $token = \App\Ext\Google2FA::generate_secret_key();
+            AdmUserSvc::updateById($user->id, array('token'=>$token));
+        }
+        $str = 'otpauth://totp/'.$adminUser.'@guixue.com?secret='.$token;
+        return \App\Ext\QRcode::png($str, false, 10, 5, 2, false, 0xFFFFFF, 0x2196F3);
     }
 
     public function loginAction()
@@ -49,21 +63,28 @@ class IndexController extends BaseController
 
     public function doLoginAction()
     {
-        $captcha     = strtolower($this->getRequest('security_code', ''));
-        $session_val = strtolower(loader('session')->get('security_code'));
-        $user        = $this->getRequest('user', '');
-        $pwd         = $this->getRequest('pwd', '');
-        if (UtlsSvc::inCompany() || true) {
-            if ('' == $captcha || $session_val !=  $captcha   || '' == $session_val) {
+        $captcha = strtolower($this->getRequest('security_code', ''));
+        $user    = $this->getRequest('user', '');
+        $pwd     = $this->getRequest('pwd', '');
+        $adminUserObj = AdmUserSvc::getByEname($user);
+        if ($adminUserObj && $adminUserObj->token == '') {
+            $session_val = strtolower(loader('session')->get('security_code'));
+            if (('' == $captcha) || ($session_val != $captcha) || ('' == $session_val)) {
                 UtlsSvc::showMsg('验证码错误', '/Index/index', 1.25);
             }
         } else {
-            
+            $verify = AdminSvc::verifyKey($user, $captcha);
+            if ($verify !== true) {
+                UtlsSvc::showMsg($verify, '/Index/index', 1.25);
+            }
         }
 
         $r = AdminSvc::login($user, $pwd);
         if (!$r) {
             UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用新的企业邮箱密码登陆</span>)', '/Index/index');
+        }
+        if ($adminUserObj->token == '') {
+            UtlsSvc::goToAct('Index', 'qrcode');
         }
         UtlsSvc::goToAct('Index', 'index');
     }
