@@ -59,9 +59,9 @@ class AdminSvc
         if (!isset($userInfo) || ($userInfo->token == '')) {
             return '令牌未绑定';
         }
-        $TimeStamp    = \App\Ext\Google2FA::get_timestamp();
-        $secretkey    = \App\Ext\Google2FA::base32_decode($userInfo->token);
-        $otp          = \App\Ext\Google2FA::oath_hotp($secretkey, $TimeStamp);
+        $TimeStamp = \App\Ext\Google2FA::get_timestamp();
+        $secretkey = \App\Ext\Google2FA::base32_decode($userInfo->token);
+        $otp       = \App\Ext\Google2FA::oath_hotp($secretkey, $TimeStamp);
 
         // echo("Init key: $userInfo->token\n");
         // echo("Timestamp: $TimeStamp\n");

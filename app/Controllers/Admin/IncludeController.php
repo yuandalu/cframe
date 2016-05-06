@@ -7,8 +7,8 @@ use App\Ext\Captcha;
 class IncludeController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
-    static $NOT_LOGIN_ACTION   = array('showimg', 'showhtmlimage');// 排除登录验证
+
+    static $NOT_LOGIN_ACTION   = array('showimg', 'showhtmlimage', 'qrcode');// 排除登录验证
 
     public function __construct()
     {
@@ -40,5 +40,11 @@ class IncludeController extends BaseController
          $captcha = new Captcha(4,2);
          $captcha->showHtmlImage(80, 34);
          exit;
+    }
+
+    public function qrcodeAction()
+    {
+        $str = $this->getRequest('str', 'no');
+        return \App\Ext\QRcode::png($str, false, 10, 5, 2, false, 0xFFFFFF, 0x219688);
     }
 }

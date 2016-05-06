@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Svc\UtlsSvc;
+use App\Models\Svc\ErrorSvc;
 use App\Models\Svc\AdminSvc;
 use App\Models\Svc\AdmUserSvc;
 use App\Ext\Browser;
@@ -11,7 +12,7 @@ class IndexController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
 
-    static $NOT_LOGIN_ACTION  = array('login', 'dologin');// 排除登录验证
+    static $NOT_LOGIN_ACTION  = array('login', 'dologin', 'logout');// 排除登录验证
 
     public function __construct()
     {
@@ -27,18 +28,40 @@ class IndexController extends BaseController
         return view('index');
     }
 
-    public function qrcodeAction()
+    public function bindTokenAction()
     {
         $adminUser = loader('session')->get('adminUser');
         $user      = AdmUserSvc::getByEname($adminUser);
-        $token     = $user->token?$user->token:\App\Ext\Google2FA::generate_secret_key();
-        $new = $this->getRequest('new', false);
-        if ($new || ($user->token == '')) {
-            $token = \App\Ext\Google2FA::generate_secret_key();
+
+        $code   = $this->getRequest('code');
+        $unbind = $this->getRequest('unbind');
+        if (!is_null($code)) {
+            $token = $this->getRequest('token');
+            if (AdmUserSvc::checkToken($token)) {
+                return ErrorSvc::format(ErrorSvc::ERR_EXISTS, null, '此验证码已被使用，正在刷新新的验证码...');
+            }
+            if (!is_numeric($code) || strlen($code) != 6) {
+                return ErrorSvc::format(ErrorSvc::ERR_PARAM_TYPE, null, '验证码非法，必须为六位数字');
+            }
+
+            $TimeStamp = \App\Ext\Google2FA::get_timestamp();
+            $secretkey = \App\Ext\Google2FA::base32_decode($token);
+            $otp       = \App\Ext\Google2FA::oath_hotp($secretkey, $TimeStamp);
+            if ($otp != $code) {
+                return ErrorSvc::format(ErrorSvc::ERR_PARAM_TYPE, null, '验证码错误，如果多次失败，请校对手机时间，当前时间：'.date('Y-m-d H:i:s'));
+            }
             AdmUserSvc::updateById($user->id, array('token'=>$token));
+            return ErrorSvc::format(ErrorSvc::ERR_OK, null, '绑定成功');
         }
-        $str = 'otpauth://totp/'.$adminUser.'@guixue.com?secret='.$token;
-        return \App\Ext\QRcode::png($str, false, 10, 5, 2, false, 0xFFFFFF, 0x2196F3);
+        if (!is_null($unbind)) {
+            AdmUserSvc::updateById($user->id, array('token'=>''));
+            UtlsSvc::goToAct("Index", "bindToken");
+        }
+
+        $token = $user->token?:\App\Ext\Google2FA::generate_secret_key();
+        $this->assign('user', $user);
+        $this->assign('token', $token);
+        return view('bindtoken');
     }
 
     public function loginAction()

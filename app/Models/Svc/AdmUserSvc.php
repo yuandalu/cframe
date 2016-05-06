@@ -82,6 +82,10 @@ class AdmUserSvc
     {
         return self::getDao()->addAuth($param);
     }
+    public static function checkToken($token)
+    {
+        return self::getDao()->where('token', $token)->count();
+    }
     private static function getDao()
     {
         return Loader::loadDao(self::OBJ);

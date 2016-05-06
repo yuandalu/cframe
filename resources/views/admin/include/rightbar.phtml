@@ -64,31 +64,11 @@
                 </li>
             </ul>
             <h3 class="control-sidebar-heading">
-                Bind Token
             </h3>
             <ul class="control-sidebar-menu">
                 <li>
-                    <a href="javascript:void(0);" onclick="newQRcode();">
-                        <img id="qrcode" width="150" src="/Index/qrcode" title="<?php echo $this->adminUserObj->token; ?>">
-                    </a>
+                    <a href="/Index/bindToken">Google Authenticator</a>
                 </li>
-                <script>
-                    function newQRcode() {
-                        $.confirm({
-                            title: '',
-                            content: '确认更换新的Token吗？',
-                            confirmButtonClass: 'btn-primary',
-                            cancelButtonClass: 'btn-danger',
-                            confirmButton: '更换',
-                            cancelButton: '取消',
-                            confirm: function () {
-                                $("#qrcode").attr('src', '/Index/qrcode?new=new');
-                            },
-                            cancel: function () {
-                            }
-                        });
-                    }
-                </script>
             </ul>
             <!-- /.control-sidebar-menu -->
             <!-- <h3 class="control-sidebar-heading">

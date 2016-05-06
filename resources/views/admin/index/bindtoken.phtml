@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>后台管理-令牌绑定</title>
+        <?php $this->render('include/headersource', true); ?>
+        <!-- 此处引入资源文件或自定义样式及脚本 -->
+        <style>
+            h5 {
+                font-family: "Helvetica Neue","Lantinghei SC","Hiragino Sans GB","Microsoft Yahei",Arial,sans-serif;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <?php $this->render('include/header', true); ?>
+            <?php $this->render('include/leftbar', true); ?>
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <h1>令牌绑定<small>Google Authenticator</small></h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="/">
+                            <i class="fa fa-dashboard"></i>
+                                后台管理
+                            </a>
+                        </li>
+                        <li class="active">
+                            Google Authenticator
+                        </li>
+                    </ol>
+                </section>
+                <section class="content">
+                <!-- 此处是主内容区域 Start -->
+                <div class="row">
+                <div class="col-md-12">
+                <div class="box box-primary">
+                <div class="box-body">
+                    <div class="clearfix">
+                        <h5>步骤一：在您的手机上安装双重验证程序：Google Authenticator</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td style="background-color:#f8f8f8;width: 135px;padding-left: 15px;">iPhone手机</td>
+                                <td style="padding-left: 25px;">在App Store中搜索Google Authenticator</td>
+                                <td style="border-left:none;">
+                                <a target="_blank" href="http://itunes.apple.com/cn/app/google-authenticator/id388497605?mt=8">点击查看</a></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#f8f8f8;padding-left: 15px; vertical-align:middle">Android手机</td>
+                                <td style="padding-left: 25px;">在安卓应用市场中搜索“谷歌身份验证器”，或搜索Google Authenticator</td>
+                                <td style="border-left:none;"><a target="_blank" href="http://apk.hiapk.com/html/2013/07/1643619.html">点击下载</a></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#f8f8f8;padding-left: 15px;width:20%">Windows Phone</td>
+                                <td style="padding-left: 25px;">在WP应用商店中搜索Google Authenticator</td>
+                                <td style="border-left:none;"><a target="_blank" href="http://www.windowsphone.com/zh-cn/store/app/authenticatorg/4362996a-8528-4641-a983-57e63c74ce16">点击查看</a></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#f8f8f8;padding-left: 15px;">Nokia手机</td>
+                                <td style="padding-left: 25px;">不支持扫描二维码，可手动输入密钥</td>
+                                <td style="border-left:none;"><a target="_blank" href="https://code.google.com/p/lwuitgauthj2me/">点击下载</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <h5>步骤二：安装完成后，您需要对该应用程序进行如下配置</h5>
+                        <div>1. 在“Google Authenticator (身份验证器)”应用程序中， 点击“添加新账户 (iOS 下是 + 号)”，然后选择“扫描条形码”。 </div>
+                        <div>2. 将手机上的相机镜头对准下图扫描该条形码。</div>
+                        <div>
+                            <div>
+                                <br>
+                                <img src="/Include/qrcode?str=<?php echo 'otpauth://totp/'.$this->user->ename.env('ADMIN_EMAIL_POSTFIX', 'local').'?secret='.$this->token; ?>" width="150" height="150" class="thumbnail">
+                            </div>
+                            <div>
+                                <span>如果您无法扫描成功上面的二维码，您还可以手动添加账户，并输入如下密匙：<?php echo $this->token; ?></span>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if ($this->user->token != ''): ?>
+                    <div>
+                        <h5>特殊操作：解绑</h5>
+                        <a class="btn btn-danger btn-sm" href="javascript:void(0);" onclick="unBindToken();">解绑</a>
+                    </div>
+                    <?php else: ?>
+                    <div>
+                        <h5>步骤三：配置完成</h5>
+                        <p>
+                            <span class="text-danger">绑定之前请备份此密钥: </span>
+                            <span><?php echo $this->token; ?></span>
+                            <small class="text-danger">（<?php echo date('Y-m-d H:i:s') ?>）</small>
+                        </p>
+                        <form method="post" action="/Index/bindToken" name="myform" id="myform">
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Google Authenticator显示的6位数字" maxlength="6" autocomplete="off" name="code">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="token" value="<?php echo $this->token; ?>">
+                            <input class="btn btn-primary btn-sm" type="submit" value="绑定">
+                        </div>
+                        </form>
+                    </div>
+                    <?php endif ?>
+                </div>
+                </div>
+                </div>
+                </div>
+                <!-- 此处是主内容区域 End -->
+                </section>
+            </div>
+            <?php $this->render('include/footer', true); ?>
+            <?php $this->render('include/rightbar', true); ?>
+        </div>
+        <?php $this->render('include/footersource', true); ?>
+        <!-- JavaScript引用和代码请集中写入此处 Start -->
+        <script src="/static/plugins/jquery-form/jquery.form.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            var btnSubmit;
+            $("#myform").ajaxForm({
+                dataType: "json",
+                beforeSubmit: function() {
+                    btnSubmit = $("#myButton").button('loading');
+                },
+                success: processJson
+            });
+            function processJson(data){
+                $('.alert.alert-warning').remove();
+                if (data.e == "9999") {
+                    setTimeout(function(){
+                        btnSubmit.button('reset');
+                    }, 500);
+                    $.confirm({
+                        title: false,
+                        content: '绑定成功，请在登录页忽略图形验证码，<span class="text-danger">使用令牌验证码登录</span>！！',
+                        backgroundDismiss: false,
+                        confirmButtonClass: 'btn-danger',
+                        cancelButton: false,
+                        confirmButton: '我真的记住了！！',
+                        closeIcon: false,
+                        confirm: function () {
+                            $.confirm({
+                                title: false,
+                                content: '你真的看了吗？<br>绑定成功，请在登录页忽略图形验证码，<span class="text-danger">使用令牌验证码登录</span>！！',
+                                backgroundDismiss: false,
+                                confirmButtonClass: 'btn-danger',
+                                cancelButton: false,
+                                confirmButton: '真的看了！！',
+                                closeIcon: false,
+                                confirm: function () {
+                                    window.location.href = window.location.href;
+                                }
+                            });
+                        }
+                    });
+                } else if (data.e == "9020"){
+                    $.confirm({
+                        title: false,
+                        content: data.m,
+                        cancelButton: false,
+                        confirmButton: false,
+                        closeIcon: false
+                    });
+                    setTimeout(function(){
+                        btnSubmit.button('reset');
+                        window.location.href = window.location.href;
+                    }, 2000);
+                } else {
+                    $.confirm({
+                        title: false,
+                        content: data.m,
+                        cancelButton: false,
+                        confirmButton: false,
+                        closeIcon: false
+                    });
+                    btnSubmit.button('reset');
+                }
+            }
+        });
+        function unBindToken() {
+            $.confirm({
+                title: '',
+                content: '确认解绑令牌吗？',
+                confirmButtonClass: 'btn-primary',
+                cancelButtonClass: 'btn-danger',
+                confirmButton: '确认',
+                cancelButton: '取消',
+                confirm: function () {
+                    window.location.href = '/Index/bindToken?unbind=y';
+                },
+                cancel: function () {
+                }
+            });
+        }
+        </script>
+        <!-- JavaScript引用和代码请集中写入此处 End -->
+    </body>
+</html>

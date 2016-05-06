@@ -17,9 +17,12 @@ class BaseController extends Controller
             if (!$adminUserObj) {
                 UtlsSvc::goToAct("Index", "login");
             }
-            $controllerName = Controller::getControllerName();
-            $actionName     = Controller::getActionName();
-            $auth = AdmAuthSvc::verify($controllerName, $actionName, $adminUserObj);
+            $c = Controller::getControllerName();
+            $a     = Controller::getActionName();
+            if ($adminUserObj->token == '' && (strtolower($c.$a) != 'indexbindtoken')) {
+                UtlsSvc::goToAct("Index", "bindToken");
+            }
+            $auth = AdmAuthSvc::verify($c, $a, $adminUserObj);
             if ($auth == "fail") {
                 UtlsSvc::showMsg('您无此权限', '/Index/index/');
             } else {

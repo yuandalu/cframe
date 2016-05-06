@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-05-06 15:23:16
+-- Generation Time: 2016-05-06 19:31:09
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.4.33
 
@@ -107,7 +107,8 @@ INSERT INTO `adm_authnode` (`id`, `ctime`, `utime`, `aid`, `contr`, `action`, `v
 (55, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'delete', 1),
 (56, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'list', 1),
 (57, '2016-04-21 17:56:09', '2016-04-21 17:56:09', 0, 'User', 'export', 1),
-(58, '2016-05-06 15:20:33', '2016-05-06 15:20:33', 0, 'Index', 'qrcode', 2);
+(58, '2016-05-06 15:20:33', '2016-05-06 15:20:33', 0, 'Include', 'qrcode', 2),
+(59, '2016-05-06 19:29:40', '2016-05-06 19:29:40', 0, 'Index', 'bindToken', 2);
 
 -- --------------------------------------------------------
 
@@ -258,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `sys_idgenter` (
 --
 
 INSERT INTO `sys_idgenter` (`obj`, `id`, `step`) VALUES
-('adm_authnode', 58, 1),
+('adm_authnode', 59, 1),
 ('adm_auths', 11, 1),
 ('adm_menugroup', 11, 1),
 ('adm_menus', 16, 1),
