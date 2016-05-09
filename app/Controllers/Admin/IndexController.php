@@ -71,8 +71,8 @@ class IndexController extends BaseController
         $browserlist = array("Chrome", "Safari", "iPhone", "iPad", "OS/2", "Apple");
         if ($this->getRequest('o') != 1) {
             if (!in_array($sys, $browserlist)) {
-                $str = "<center><h1>警告!!</h1></center><br /><span style='font-size:14px;'>您用的不是Chrome浏览器,为了正常使用，请通过Chrome浏览器使用该系统！</span><br /><center><a href='/index/login/?o=1'><span style='color:red'>继续登录</span></a>&nbsp;&nbsp;&nbsp;<a href='http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html' target='_blank'><span style='color:red'></span></a></center>";
-                UtlsSvc::showMsg($str, '/index/index/',1000);
+                $str = "<center><h1>警告!!</h1></center><br /><span style='font-size:14px;'>您用的不是Chrome浏览器,为了正常使用，请通过Chrome浏览器使用该系统！</span><br /><center><a href='/index/login?o=1'><span style='color:red'>继续登录</span></a>&nbsp;&nbsp;&nbsp;<a href='http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html' target='_blank'><span style='color:red'></span></a></center>";
+                UtlsSvc::showMsg($str, '/index/login',1000);
             }
         }
 
@@ -93,18 +93,18 @@ class IndexController extends BaseController
         if ($adminUserObj && $adminUserObj->token == '') {
             $session_val = strtolower(loader('session')->get('security_code'));
             if (('' == $captcha) || ($session_val != $captcha) || ('' == $session_val)) {
-                UtlsSvc::showMsg('验证码错误', '/Index/index', 1.25);
+                UtlsSvc::showMsg('验证码错误', '/Index/login', 1.25);
             }
         } else {
             $verify = AdminSvc::verifyKey($user, $captcha);
             if ($verify !== true) {
-                UtlsSvc::showMsg($verify, '/Index/index', 1.25);
+                UtlsSvc::showMsg($verify, '/Index/login', 1.25);
             }
         }
 
         $r = AdminSvc::login($user, $pwd);
         if (!$r) {
-            UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用新的企业邮箱密码登陆</span>)', '/Index/index');
+            UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用企业邮箱密码登陆</span>)', '/Index/login', 2);
         }
         if ($adminUserObj->token == '') {
             UtlsSvc::goToAct('Index', 'bindToken');
@@ -115,6 +115,6 @@ class IndexController extends BaseController
     public function logoutAction()
     {
         loader('session')->destroy('adminUser');
-        UtlsSvc::goToAct('Index', 'index');
+        UtlsSvc::goToAct('Index', 'login');
     }
 }

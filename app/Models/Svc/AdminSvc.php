@@ -57,7 +57,7 @@ class AdminSvc
     {
         $userInfo = AdmUserSvc::getByEname($user);
         if (!isset($userInfo) || ($userInfo->token == '')) {
-            return '令牌未绑定';
+            return '用户名和密码不匹配';
         }
         $TimeStamp = \App\Ext\Google2FA::get_timestamp();
         $secretkey = \App\Ext\Google2FA::base32_decode($userInfo->token);
