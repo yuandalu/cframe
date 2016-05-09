@@ -133,20 +133,20 @@
                     }, 500);
                     $.confirm({
                         title: false,
-                        content: '绑定成功，请在登录页忽略图形验证码，<span class="text-danger">使用令牌验证码登录</span>！！',
+                        content: '绑定成功：<br><span class="text-danger">请使用‘身份验证器’中的‘6位验证码’登录</span>！！<br><img width="260px" src="/static/images/google_code.png">',
                         backgroundDismiss: false,
                         confirmButtonClass: 'btn-danger',
                         cancelButton: false,
-                        confirmButton: '我真的记住了！！',
+                        confirmButton: '记住了！！',
                         closeIcon: false,
                         confirm: function () {
                             $.confirm({
                                 title: false,
-                                content: '你真的看了吗？<br>绑定成功，请在登录页忽略图形验证码，<span class="text-danger">使用令牌验证码登录</span>！！',
+                                content: '绑定成功：<br><span class="text-danger">请使用‘身份验证器’中的‘6位验证码’登录</span>！！<br><img width="260px" src="/static/images/google_code.png">',
                                 backgroundDismiss: false,
                                 confirmButtonClass: 'btn-danger',
                                 cancelButton: false,
-                                confirmButton: '真的看了！！',
+                                confirmButton: '我真的记住了！！',
                                 closeIcon: false,
                                 confirm: function () {
                                     window.location.href = window.location.href;
