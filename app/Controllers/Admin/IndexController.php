@@ -55,7 +55,7 @@ class IndexController extends BaseController
         }
         if (!is_null($unbind)) {
             AdmUserSvc::updateById($user->id, array('token'=>''));
-            UtlsSvc::goToAct("Index", "bindToken");
+            UtlsSvc::goToAct('Index', 'bindToken');
         }
 
         $token = $user->token?:\App\Ext\Google2FA::generate_secret_key();
@@ -107,7 +107,7 @@ class IndexController extends BaseController
             UtlsSvc::showMsg('用户名和密码不匹配,(<span style="color:red">请使用新的企业邮箱密码登陆</span>)', '/Index/index');
         }
         if ($adminUserObj->token == '') {
-            UtlsSvc::goToAct('Index', 'qrcode');
+            UtlsSvc::goToAct('Index', 'bindToken');
         }
         UtlsSvc::goToAct('Index', 'index');
     }
