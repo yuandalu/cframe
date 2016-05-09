@@ -74,7 +74,7 @@ class AdminSvc
         }
         $verifyNum  = loader('dbcache')->get('token_codeuse_'.$user);
         if ($verifyNum >= env('ADMIN_VERIFY_NUM', 'local')) {
-            return '超过验证次数，请等待下一次令牌';
+            return '令牌失效，请等待下一次令牌';
         }
 
         // otpauth://totp/test@test.com?secret=1234567812345678
