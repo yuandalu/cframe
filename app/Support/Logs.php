@@ -21,7 +21,8 @@ class Logs
             }
             $this->_fp = fopen($this->_file_name, 'a');
         }
-        $msg = '['.date('Y-m-d H:i:s').' '.$this->_getClientIP().' '.$_SERVER['REMOTE_ADDR'].'] '.$msg."\n";
+        $remote_addr = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'';
+        $msg = '['.date('Y-m-d H:i:s').' '.$this->_getClientIP().' '.$remote_addr.'] '.$msg."\n";
         if ($this->_fp) {
             fwrite($this->_fp, $msg);
         }
@@ -40,7 +41,7 @@ class Logs
         } elseif (getenv('HTTP_FORWARDED')) {
             $ip = getenv('HTTP_FORWARDED');
         } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            $ip = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'';
         }
         return $ip;
     }

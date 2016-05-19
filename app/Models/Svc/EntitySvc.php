@@ -471,7 +471,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
             // \$ctime = \$v['ctime'];
             // \$utime = \$v['utime'];
 ";
-        $admin_controller_tmp.= "            // \$str .= \$id.','.\$ctime.','.\$utime";
+        $admin_controller_tmp = "            // \$str .= \$id.','.\$ctime.','.\$utime";
         foreach ($f_name as $k => $v) {
             if (in_array($v,array('id','ctime','utime'))) {
                 continue;

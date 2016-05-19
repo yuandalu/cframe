@@ -110,7 +110,8 @@ class SQLExecutor
         $str = str_replace('%', '{#}', $sql);
         $str = vsprintf(str_replace('?', '%s', $str), $this->formatValues($values));
         $str = str_replace('{#}', '%', $str);
-        $this->_log->log($str . $trace . ($add==''?'':"\n".$add."\n".$_SERVER['REQUEST_URI']));
+        $request_uri = isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'';
+        $this->_log->log($str . $trace . ($add==''?'':"\n".$add."\n".$request_uri));
     }
 
     public function exeNoQuery($sql, $values = array())
