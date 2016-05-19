@@ -15,13 +15,13 @@ class BaseDao {
     public function add($obj = null)
     {
         if (empty($obj) || !is_object($obj)) {
-            return false;
+            return null;
         }
         $result = $this->addImp($obj);
         if ($result) {
             return $obj;
         }
-        return false;
+        return null;
     }
 
     private function addImp($obj)
@@ -39,13 +39,13 @@ class BaseDao {
     public function adds($objs = array())
     {
         if (empty($objs) || !is_array($objs)) {
-            return false;
+            return null;
         }
         $result = $this->addsImp($objs);
         if ($result) {
             return $objs;
         }
-        return false;
+        return null;
     }
 
     private function addsImp($objs)

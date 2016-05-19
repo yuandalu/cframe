@@ -9,6 +9,7 @@ class SQLExecutor
 
     private $_dbh = null;
     private $_log = null;
+    protected $transactions = 0;
 
     public function __construct($dbconf, $ctype = '', $charset = 'UTF8MB4')
     {
@@ -149,7 +150,10 @@ class SQLExecutor
 
     public function beginTrans()
     {
-        $this->_dbh->beginTransaction();
+        ++$this->transactions;
+        if ($this->transactions == 1) {
+            $this->_dbh->beginTransaction();
+        }
     }
 
     public function commit()
@@ -159,12 +163,23 @@ class SQLExecutor
             ErrorSvc::show(ErrorSvc::ERR_BUSY);
             exit();
         }
-        return $this->_dbh->commit();
+        if ($this->transactions == 1) {
+            return $this->_dbh->commit();
+        }
+        --$this->transactions;
     }
 
     public function rollback()
     {
-        return $this->_dbh->rollback();
+        if ($this->transactions == 1) {
+            return $this->_dbh->rollback();
+        }
+        $this->transactions = max(0, $this->transactions - 1);
+    }
+
+    public function transactionLevel()
+    {
+        return $this->transactions;
     }
 
     public function getLastInsertID()
