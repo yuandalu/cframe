@@ -19,7 +19,7 @@ $data = \App\Models\Svc\AdmAuthNodeSvc::getAll();//已经有的数据
 
 $result = array_diff($auth, $data);
 
-print_r($data);
+print_r($result);
 if (!empty($result)) {
     foreach ($result as $value) {
         $re = explode("_", $value);
