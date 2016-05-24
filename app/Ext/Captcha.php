@@ -53,7 +53,7 @@ class Captcha
     public function show_image($width = 88, $height = 31)
     {
 
-        if(!file_exists(Config::getConfig('CAPTCHA_FONT_FILE'))) exit('字体文件不存在');
+        if(!file_exists(env('CAPTCHA_FONT_FILE'))) exit('字体文件不存在');
 
         if($this->_chars_number < 3) exit('验证码长度最小为3');
 
@@ -104,7 +104,7 @@ class Captcha
             $angle = rand(-15, 15);
 
             $textcolor = ImageColorAllocate($im, rand(60,120), rand(60,120),rand(60,120));
-            imagettftext($im, self::FONT_SIZE, $angle, $x, $y, $textcolor, Config::getConfig('CAPTCHA_FONT_FILE'), $char);
+            imagettftext($im, self::FONT_SIZE, $angle, $x, $y, $textcolor, env('CAPTCHA_FONT_FILE'), $char);
         }
 
         //存入SESSION
@@ -121,7 +121,7 @@ class Captcha
     public function showHtmlImage($width = 88, $height = 31)
     {
 
-        if(!file_exists(Config::getConfig('CAPTCHA_FONT_FILE'))) exit('字体文件不存在');
+        if(!file_exists(env('CAPTCHA_FONT_FILE'))) exit('字体文件不存在');
 
         if($this->_chars_number < 3) exit('验证码长度最小为3');
 
@@ -172,7 +172,7 @@ class Captcha
             $angle = rand(-15, 15);
 
             $textcolor = ImageColorAllocate($im, rand(60,120), rand(60,120),rand(60,120));
-            imagettftext($im, self::FONT_SIZE, $angle, $x, $y, $textcolor, Config::getConfig('CAPTCHA_FONT_FILE'), $char);
+            imagettftext($im, self::FONT_SIZE, $angle, $x, $y, $textcolor, env('CAPTCHA_FONT_FILE'), $char);
         }
 
         //存入SESSION

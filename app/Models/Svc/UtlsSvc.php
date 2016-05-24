@@ -557,7 +557,7 @@ class UtlsSvc
     // 只读模式
     public static function isReadonly()
     {
-        return env('READONLY_MODE', 'local') == '1';
+        return env('READONLY_MODE', '0') == '1';
     }
 
     public static function numToCny($num)

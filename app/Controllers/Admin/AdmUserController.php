@@ -31,7 +31,7 @@ class AdmUserController extends BaseController
         $this->assign('name', $request['name']);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admuser');
-        return view('index');
+        return render('index');
     }
 
     public function addAction()
@@ -139,7 +139,7 @@ class AdmUserController extends BaseController
         $this->assign('data',$auth);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admuser');
-        return view('modifyauth');
+        return render('modifyauth');
     }
 
     // 账号禁用

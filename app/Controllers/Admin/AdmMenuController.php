@@ -32,7 +32,7 @@ class AdmMenuController extends BaseController
         $this->assign("auths",$auths);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
-        return view('index');
+        return render('index');
     }
 
 
@@ -72,7 +72,7 @@ class AdmMenuController extends BaseController
         $this->assign("data",$data);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
-        return view('edit');
+        return render('edit');
     }
 
     public function modifyAction()
@@ -137,6 +137,6 @@ class AdmMenuController extends BaseController
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admmenu');
         $this->assign('orderby', $orderby);
-        return view('list');
+        return render('list');
     }
 }

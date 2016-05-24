@@ -25,7 +25,7 @@ class IndexController extends BaseController
 
     public function indexAction()
     {
-        return view('index');
+        return render('index');
     }
 
     public function bindTokenAction()
@@ -61,7 +61,7 @@ class IndexController extends BaseController
         $token = $user->token?:\App\Ext\Google2FA::generate_secret_key();
         $this->assign('user', $user);
         $this->assign('token', $token);
-        return view('bindtoken');
+        return render('bindtoken');
     }
 
     public function loginAction()
@@ -81,7 +81,7 @@ class IndexController extends BaseController
         if ($adminUserObj) {
             UtlsSvc::goToAct('Index', 'index');
         }
-        return view('login');
+        return render('login');
     }
 
     public function doLoginAction()

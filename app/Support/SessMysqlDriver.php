@@ -25,7 +25,7 @@ class SessMysqlDriver
 
     public function init()
     {
-        if (!env('READONLY_MODE', 'local')) {
+        if (!env('READONLY_MODE', '0')) {
             $handler = new SessHandler();
             session_set_save_handler($handler, true);
         }

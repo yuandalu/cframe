@@ -10,7 +10,7 @@ use App\Models\Svc\AdmUserAuthSvc;
 class AdmAuthController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -26,7 +26,7 @@ class AdmAuthController extends BaseController
     {
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauth');
-        return view('index');
+        return render('index');
     }
 
     public function addAction()
@@ -87,6 +87,6 @@ class AdmAuthController extends BaseController
 
         $this->assign($request);
         $this->assign('orderby', $orderby);
-        return view('list');
+        return render('list');
     }
 }

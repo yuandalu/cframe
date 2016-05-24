@@ -42,7 +42,7 @@ class AdminSvc
 
     public static function staffAuth($uid, $pwd)
     {
-        $o = new SocketPOPClient($uid.env('ADMIN_EMAIL_POSTFIX', 'local'), $pwd, env('ADMIN_POP_ADDRESS', 'local'), env('ADMIN_POP_PORT', 'local'));
+        $o = new SocketPOPClient($uid.env('ADMIN_EMAIL_POSTFIX', '@yuandalu.com'), $pwd, env('ADMIN_POP_ADDRESS', 'pop.exmail.qq.com'), env('ADMIN_POP_PORT', '110'));
         if ($o->popLogin()) {
             //优先用QQ企业邮箱登陆
             $r = 1;
@@ -73,7 +73,7 @@ class AdminSvc
             loader('dbcache')->set('token_code_'.$user, $otp, 315360000);
         }
         $verifyNum  = loader('dbcache')->get('token_codeuse_'.$user);
-        if ($verifyNum >= env('ADMIN_VERIFY_NUM', 'local')) {
+        if ($verifyNum >= env('ADMIN_VERIFY_NUM', '5')) {
             return '令牌失效，请等待下一次令牌';
         }
 
@@ -84,7 +84,7 @@ class AdminSvc
             loader('dbcache')->set('token_codeuse_'.$user, ($verifyNum + 1), 315360000);
             return '验证码错误';
         } else {
-            loader('dbcache')->set('token_codeuse_'.$user, env('ADMIN_VERIFY_NUM', 'local'), 315360000);
+            loader('dbcache')->set('token_codeuse_'.$user, env('ADMIN_VERIFY_NUM', '5'), 315360000);
         }
         return true;
     }

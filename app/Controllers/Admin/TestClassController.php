@@ -10,7 +10,7 @@ use App\Models\Svc\TestClassSvc;
 class TestClassController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -34,7 +34,7 @@ class TestClassController extends BaseController
         }
         $this->assign('curr_menu', 'TestClass');
         $this->assign('curr_submenu', 'TestClass_add');
-        return view('index');
+        return render('index');
     }
 
 
@@ -104,7 +104,7 @@ class TestClassController extends BaseController
         $this->assign('list', $list);
         $this->assign('curr_menu', 'TestClass');
         $this->assign('curr_submenu', 'TestClass_list');
-        return view('list');
+        return render('list');
     }
 
     public function exportAction()
@@ -158,11 +158,11 @@ class TestClassController extends BaseController
             // $testint_table = $v['testint_table'];
             // $str .= $id.','.$ctime.','.$utime.','.$testdatetime.','.$testdata.','.$testtime.','.$testint.','.$testtinyint.','.$testvarchar.','.$testint_table."\n";
         // }
-        // header("Content-type:text/csv");   
-        // header("Content-Disposition:attachment;filename=".date('Ymd').'.csv');   
-        // header('Cache-Control:must-revalidate,post-check=0,pre-check=0');   
-        // header('Expires:0');   
-        // header('Pragma:public');  
+        // header("Content-type:text/csv");
+        // header("Content-Disposition:attachment;filename=".date('Ymd').'.csv');
+        // header('Cache-Control:must-revalidate,post-check=0,pre-check=0');
+        // header('Expires:0');
+        // header('Pragma:public');
         // echo $str;
         exit;
     }

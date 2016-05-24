@@ -1,12 +1,21 @@
 <?php
 
-chdir(dirname(__FILE__));
-error_reporting(E_ALL | E_STRICT);
 define('BASE_DIR', dirname(dirname(dirname(__FILE__))));
-require BASE_DIR.'/bootstrap/autoload.php';
-require_once '../../config/server_conf.php';
-$ini = parse_ini_file('../../config/env_conf_'.$argv[1]);
-foreach ($ini as $k => $v) {
-    $_SERVER[$k]=$v;
+
+if (in_array(getenv('REMOTE_ADDR'), array('127.0.0.1')) || substr(getenv('REMOTE_ADDR'), 0, 8) == '192.168.') {
+    error_reporting(E_ALL | E_STRICT);
+    putenv("EXCEPTION=true");
+} else {
+    error_reporting(0);
+    putenv("EXCEPTION=false");
 }
+
+require_once BASE_DIR.'/vendor/autoload.php';
+
+try {
+    (new Dotenv\Dotenv(__DIR__.'/../../'))->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
+
 \App\Support\Loader::init();

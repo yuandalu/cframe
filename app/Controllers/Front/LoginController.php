@@ -29,7 +29,7 @@ class LoginController extends BaseController
         }
         $go = $this->getRequest('go', '/');
         $this->assign('go', $go);
-        return view('index');
+        return render('index');
     }
 
     public function loginAction()
@@ -76,8 +76,8 @@ class LoginController extends BaseController
 
     public function logoutAction()
     {
-        setcookie('F', '', -1, '/', env('DOMAIN_NAME', 'local'));
-        setcookie('B', '', -1, '/', env('DOMAIN_NAME', 'local'));
+        setcookie('F', '', -1, '/', env('DOMAIN_NAME'));
+        setcookie('B', '', -1, '/', env('DOMAIN_NAME'));
         header("location:/Login/index");
     }
 }

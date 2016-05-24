@@ -5,8 +5,8 @@ use App\Support\ObjectFinder;
 use App\Support\Loader;
 use App\Support\Logs;
 
-if (!function_exists('view')) {
-    function view($name, $noController = false)
+if (!function_exists('render')) {
+    function render($name, $noController = false)
     {
         $view = Factory::find('Elephant\Foundation\View');
         $view->setReturnAction($name);
@@ -42,19 +42,6 @@ if (!function_exists('loader')) {
                 break;
         }
         return null;
-    }
-}
-
-if (!function_exists('env')) {
-    function env($name, $location = 'fastcgi')
-    {
-        if ($location == 'fastcgi') {
-            return isset($_SERVER[$name])?$_SERVER[$name]:'';
-        } elseif ($location == 'local') {
-            // 帮助函数载入比较优先，所以app.php设置的配置路径不生效，在此重新设置
-            Elephant\Base\Config::$configFile = BASE_DIR.'/config/server_conf.php';
-            return \Elephant\Base\Config::getConfig($name);
-        }
     }
 }
 

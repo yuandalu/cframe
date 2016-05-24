@@ -74,8 +74,8 @@ class UserSvc
             }
             return self::loginCore($user, $expire);
         } else {
-            setcookie('F', '', -1, '/', env('DOMAIN_NAME', 'local'));
-            setcookie('B', '', -1, '/', env('DOMAIN_NAME', 'local'));
+            setcookie('F', '', -1, '/', env('DOMAIN_NAME'));
+            setcookie('B', '', -1, '/', env('DOMAIN_NAME'));
             return ErrorSvc::format(ErrorSvc::ERR_LOGININFO_ERROR, '', '账户名或密码错误，请重试');
         }
     }
@@ -85,7 +85,7 @@ class UserSvc
         $expire = $expire?$expire+time():315360000+time();
         $cookie = self::createCookie($user);
         foreach ($cookie as $key=>$val) {
-            setcookie($key, $val, $expire, '/', env('DOMAIN_NAME', 'local'));
+            setcookie($key, $val, $expire, '/', env('DOMAIN_NAME'));
         }
         return ErrorSvc::format(ErrorSvc::ERR_OK, '', '登陆成功');
     }

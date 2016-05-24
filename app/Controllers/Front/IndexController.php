@@ -37,12 +37,12 @@ class IndexController extends BaseController
         // echo loader('session')->get('a');
         // echo UtlsSvc::fenToYuan(1000);
         // LogSvc::writeLog('test', 'test');
-        // var_dump(env('CAPTCHA_FONT_FILE', 'local'));
+        // var_dump(env('CAPTCHA_FONT_FILE'));
         // logs('test')->log('test');
         $name = 'Frame';
         $this->assign('name', $name);
         // echo $name;
-        // return view('index');
+        // return render('index');
         $data = UserConf::getUsers();
         // return $data;
         // return 666;

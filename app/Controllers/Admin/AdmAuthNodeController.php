@@ -11,7 +11,7 @@ use App\Models\Svc\LogSvc;
 class AdmAuthNodeController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -30,7 +30,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign("auth", $auth);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauthnode');
-        return view('index');
+        return render('index');
     }
 
     public function addAction()
@@ -44,14 +44,14 @@ class AdmAuthNodeController extends BaseController
         if (AdmAuthNodeSvc::getByCA($param['contr'], $param['action'])) {
             UtlsSvc::showMsg('已添加过','/AdmAuthNode/list/');
         }
-        
+
 
         $obj = AdmAuthNodeSvc::add($param);
         var_dump($obj);
         exit;
         //UtlsSvc::showMsg('添加成功','/AdmAuthNode/list/');
     }
-    
+
     public function updateAuthsAction()
     {
         $ids = $this->getRequest('ids');
@@ -73,7 +73,7 @@ class AdmAuthNodeController extends BaseController
         $this->assign('auths', $auths );
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_admauthnode');
-        return view('edit');
+        return render('edit');
     }
 
     public function modifyAction()
@@ -113,7 +113,7 @@ class AdmAuthNodeController extends BaseController
         $request['contr'] = $this->getRequest('contr','');
         $request['action'] = $this->getRequest('action','');
         $orderby  = $this->getRequest('orderby');
-        
+
         $list = AdmAuthNodeSvc::lists($request,array('per_page'=>self::PER_PAGE_NUM, 'page_param'=>'cp', 'curr_page'=>$this->getRequest('cp',1),'file_name'=>'/AdmAuthNode/list/','orderby'=>$orderby));
 
         $this->assign('request',$request);
@@ -127,6 +127,6 @@ class AdmAuthNodeController extends BaseController
         $this->assign($request);
         $this->assign( 'authconf',  AdmAuthSvc::getConf());
         $this->assign('orderby', $orderby);
-        return view('list');
+        return render('list');
     }
 }

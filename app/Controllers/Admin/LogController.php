@@ -7,7 +7,7 @@ use App\Models\Svc\LogSvc;
 class LogController extends BaseController
 {
     const PER_PAGE_NUM = 15;// 默认分页数
-    
+
     static $NOT_LOGIN_ACTION  = array();// 排除登录验证
 
     public function __construct()
@@ -25,7 +25,7 @@ class LogController extends BaseController
         $this->assign('list', $list);
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_log');
-        return view('index');
+        return render('index');
     }
 
     public function operateAction()
@@ -49,7 +49,7 @@ class LogController extends BaseController
 
         $this->assign('curr_menu', 'manage');
         $this->assign('curr_submenu', 'manage_operate');
-        return view('operate');
+        return render('operate');
     }
 
     public function getLogDetailAction()

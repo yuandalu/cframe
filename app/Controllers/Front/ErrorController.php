@@ -32,7 +32,7 @@ class ErrorController extends BaseController
         }
         $this->assign('err_no', $e);
         $this->assign('err_msg', ErrorSvc::getMsg($e));
-        return view('show');
+        return render('show');
     }
 
     private function checkShowParam($e, $t, $s)

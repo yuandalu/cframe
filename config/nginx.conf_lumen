@@ -1,0 +1,32 @@
+server{
+    listen 80;
+    server_name lumen.site.yuandalu.com;
+    root /Users/dingdejing/work/www/qframe/public/lumen;
+    index index.php;
+
+    access_log logs/$host.access.log  main;
+
+    location / {
+        if (!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?$1 last;
+        }
+    }
+
+    location /static/ {
+        access_log off;
+        #expires   180m;
+    }
+
+    location /favicon.ico {
+        access_log off;
+        expires    1d;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include       fastcgi_params;
+        fastcgi_param SERVER_NAME $host;
+    }
+}
