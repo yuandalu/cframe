@@ -322,7 +322,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         }
         \$this->assign('curr_menu', '".$entity."');
         \$this->assign('curr_submenu', '".$entity."_add');
-        return view('index');
+        return render('index');
     }
 
 
@@ -396,7 +396,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
         \$this->assign('list', \$list);
         \$this->assign('curr_menu', '".$entity."');
         \$this->assign('curr_submenu', '".$entity."_list');
-        return view('list');
+        return render('list');
     }
 
     public function exportAction()
