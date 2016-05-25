@@ -46,13 +46,13 @@ class EntitySvc
                     $entity_file.="\n        \$obj->$name = date('Y-m-d H:i:s');";
                     break;
                 case "datetime":
-                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('Y-m-d H:i:s');";
+                    $entity_file.="\n        \$obj->$name = isset(\$param['$name'])?\$param['$name']:date('Y-m-d H:i:s');";
                     break;
                 case "date":
-                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('Y-m-d');";
+                    $entity_file.="\n        \$obj->$name = isset(\$param['$name'])?\$param['$name']:date('Y-m-d');";
                     break;
                 case "time":
-                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:date('H:i:s');";
+                    $entity_file.="\n        \$obj->$name = isset(\$param['$name'])?\$param['$name']:date('H:i:s');";
                     break;
                 default:
                     $default_value = "'{$f_default[$k]}'";
@@ -64,7 +64,7 @@ class EntitySvc
                         list($op_n, $op_v, $op_w) = explode(":", $oparr[1]);
                         $default_value = "self::".strtoupper($f_name[$k].'_'.$op_n);
                     }
-                    $entity_file.="\n        \$obj->$name = \$param['$name']?\$param['$name']:{$default_value};";
+                    $entity_file.="\n        \$obj->$name = isset(\$param['$name'])?\$param['$name']:{$default_value};";
             }
 
         }
