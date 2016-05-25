@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs
+END
+command-queued.stub
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/command-queued.stub
+END
+job.stub
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/job.stub
+END
+listener-queued.stub
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/listener-queued.stub
+END
+command.stub
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/command.stub
+END
+test.stub
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/test.stub
+END
+event.stub
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/event.stub
+END
+routes.stub
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/routes.stub
+END
+event-handler-queued.stub
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/event-handler-queued.stub
+END
+listener.stub
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/listener.stub
+END
+command-queued-with-handler.stub
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/command-queued-with-handler.stub
+END
+request.stub
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/request.stub
+END
+command-handler.stub
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/command-handler.stub
+END
+provider.stub
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/provider.stub
+END
+event-handler.stub
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/event-handler.stub
+END
+policy.stub
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/policy.stub
+END
+model.stub
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/model.stub
+END
+job-queued.stub
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/job-queued.stub
+END
+console.stub
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/console.stub
+END
+command-with-handler.stub
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/video/!svn/ver/13078/branches/php7andcomposer/lumen/app/Console/Commands/Tool/stubs/command-with-handler.stub
+END

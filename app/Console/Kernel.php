@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\Tool\ConsoleMakeCommand::class,
+        Commands\Tool\EventGenerateCommand::class,
+        Commands\Tool\EventMakeCommand::class,
+        Commands\Tool\ListenerMakeCommand::class,
+        Commands\Tool\KeyGenerateCommand::class
     ];
 
     /**
