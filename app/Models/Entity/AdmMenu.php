@@ -28,6 +28,7 @@ class AdmMenu extends Entity
         $obj->aid = $param['aid'];
         $obj->curr_menu = $param['curr_menu'];
         $obj->curr_submenu = $param['curr_submenu'];
+        $obj->icon = $param['icon']?$param['icon']:'fa fa-circle-o text-aqua';
         return $obj;
     }
 }

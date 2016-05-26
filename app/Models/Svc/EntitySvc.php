@@ -314,11 +314,11 @@ $admin_controller .=" ".$entity."Controller extends BaseController
     {
         \$id = \$this->getRequest('id','');
         if (\$id > 0) {
-            \$".$entity." = ".$entity."Svc::getById(\$id);
-            if (is_null(\$".$entity.")) {
+            \$".lcfirst($entity)." = ".$entity."Svc::getById(\$id);
+            if (is_null(\$".lcfirst($entity).")) {
                 UtlsSvc::showMsg('没有这个ID', '/".$entity."/list');
             }
-            \$this->assign(\$".$entity."->toAry());
+            \$this->assign(\$".lcfirst($entity)."->toAry());
         }
         \$this->assign('curr_menu', '".$entity."');
         \$this->assign('curr_submenu', '".$entity."_add');
@@ -781,7 +781,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                         <div class="form-group">
                             <label class="col-sm-2 control-label">'.$f_description[$k].'</label>
                             <div class="col-sm-10">
-                                <select class="form-control" style="width:200px;"  name="'.$f_name[$k].'">
+                                <select class="form-control" style="width:200px;" name="'.$f_name[$k].'">
                                 <?php foreach (\App\Models\Entity\\'.$entity.'::$'.strtoupper($f_name[$k]).' as $k => $v): ?>
                                     <?php if ($k == $this->'.$f_name[$k].') {
                                         echo \'<option value="\'.$k.\'" selected>\'.$v[\'name\'].\'-\'.$k.\'</option>\';
@@ -797,7 +797,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                         <div class="form-group">
                             <label class="col-sm-2 control-label">'.$f_description[$k].'</label>
                             <div class="col-sm-10">
-                                <select class="form-control" style="width:200px;"  name="'.$f_name[$k].'">
+                                <select class="form-control" style="width:200px;" name="'.$f_name[$k].'">
                                 <?php foreach (\App\Models\Svc\\'.$oparr[1].'Svc::getAll() as $k => $v): ?>
                                     <?php if ($v[\''.$oparr[2].'\'] == $this->'.$f_name[$k].') {
                                         echo \'<option value="\'.$v[\''.$oparr[2].'\'].\'" selected>\'.$v[\''.$oparr[2].'\'].\'-\'.$v[\''.$oparr[3].'\'].\'</option>\';
