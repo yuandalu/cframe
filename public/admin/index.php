@@ -17,6 +17,7 @@ try {
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
+
 $lumen = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../../')
 );
