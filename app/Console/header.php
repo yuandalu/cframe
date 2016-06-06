@@ -1,19 +1,12 @@
 <?php
 
 define('BASE_DIR', dirname(dirname(dirname(__FILE__))));
-
-if (in_array(getenv('REMOTE_ADDR'), array('127.0.0.1')) || substr(getenv('REMOTE_ADDR'), 0, 8) == '192.168.') {
-    error_reporting(E_ALL | E_STRICT);
-    putenv("EXCEPTION=true");
-} else {
-    error_reporting(0);
-    putenv("EXCEPTION=false");
-}
+putenv('ENV_LUMEN_ENV='.$argv[1]);
 
 require_once BASE_DIR.'/vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../../'))->load();
+    (new Dotenv\Dotenv(__DIR__.'/../../config/', 'env_'.getenv('ENV_LUMEN_ENV')))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }

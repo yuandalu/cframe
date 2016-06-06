@@ -15,7 +15,17 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 |
 */
 
+foreach ($argv as $v) {
+    if (strpos($v, '--env') !== false) {
+        putenv('ENV_LUMEN_ENV='.str_replace('--env=', '', $v));
+        break;
+    }
+}
+if (!file_exists(__DIR__.'/config/env_'.getenv('ENV_LUMEN_ENV'))) {
+    echo 'env file not exists!!'."\r\n";exit;
+}
 $app = require __DIR__.'/bootstrap/app.php';
+\App\Support\Loader::init();
 
 /*
 |--------------------------------------------------------------------------

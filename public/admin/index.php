@@ -11,20 +11,7 @@ if (in_array(getenv('REMOTE_ADDR'), array('127.0.0.1')) || substr(getenv('REMOTE
 }
 
 require_once BASE_DIR.'/vendor/autoload.php';
-
-try {
-    (new Dotenv\Dotenv(__DIR__.'/../../'))->load();
-} catch (Dotenv\Exception\InvalidPathException $e) {
-    //
-}
-
-$lumen = new Laravel\Lumen\Application(
-    realpath(__DIR__.'/../../')
-);
-$lumen->register(App\Providers\EventServiceProvider::class);
-$lumen->singleton('redis', function () use ($lumen) {
-    return $lumen->loadComponent('database', 'Illuminate\Redis\RedisServiceProvider', 'redis');
-});
+require_once BASE_DIR.'/bootstrap/lumen.php';
 
 \App\Support\Loader::init();
 \App\Support\Loader::regSess('admin');

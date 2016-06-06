@@ -3,7 +3,7 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+    (new Dotenv\Dotenv(__DIR__.'/../config/', 'env_'.getenv('ENV_LUMEN_ENV')))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -19,7 +19,14 @@ try {
 |
 */
 
-$app = new Laravel\Lumen\Application(
+class LumenAppFrameWork extends Laravel\Lumen\Application
+{
+    public function storagePath($path = null)
+    {
+        return env('STORAGE_PATH', $this->basePath().'/storage').($path ? '/'.$path : $path);
+    }
+}
+$app = new LumenAppFrameWork(
     realpath(__DIR__.'/../')
 );
 
@@ -80,7 +87,7 @@ $app->singleton(
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
 $app->singleton('redis', function () use ($app) {
     return $app->loadComponent('database', 'Illuminate\Redis\RedisServiceProvider', 'redis');
 });

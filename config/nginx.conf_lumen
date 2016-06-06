@@ -28,5 +28,6 @@ server{
         fastcgi_param SCRIPT_FILENAME  $document_root$fastcgi_script_name;
         include       fastcgi_params;
         fastcgi_param SERVER_NAME $host;
+        fastcgi_param ENV_LUMEN_ENV example;
     }
 }

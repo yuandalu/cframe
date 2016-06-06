@@ -1,20 +1,20 @@
-APP_ENV=local
+APP_ENV=example
 APP_DEBUG=true
 APP_TIMEZONE=PRC
 APP_KEY=SomeRandomKey!!!
 
 DB_CONNECTION=mysql
-DB_HOST=localhost
+DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
+DB_DATABASE=yuandalu
+DB_USERNAME=root
+DB_PASSWORD=123456
 
-CACHE_DRIVER=memcached
+CACHE_DRIVER=redis
 QUEUE_DRIVER=redis
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
-REDIS_DATABASE=0
+REDIS_DATABASE=1
 REDIS_PASSWORD=redis:redis
 
 ENV_DATA_DIR=/Users/dingdejing/work/www/frameenv/data/frame.yuandalu.com

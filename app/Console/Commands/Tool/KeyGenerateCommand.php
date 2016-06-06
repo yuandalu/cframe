@@ -30,14 +30,14 @@ class KeyGenerateCommand extends Command
     public function fire()
     {
         $this->laravel->configure('app');
-        
+
         $key = $this->getRandomKey($this->laravel['config']['app.cipher']);
 
         if ($this->option('show')) {
             return $this->line('<comment>'.$key.'</comment>');
         }
 
-        $path = base_path('.env');
+        $path = base_path('config/env_'.getenv('ENV_LUMEN_ENV'));
 
         if (file_exists($path)) {
             file_put_contents($path, str_replace(
