@@ -666,7 +666,7 @@ $admin_controller .=" ".$entity."Controller extends BaseController
                         <th>操作</th>
                     </tr>
                     <?php foreach ($this->list[\'records\'] as $v) {
-                    echo "<tr>";';
+                    echo \'<tr>\';';
                     foreach ($f_name as $name) {
                         $admin_list_file.="
                         echo '<td>'.\$v['".$name."'].'</td>';";
