@@ -7,7 +7,7 @@ use App\Models\Svc\ErrorSvc;
 class ErrorController extends BaseController
 {
     // 需要排除验证登录的action名
-    static $NOT_LOGIN_ACTION  = array('show');
+    static $NOT_LOGIN_ACTION  = array('error', 'show');
     // 默认分页数
     const PER_PAGE_NUM = 15;
 
@@ -20,6 +20,12 @@ class ErrorController extends BaseController
         parent::__construct($isLogin);
     }
 
+    public function errorAction()
+    {
+        $errorHandle = $this->getParam('error_handle');
+        echo '页面错误，美化错误页，从你我做起';
+        exit;
+    }
 
     public function showAction()
     {
@@ -32,7 +38,7 @@ class ErrorController extends BaseController
         }
         $this->assign('err_no', $e);
         $this->assign('err_msg', ErrorSvc::getMsg($e));
-        return render('show');
+        return view('show');
     }
 
     private function checkShowParam($e, $t, $s)
